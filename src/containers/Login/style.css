@@ -1,0 +1,24 @@
+.login_h1 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.login_form_box {
+  line-height: 2rem;
+  padding: 0 1rem 0 1rem;
+  transform: translateY(-10%);
+}
+
+.login_form_box button {
+  margin-top: 1.7rem;
+}
+
+.login_logo_img {
+  margin: 2rem 1.5rem 1.5rem 0;
+  width: 200px;
+}
+
+.login_welcome_img {
+  max-width: 600px;
+}

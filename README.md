@@ -6,5 +6,5 @@
 
 ## 技术选型
 
-- ReactJS
+- ReactJS (with hooks)
 - TypeScript

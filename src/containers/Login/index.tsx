@@ -5,28 +5,28 @@ import welcomeSvg from "./welcome.svg";
 import logoSvg from "./logo.svg";
 import { LoginInfo } from "../../models/User";
 
-export default function Login() {
-  const loginForm: LoginInfo = {
-    username: "",
-    password: "",
-  };
+const loginForm: LoginInfo = {
+  username: "",
+  password: "",
+};
 
-  function onSubmit(e: any) {
-    e.preventDefault();
-    let username: string = e.target[0]?.value;
-    let password: string = e.target[1]?.value;
-    username = username.trim();
-    password = password.trim();
-    if (username && password) {
-      loginForm.username = username;
-      loginForm.password = password;
-      console.log(loginForm);
-      return;
-    }
-    // error input
-    console.log("error input!");
+function onSubmit(e: any) {
+  e.preventDefault?.();
+  let username: string = e.target?.[0]?.value ?? "";
+  let password: string = e.target?.[1]?.value ?? "";
+  username = username.trim();
+  password = password.trim();
+  if (username && password) {
+    loginForm.username = username;
+    loginForm.password = password;
+    console.log(loginForm);
+    return;
   }
+  // error input
+  console.log("error input!");
+}
 
+export default function Login() {
   return (
     <Container>
       <Navbar className="position-absolute">
@@ -34,12 +34,12 @@ export default function Login() {
           <img src={logoSvg} className="login_logo_img" alt="" />
         </Navbar.Brand>
       </Navbar>
-      <Row className="full-vertical">
-        <Col className="align-self-center center" md={8}>
+      <Row className="min-vh-100">
+        <Col className="align-self-center d-flex justify-content-center" md={7}>
           <img src={welcomeSvg} className="login_welcome_img" alt="" />
         </Col>
-        <Col className="align-self-center">
-          <div className="login_form_box">
+        <Col className="align-self-center d-flex justify-content-center" md={5}>
+          <div className="login_form_box w-75">
             <h1 className="login_h1">Sign in</h1>
             <Form onSubmit={onSubmit}>
               <Form.Group controlId="username">

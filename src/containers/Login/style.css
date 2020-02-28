@@ -7,7 +7,7 @@
 .login_form_box {
   line-height: 2rem;
   padding: 0 1rem 0 1rem;
-  transform: translateY(-10%);
+  transform: translateY(-1.5rem);
 }
 
 .login_form_box button {

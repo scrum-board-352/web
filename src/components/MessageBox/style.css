@@ -1,0 +1,29 @@
+.messagebox {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  width: 20rem;
+}
+
+.messagebox-enter {
+  opacity: 0;
+  transform: translateX(50%);
+}
+
+.messagebox-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 300ms;
+}
+
+.messagebox-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.messagebox-exit-active {
+  opacity: 0;
+  transform: translateX(50%);
+  transition: all 300ms;
+}

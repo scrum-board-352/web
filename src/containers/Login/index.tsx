@@ -7,8 +7,8 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 
 enum FormType {
-  Login,
-  Register,
+  Login = "login",
+  Register = "register",
 }
 
 export default function Login() {
@@ -39,9 +39,9 @@ export default function Login() {
         >
           <div className="login_form_box d-flex flex-column align-items-center w-100">
             {formType === FormType.Login ? (
-              <LoginForm className="w-75" />
+              <LoginForm className="w-75 animated fadeIn" />
             ) : (
-              <RegisterForm className="w-75" />
+              <RegisterForm className="w-75 animated fadeIn" />
             )}
           </div>
 

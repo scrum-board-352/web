@@ -1,20 +1,24 @@
 import React from "react";
-import Error from "components/Error";
+import { Type, message } from "components/MessageBox";
 import { Button } from "react-bootstrap";
 
 function Home() {
-  function showError() {
+  function showMsg(t: Type) {
     console.log("click");
-    Error.show({
-      title: "QwQ",
-      content: Math.random().toString(),
+    message({
+      type: t,
+      title: "Success!",
+      content:
+        "lorem ahsduhs iohioashdh a ioshdio hains hna okjnhjio sa n ijaoisn doihioah oihn o",
     });
   }
 
   return (
     <>
       <h1>This is Home</h1>
-      <Button onClick={showError}>Show Error</Button>
+      <Button onClick={() => showMsg(Type.Success)}>Show success</Button>
+      <Button onClick={() => showMsg(Type.Error)}>Show error</Button>
+      <Button onClick={() => showMsg(Type.Info)}>Show info</Button>
     </>
   );
 }

@@ -3,9 +3,9 @@ import { Form, Button } from "react-bootstrap";
 import { RegisterInfo } from "models/User";
 import useFormData from "hooks/useFromData";
 
-interface Props {
+export type Props = {
   className?: string;
-}
+};
 
 export default function RegisterForm(props?: Props) {
   const [registerForm, handleInputChange] = useFormData<RegisterInfo>({

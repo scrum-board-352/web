@@ -1,0 +1,20 @@
+.dashboard_title {
+  margin-top: 1rem;
+  font-size: 1.7rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.dashboard_menu {
+  margin-top: 1.5rem;
+}
+
+.dashboard_content_container {
+  flex-grow: 1;
+}
+
+.dashboard_sidebar_avatar {
+  color: var(--dark);
+  font-size: 1.3rem;
+  font-weight: 700;
+}

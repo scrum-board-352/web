@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Alert } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./style.css";
@@ -39,7 +39,7 @@ export default function MessageBox() {
 
   return (
     <div className="messagebox">
-      <TransitionGroup>
+      <TransitionGroup component={Fragment}>
         {msgList.map((msg) => (
           <CSSTransition
             key={msg.id}

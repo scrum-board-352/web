@@ -1,0 +1,13 @@
+.avatar_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar_img {
+  border-radius: 50%;
+}
+
+.avatar_name {
+  margin-left: 0.7rem;
+}

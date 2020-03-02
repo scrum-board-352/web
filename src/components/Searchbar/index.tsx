@@ -6,6 +6,7 @@ export type Props = {
   size: string;
   color: string;
   hoverColor: string;
+  placeholder?: string;
   onChange?: (newVal: string) => void;
   onSearch: (val: string) => void;
 };
@@ -44,10 +45,12 @@ export default function Searchbar(props: Props) {
       onBlur={() => setFocus(false)}
     >
       <input
+        placeholder={props.placeholder}
         type="text"
         onKeyUp={handleEnter}
         onChange={handleChange}
         style={{
+          color: props.color,
           borderBottomColor: color,
           caretColor: color,
         }}

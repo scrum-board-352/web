@@ -11,10 +11,16 @@
 
 .dashboard_content_container {
   flex-grow: 1;
+  padding: 1.5rem 2rem;
 }
 
 .dashboard_sidebar_avatar {
   color: var(--dark);
   font-size: 1.3rem;
   font-weight: 700;
+}
+
+.dashboard_sidebar_item {
+  font-size: 1rem;
+  font-weight: 400;
 }

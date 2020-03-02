@@ -1,6 +1,11 @@
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import "./style.css";
 import Home from "./containers/Home";
 import NotFound from "./containers/NotFound";
@@ -15,9 +20,12 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/404" exact component={NotFound} />
           <Route path="/login" exact component={Login} />
           <Route path="/dashboard" component={Dashboard} />
-          <Route path="/" component={NotFound} />
+          <Route path="*">
+            <Redirect to="/404" />
+          </Route>
         </Switch>
       </Router>
     </Fragment>

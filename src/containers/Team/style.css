@@ -1,0 +1,11 @@
+.team_container > .row {
+  margin-top: 1.7rem;
+}
+
+.team_container td {
+  line-height: 1.5rem;
+}
+
+.team_container h2 {
+  font-size: 1.1rem;
+}

@@ -1,29 +1,34 @@
 import React, { ReactNode } from "react";
 
-export type ItemProps = {
+enum ItemClass {
+  Item = ".sidebar_item",
+  Active = ".sidebar_item_active",
+}
+
+export type Props = {
   children: ReactNode;
   className?: string;
   onClick?: () => void;
 };
 
-export type ItemComp = React.FunctionComponent<ItemProps>;
+export type TItem = React.FunctionComponent<Props>;
 
 function setActive(e: React.MouseEvent<HTMLButtonElement>) {
   const elem = e.target;
-  document.querySelectorAll(".sidebar_item").forEach((item) => {
-    if (item.classList.contains("sidebar_item_active")) {
+  document.querySelectorAll(ItemClass.Item).forEach((item) => {
+    if (item.classList.contains(ItemClass.Active)) {
       if (item !== elem) {
-        item.classList.remove("sidebar_item_active");
+        item.classList.remove(ItemClass.Active);
       }
       return;
     }
     if (item === elem) {
-      item.classList.add("sidebar_item_active");
+      item.classList.add(ItemClass.Active);
     }
   });
 }
 
-function Item(props: ItemProps) {
+function Item(props: Props) {
   return (
     <button
       onClick={(e) => {
@@ -37,4 +42,4 @@ function Item(props: ItemProps) {
   );
 }
 
-export default Item as ItemComp;
+export default Item as TItem;

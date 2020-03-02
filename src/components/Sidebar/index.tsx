@@ -1,16 +1,16 @@
-import _Sidebar, { SidebarComp as _SidebarComp } from "./Sidebar";
-import Title, { TitleComp } from "./Title";
-import Item, { ItemComp } from "./Item";
-import Items, { ItemsComp } from "./Items";
+import _Sidebar, { TSidebar as _TSidebar } from "./Sidebar";
+import Title, { TTitle } from "./Title";
+import Item, { TItem } from "./Item";
+import Items, { TItems } from "./Items";
 import "./style.css";
 
-export type SidebarComp = _SidebarComp & {
-  Title: TitleComp;
-  Items: ItemsComp;
-  Item: ItemComp;
+export type TSidebar = _TSidebar & {
+  Title: TTitle;
+  Items: TItems;
+  Item: TItem;
 };
 
-const Sidebar: SidebarComp = _Sidebar as SidebarComp;
+const Sidebar = _Sidebar as TSidebar;
 Sidebar.Title = Title;
 Sidebar.Items = Items;
 Sidebar.Item = Item;

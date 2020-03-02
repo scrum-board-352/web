@@ -1,16 +1,16 @@
 import React, { ReactNode } from "react";
 
-export type ItemsProps = {
+export type Props = {
   children: ReactNode;
   color: string;
   activeColor: string;
 };
 
-export type ItemsComp = React.FunctionComponent<ItemsProps>;
+export type TItems = React.FunctionComponent<Props>;
 
 const styleElem = document.head.appendChild(document.createElement("style"));
 
-function Items(props: ItemsProps) {
+function Items(props: Props) {
   styleElem.innerHTML = `
     .sidebar_item {
       color: ${props.color};
@@ -34,4 +34,4 @@ function Items(props: ItemsProps) {
   return props.children;
 }
 
-export default Items as ItemsComp;
+export default Items as TItems;

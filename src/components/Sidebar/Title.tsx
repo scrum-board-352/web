@@ -1,13 +1,13 @@
 import React from "react";
 
-export type TitleProps = {
+export type Props = {
   children: React.ReactNode;
 };
 
-export type TitleComp = React.FunctionComponent<TitleProps>;
+export type TTitle = React.FunctionComponent<Props>;
 
-function Title(props: TitleProps) {
+function Title(props: Props) {
   return <div className="sidebar_title_container">{props.children}</div>;
 }
 
-export default Title as TitleComp;
+export default Title as TTitle;

@@ -1,20 +1,22 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 
-export type SidebarProps = {
+export type Props = {
   children?: React.ReactNode;
   backgroundColor?: string;
 };
 
-export type SidebarComp = React.FunctionComponent<SidebarProps>;
+export type TSidebar = React.FunctionComponent<Props>;
 
-function Sidebar(props: SidebarProps) {
+function Sidebar(props: Props) {
   const [show, setShow] = useState(true);
-  let sidebarContainer: HTMLElement;
-  let sidebarHolder: HTMLElement;
+  const sidebarContainerRef = useRef<HTMLDivElement>(null);
+  const sidebarHolderRef = useRef<HTMLDivElement>(null);
 
   function toggleShow() {
     setShow(!show);
+    const sidebarContainer = sidebarContainerRef.current as HTMLDivElement;
+    const sidebarHolder = sidebarHolderRef.current as HTMLDivElement;
     const width = sidebarContainer.offsetWidth;
     sidebarContainer.style.marginLeft = sidebarHolder.style.marginLeft = show
       ? `-${width}px`
@@ -22,6 +24,8 @@ function Sidebar(props: SidebarProps) {
   }
 
   useEffect(() => {
+    const sidebarContainer = sidebarContainerRef.current as HTMLDivElement;
+    const sidebarHolder = sidebarHolderRef.current as HTMLDivElement;
     const width = sidebarContainer.offsetWidth;
     sidebarHolder.style.minWidth = `${width}px`;
   });
@@ -29,7 +33,7 @@ function Sidebar(props: SidebarProps) {
   return (
     <Fragment>
       <div
-        ref={(e) => (sidebarContainer = e as HTMLElement)}
+        ref={sidebarContainerRef}
         className={`sidebar_container shadow ${
           show ? "sidebar_show" : "sidebar_hide"
         }`}
@@ -48,11 +52,11 @@ function Sidebar(props: SidebarProps) {
         </div>
       </div>
       <div
-        ref={(e) => (sidebarHolder = e as HTMLElement)}
+        ref={sidebarHolderRef}
         className={`sidebar_holder ${show ? "sidebar_show" : "sidebar_hide"}`}
       ></div>
     </Fragment>
   );
 }
 
-export default Sidebar as SidebarComp;
+export default Sidebar as TSidebar;

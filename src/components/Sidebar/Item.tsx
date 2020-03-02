@@ -1,9 +1,5 @@
-import React, { ReactNode } from "react";
-
-enum ItemClass {
-  Item = ".sidebar_item",
-  Active = ".sidebar_item_active",
-}
+import React, { ReactNode, useRef } from "react";
+import { SetActiveItem } from "./Items";
 
 export type Props = {
   children: ReactNode;
@@ -13,26 +9,19 @@ export type Props = {
 
 export type TItem = React.FunctionComponent<Props>;
 
-function setActive(e: React.MouseEvent<HTMLButtonElement>) {
-  const elem = e.target;
-  document.querySelectorAll(ItemClass.Item).forEach((item) => {
-    if (item.classList.contains(ItemClass.Active)) {
-      if (item !== elem) {
-        item.classList.remove(ItemClass.Active);
-      }
-      return;
-    }
-    if (item === elem) {
-      item.classList.add(ItemClass.Active);
-    }
-  });
-}
+type _Props = Props & {
+  setActiveItem: SetActiveItem;
+};
 
-function Item(props: Props) {
+function Item(props: _Props) {
+  const itemRef = useRef<HTMLButtonElement>(null);
+  const setActiveItem = props.setActiveItem;
+
   return (
     <button
-      onClick={(e) => {
-        setActive(e);
+      ref={itemRef}
+      onClick={() => {
+        setActiveItem(itemRef.current as HTMLButtonElement);
         props.onClick?.();
       }}
       className={`sidebar_item ${props.className ?? ""}`}

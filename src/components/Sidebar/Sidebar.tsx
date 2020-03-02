@@ -16,14 +16,9 @@ function Sidebar(props: SidebarProps) {
   function toggleShow() {
     setShow(!show);
     const width = sidebarContainer.offsetWidth;
-    if (show) {
-      // to hide.
-      sidebarContainer.style.marginLeft = sidebarHolder.style.marginLeft = `-${width}px`;
-    } else {
-      // to show.
-      sidebarContainer.style.marginLeft = sidebarHolder.style.marginLeft =
-        "0px";
-    }
+    sidebarContainer.style.marginLeft = sidebarHolder.style.marginLeft = show
+      ? `-${width}px`
+      : "0px";
   }
 
   useEffect(() => {

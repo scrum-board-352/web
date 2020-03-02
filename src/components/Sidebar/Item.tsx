@@ -8,7 +8,7 @@ export type ItemProps = {
 
 export type ItemComp = React.FunctionComponent<ItemProps>;
 
-function setActive(e: React.MouseEvent<HTMLButtonElement>, cb?: () => void) {
+function setActive(e: React.MouseEvent<HTMLButtonElement>) {
   const elem = e.target;
   document.querySelectorAll(".sidebar_item").forEach((item) => {
     if (item.classList.contains("sidebar_item_active")) {
@@ -21,13 +21,15 @@ function setActive(e: React.MouseEvent<HTMLButtonElement>, cb?: () => void) {
       item.classList.add("sidebar_item_active");
     }
   });
-  cb?.();
 }
 
 function Item(props: ItemProps) {
   return (
     <button
-      onClick={(e) => setActive(e, props.onClick)}
+      onClick={(e) => {
+        setActive(e);
+        props.onClick?.();
+      }}
       className={`sidebar_item ${props.className ?? ""}`}
     >
       <div className="sidebar_item_content">{props.children}</div>

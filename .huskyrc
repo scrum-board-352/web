@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "pre-commit": "npx pretty-quick --staged",
+    "prepare-commit-msg": "./scripts/add-name-to-commit-msg.sh"
+  }
+}

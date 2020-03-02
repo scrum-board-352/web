@@ -23,7 +23,7 @@ export default function Dashboard() {
         </Sidebar.Title>
         <IconContext.Provider value={{ size: "20px" }}>
           <Sidebar.Items color="var(--dark)" activeColor="yellowgreen">
-            <Sidebar.Item>
+            <Sidebar.Item onClick={() => console.log("projects")}>
               <AiOutlineProject />
               <span className="ml-3">Projects</span>
             </Sidebar.Item>

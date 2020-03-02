@@ -1,4 +1,4 @@
-import React, { ReactNode, Fragment } from "react";
+import React, { ReactNode, Fragment, useRef } from "react";
 
 export type Props = {
   children: ReactNode;
@@ -37,18 +37,18 @@ function Items(props: Props) {
     }
     `;
 
-  let activeItem: HTMLElement;
+  const activeItemRef = useRef<HTMLElement>();
   const setActiveItem: SetActiveItem = (item: HTMLElement) => {
-    if (activeItem === item) {
+    if (activeItemRef.current === item) {
       return;
     }
     item.classList.add(ItemClass.Active);
-    if (!activeItem) {
-      activeItem = item;
+    if (!activeItemRef.current) {
+      activeItemRef.current = item;
       return;
     }
-    activeItem.classList.remove(ItemClass.Active);
-    activeItem = item;
+    activeItemRef.current.classList.remove(ItemClass.Active);
+    activeItemRef.current = item;
   };
 
   const children = React.Children.map(props.children, (child) => {

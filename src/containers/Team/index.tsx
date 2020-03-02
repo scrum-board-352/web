@@ -13,7 +13,7 @@ export default function Team() {
   return (
     <Container fluid className="team_container">
       <Row className="flex-row-reverse">
-        <Button variant="outline-primary" size="sm">
+        <Button variant="primary" size="sm">
           Create Team
         </Button>
       </Row>
@@ -34,10 +34,18 @@ export default function Team() {
           </Row>
           <Row>
             <PeopleCard
+              className="mb-3 mr-3"
               size="60px"
               avatarSrc="holder.js/60x60?bg=20c997&fg=ffffff"
               name="Mokuo"
               onClick={() => console.log("click!")}
+            />
+
+            <PeopleCard
+              className="mb-3 mr-3"
+              size="60px"
+              avatarSrc="holder.js/60x60?bg=6610f2&fg=ffffff"
+              name="Emmm"
             />
           </Row>
         </Container>

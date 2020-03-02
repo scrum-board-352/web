@@ -5,13 +5,16 @@ type Props = {
   avatarSrc: string;
   size: string;
   name: string;
+  className?: string;
   onClick?: () => void;
 };
 
 export default function PeopleCard(props: Props) {
+  const className = props.className ?? "";
+
   return (
     <div
-      className="cardshadow d-flex align-items-center justify-centent-center p-4"
+      className={`${className} cardshadow d-flex align-items-center justify-centent-center p-4`}
       style={{ cursor: "pointer" }}
       onClick={props.onClick}
     >

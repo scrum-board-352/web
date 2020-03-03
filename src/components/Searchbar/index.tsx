@@ -5,7 +5,7 @@ import "./style.css";
 export type Props = {
   size: string;
   color: string;
-  hoverColor: string;
+  activeColor: string;
   placeholder?: string;
   onChange?: (newVal: string) => void;
   onSearch: (val: string) => void;
@@ -31,7 +31,7 @@ export default function Searchbar(props: Props) {
     props.onSearch(searchTextRef.current);
   }
 
-  const color = focus ? props.hoverColor : props.color;
+  const color = focus ? props.activeColor : props.color;
 
   return (
     <div

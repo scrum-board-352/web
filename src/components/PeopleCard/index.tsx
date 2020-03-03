@@ -14,7 +14,7 @@ export default function PeopleCard(props: Props) {
 
   return (
     <div
-      className={`${className} cardshadow d-flex align-items-center justify-centent-center p-4`}
+      className={`${className} cardshadow d-flex align-items-center justify-centent-center p-4 rounded-lg`}
       style={{ cursor: "pointer" }}
       onClick={props.onClick}
     >

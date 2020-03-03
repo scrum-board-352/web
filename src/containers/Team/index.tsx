@@ -21,7 +21,7 @@ export default function Team() {
         <Searchbar
           placeholder="Search People or Team"
           color="var(--gray)"
-          hoverColor="var(--blue)"
+          activeColor="var(--blue)"
           size="2rem"
           onSearch={searchTeam}
           onChange={(s) => console.log(s)}

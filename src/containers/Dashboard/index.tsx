@@ -16,6 +16,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import Team from "containers/Team";
+import ProjectBrowser from "containers/ProjectBrowser";
 
 enum Path {
   Projects = "projects",
@@ -62,11 +63,17 @@ export default function Dashboard() {
           <Route exact path={path}>
             <h1>Welcome!</h1>
           </Route>
-          <Route exact path={`${path}/${Path.Projects}`} />
+
+          <Route exact path={`${path}/${Path.Projects}`}>
+            <ProjectBrowser />
+          </Route>
+
           <Route exact path={`${path}/${Path.Team}`}>
             <Team />
           </Route>
-          <Route exact path={`${path}/${Path.Messages}`} />
+
+          <Route exact path={`${path}/${Path.Messages}`}></Route>
+
           <Route path="*">
             <Redirect to="/404" />
           </Route>

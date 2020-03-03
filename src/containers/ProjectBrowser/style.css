@@ -1,0 +1,19 @@
+.projectbrowser_container > .row:first-child {
+  margin-top: 0;
+}
+
+.projectbrowser_container > .row {
+  margin-top: 1.7rem;
+}
+
+.projectbrowser_container td {
+  line-height: 1.5rem;
+}
+
+.projectbrowser_container h2 {
+  font-size: 1.1rem;
+}
+
+.projectbrowser_searchbar_container {
+  width: 15rem;
+}

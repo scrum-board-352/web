@@ -12,8 +12,9 @@ export default function Team() {
 
   return (
     <Container fluid className="team_container">
-      <Row className="flex-row-reverse">
-        <Button variant="primary" size="sm">
+      <Row className="align-item-center justify-content-between">
+        <h1>Team</h1>
+        <Button variant="primary" size="sm" className="align-self-center">
           Create Team
         </Button>
       </Row>

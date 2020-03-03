@@ -1,17 +1,36 @@
-import React from "react";
-import { Row, Container, Button, Table } from "react-bootstrap";
-import Searchbar from "components/Searchbar";
-import PeopleCard from "components/PeopleCard";
-import "./style.css";
 import Avatar from "components/Avatar";
+import PeopleCard from "components/PeopleCard";
+import Searchbar from "components/Searchbar";
+import TeamModel from "models/Team";
+import UserModel from "models/User";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Row, Table } from "react-bootstrap";
+import testTeamData from "utils/testTeamData";
+import testUserData from "utils/testUserData";
+import "./style.css";
 
 export default function Team() {
+  const [people, setPeople] = useState<UserModel.PublicInfo[]>([]);
+  const [teams, setTeams] = useState<TeamModel.Info[]>([]);
+
+  useEffect(() => {
+    // TODO: fetch people.
+    const people = [testUserData.mokuo, testUserData.emmm];
+    setPeople(people);
+  }, []);
+
+  useEffect(() => {
+    // TODO: fetch teams.
+    const teams = [testTeamData.lgtm, testTeamData.shit];
+    setTeams(teams);
+  }, []);
+
   function searchTeam(name: string) {
     console.log("search", name);
   }
 
   return (
-    <Container fluid className="team_container">
+    <Container fluid className="dashboard_page_container">
       <Row className="align-item-center justify-content-between">
         <h1>Team</h1>
         <Button variant="primary" size="sm" className="align-self-center">
@@ -34,20 +53,14 @@ export default function Team() {
             <h2>People</h2>
           </Row>
           <Row>
-            <PeopleCard
-              className="mb-3 mr-3"
-              size="60px"
-              avatarSrc="holder.js/60x60?bg=20c997&fg=ffffff"
-              name="Mokuo"
-              onClick={() => console.log("click!")}
-            />
-
-            <PeopleCard
-              className="mb-3 mr-3"
-              size="60px"
-              avatarSrc="holder.js/60x60?bg=6610f2&fg=ffffff"
-              name="Emmm"
-            />
+            {people.map((p) => (
+              <PeopleCard
+                key={p.id}
+                className="mb-3 mr-3"
+                size="60px"
+                user={p}
+              />
+            ))}
           </Row>
         </Container>
       </Row>
@@ -67,48 +80,18 @@ export default function Team() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>
-                    <a href="/">LGTM</a>
-                  </td>
-                  <td>
-                    <Avatar
-                      name="Mokuo"
-                      src="holder.js/15x15?bg=20c997"
-                      size="15px"
-                      gap="0.5rem"
-                    />
-                  </td>
-                  <td>
-                    This is what LGTM! Lorem ipsum dolor sit, amet consectetur
-                    adipisicing elit. Ad, voluptatem officiis. Recusandae
-                    repudiandae illo fugiat voluptatibus quis ab consequuntur
-                    aliquid iste placeat quae sapiente dolorum, dolor atque nemo
-                    numquam optio?
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>
-                    <a href="/">Shit</a>
-                  </td>
-                  <td>
-                    <Avatar
-                      name="Emmm"
-                      src="holder.js/15x15?bg=6610f2"
-                      size="15px"
-                      gap="0.5rem"
-                    />
-                  </td>
-                  <td>
-                    Shit is always shit. Lorem ipsum, dolor sit amet consectetur
-                    adipisicing elit. Aspernatur corporis necessitatibus dolorum
-                    esse suscipit exercitationem eaque beatae aperiam non harum
-                    quod explicabo, assumenda, hic dolores a quidem aliquid
-                    expedita doloremque?
-                  </td>
-                </tr>
+                {teams.map((team, i) => (
+                  <tr>
+                    <td>{i + 1}</td>
+                    <td>
+                      <a href="/">{team.name}</a>
+                    </td>
+                    <td>
+                      <Avatar user={team.creator} size="15px" gap="0.5rem" />
+                    </td>
+                    <td>{team.description}</td>
+                  </tr>
+                ))}
               </tbody>
             </Table>
           </Row>

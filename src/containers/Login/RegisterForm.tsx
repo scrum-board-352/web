@@ -1,18 +1,20 @@
-import React from "react";
-import { Form, Button } from "react-bootstrap";
-import { RegisterInfo } from "models/User";
 import useFormData from "hooks/useFromData";
+import UserModel from "models/User";
+import React from "react";
+import { Button, Form } from "react-bootstrap";
 
 export type Props = {
   className?: string;
 };
 
 export default function RegisterForm(props?: Props) {
-  const [registerForm, handleInputChange] = useFormData<RegisterInfo>({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [registerForm, handleInputChange] = useFormData<UserModel.RegisterInfo>(
+    {
+      username: "",
+      email: "",
+      password: "",
+    }
+  );
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

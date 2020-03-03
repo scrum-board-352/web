@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import "./style.css";
-import { Container, Row, Button, Table } from "react-bootstrap";
-import Searchbar from "components/Searchbar";
 import Avatar from "components/Avatar";
+import Searchbar from "components/Searchbar";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Row, Table } from "react-bootstrap";
+import testUserData from "utils/testUserData";
+import "./style.css";
 
 export default function ProjectBrowser() {
   const [projectData, setProjectData] = useState<any[]>([]);
@@ -16,10 +17,7 @@ export default function ProjectBrowser() {
         name: "Shit Mountain",
         createTime: "2020-03-01",
         iteration: 14,
-        creator: {
-          name: "Mokuo",
-          avatar: "holder.js/15x15?bg=20c997",
-        },
+        creator: testUserData.mokuo,
       },
       {
         id: 2,
@@ -27,10 +25,7 @@ export default function ProjectBrowser() {
         name: "Shit Mountain v2",
         createTime: "2020-03-01",
         iteration: 7,
-        creator: {
-          name: "Emmm",
-          avatar: "holder.js/15x15?bg=6610f2",
-        },
+        creator: testUserData.emmm,
       },
     ];
     console.log("fetch data:", projectData);
@@ -42,7 +37,7 @@ export default function ProjectBrowser() {
   }
 
   return (
-    <Container fluid className="projectbrowser_container">
+    <Container fluid className="dashboard_page_container">
       <Row className="align-item-center justify-content-between">
         <h1>Projects</h1>
         <Button variant="primary" size="sm" className="align-self-center">
@@ -81,12 +76,7 @@ export default function ProjectBrowser() {
                 <td>{project.createTime}</td>
                 <td>{project.iteration}</td>
                 <td>
-                  <Avatar
-                    name={project.creator.name}
-                    src={project.creator.avatar}
-                    size="15px"
-                    gap="0.5rem"
-                  />
+                  <Avatar user={project.creator} size="15px" gap="0.5rem" />
                 </td>
               </tr>
             ))}

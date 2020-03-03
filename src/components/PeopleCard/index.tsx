@@ -1,10 +1,10 @@
-import React from "react";
 import Avatar, { NamePosition } from "components/Avatar";
+import UserModel from "models/User";
+import React from "react";
 
 type Props = {
-  avatarSrc: string;
+  user: UserModel.PublicInfo;
   size: string;
-  name: string;
   className?: string;
   onClick?: () => void;
 };
@@ -20,8 +20,7 @@ export default function PeopleCard(props: Props) {
     >
       <Avatar
         size={props.size}
-        src={props.avatarSrc}
-        name={props.name}
+        user={props.user}
         namePosition={NamePosition.Bottom}
       />
     </div>

@@ -59,3 +59,19 @@ button::-moz-focus-inner {
   box-shadow: rgba(9, 30, 66, 0.25) 0px 8px 16px -4px,
     rgba(9, 30, 66, 0.31) 0px 0px 1px;
 }
+
+.dashboard_page_container > .row:first-child {
+  margin-top: 0;
+}
+
+.dashboard_page_container > .row {
+  margin-top: 1.7rem;
+}
+
+.dashboard_page_container td {
+  line-height: 1.5rem;
+}
+
+.dashboard_page_container h2 {
+  font-size: 1.1rem;
+}

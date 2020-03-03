@@ -1,14 +1,14 @@
-import React from "react";
-import { Form, Button } from "react-bootstrap";
-import { LoginInfo } from "models/User";
 import useFormData from "hooks/useFromData";
+import UserModel from "models/User";
+import React from "react";
+import { Button, Form } from "react-bootstrap";
 
 export type Props = {
   className?: string;
 };
 
 export default function LoginForm(props?: Props) {
-  const [loginForm, handleInputChange] = useFormData<LoginInfo>({
+  const [loginForm, handleInputChange] = useFormData<UserModel.LoginInfo>({
     username: "",
     password: "",
   });

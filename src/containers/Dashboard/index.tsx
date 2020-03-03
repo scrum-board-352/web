@@ -1,22 +1,24 @@
+import Avatar from "components/Avatar";
+import Sidebar from "components/Sidebar";
+import Messages from "containers/Messages";
+import ProjectBrowser from "containers/ProjectBrowser";
+import Team from "containers/Team";
 import React from "react";
 import { IconContext } from "react-icons";
 import {
+  AiOutlineMessage,
   AiOutlineProject,
   AiOutlineUsergroupAdd,
-  AiOutlineMessage,
 } from "react-icons/ai";
-import Sidebar from "components/Sidebar";
-import "./style.css";
-import Avatar from "components/Avatar";
 import {
-  Switch,
-  Route,
-  useRouteMatch,
-  useHistory,
   Redirect,
+  Route,
+  Switch,
+  useHistory,
+  useRouteMatch,
 } from "react-router-dom";
-import Team from "containers/Team";
-import ProjectBrowser from "containers/ProjectBrowser";
+import TestUser from "utils/testUserData";
+import "./style.css";
 
 enum Path {
   Projects = "projects",
@@ -33,8 +35,7 @@ export default function Dashboard() {
       <Sidebar>
         <Sidebar.Title>
           <Avatar
-            src="holder.js/50x50?bg=20c997&fg=ffffff"
-            name="Mokuo"
+            user={TestUser.mokuo}
             size="50px"
             className="dashboard_sidebar_avatar"
           />
@@ -72,7 +73,9 @@ export default function Dashboard() {
             <Team />
           </Route>
 
-          <Route exact path={`${path}/${Path.Messages}`}></Route>
+          <Route exact path={`${path}/${Path.Messages}`}>
+            <Messages />
+          </Route>
 
           <Route path="*">
             <Redirect to="/404" />

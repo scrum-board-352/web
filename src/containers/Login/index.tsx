@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Navbar, Button } from "react-bootstrap";
+import { Button, Col, Container, Navbar, Row } from "react-bootstrap";
+import LoginForm from "./LoginForm";
+import logoSvg from "./logo.svg";
+import RegisterForm from "./RegisterForm";
 import "./style.css";
 import welcomeSvg from "./welcome.svg";
-import logoSvg from "./logo.svg";
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
 
 enum FormType {
   Login = "login",
@@ -31,7 +31,11 @@ export default function Login() {
       </Navbar>
       <Row className="min-vh-100">
         <Col className="align-self-center d-flex justify-content-center" md={7}>
-          <img src={welcomeSvg} className="login_welcome_img" alt="" />
+          <img
+            src={welcomeSvg}
+            className="login_welcome_img animated fadeIn"
+            alt=""
+          />
         </Col>
         <Col
           className="align-self-center d-flex flex-column align-items-center"

@@ -1,5 +1,5 @@
-import React, { ReactNode, useRef } from "react";
-import { SetActiveItem } from "./Items";
+import React, { ReactNode, useRef, useContext } from "react";
+import { ItemContext } from "./Items";
 
 export type Props = {
   children: ReactNode;
@@ -9,13 +9,9 @@ export type Props = {
 
 export type TItem = React.FunctionComponent<Props>;
 
-type _Props = Props & {
-  setActiveItem: SetActiveItem;
-};
-
-function Item(props: _Props) {
+function Item(props: Props) {
   const itemRef = useRef<HTMLButtonElement>(null);
-  const setActiveItem = props.setActiveItem;
+  const { setActiveItem } = useContext(ItemContext);
 
   return (
     <button

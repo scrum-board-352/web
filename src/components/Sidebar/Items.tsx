@@ -1,4 +1,18 @@
-import React, { ReactNode, Fragment, useRef } from "react";
+import React, {
+  ReactNode,
+  Fragment,
+  useRef,
+  createContext,
+  useCallback,
+} from "react";
+
+export type ItemContextValue = {
+  setActiveItem: (item: HTMLElement) => void;
+};
+
+export const ItemContext = createContext<ItemContextValue>({
+  setActiveItem: (item: HTMLElement) => {},
+});
 
 export type Props = {
   children: ReactNode;
@@ -7,8 +21,6 @@ export type Props = {
 };
 
 export type TItems = React.FunctionComponent<Props>;
-
-export type SetActiveItem = (item: HTMLElement) => void;
 
 enum ItemClass {
   Active = "sidebar_item_active",
@@ -38,26 +50,29 @@ function Items(props: Props) {
     `;
 
   const activeItemRef = useRef<HTMLElement>();
-  const setActiveItem: SetActiveItem = (item: HTMLElement) => {
-    if (activeItemRef.current === item) {
-      return;
-    }
-    item.classList.add(ItemClass.Active);
-    if (!activeItemRef.current) {
+  const setActiveItem = useCallback(
+    (item: HTMLElement) => {
+      if (activeItemRef.current === item) {
+        return;
+      }
+      item.classList.add(ItemClass.Active);
+      if (!activeItemRef.current) {
+        activeItemRef.current = item;
+        return;
+      }
+      activeItemRef.current.classList.remove(ItemClass.Active);
       activeItemRef.current = item;
-      return;
-    }
-    activeItemRef.current.classList.remove(ItemClass.Active);
-    activeItemRef.current = item;
-  };
+    },
+    [activeItemRef]
+  );
 
-  const children = React.Children.map(props.children, (child) => {
-    if (React.isValidElement(child)) {
-      return React.cloneElement(child, { setActiveItem });
-    }
-  });
-
-  return <Fragment>{children}</Fragment>;
+  return (
+    <Fragment>
+      <ItemContext.Provider value={{ setActiveItem }}>
+        {props.children}
+      </ItemContext.Provider>
+    </Fragment>
+  );
 }
 
 export default Items as TItems;

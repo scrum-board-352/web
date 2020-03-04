@@ -18,8 +18,13 @@ export default function Checkbox(props: Props) {
 
   return (
     <span
-      className={style.checkbox}
-      style={{ width: props.size, height: props.size }}
+      className={`${style.checkbox} ${checked ? style.checked : ""}`}
+      style={{
+        minWidth: props.size,
+        minHeight: props.size,
+        width: props.size,
+        height: props.size,
+      }}
       onClick={handleClick}
     >
       {checked ? <FaCheck size="95%" /> : null}

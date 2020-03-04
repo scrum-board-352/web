@@ -1,5 +1,8 @@
+import Avatar, { NamePosition } from "components/Avatar";
+import Checkbox from "components/Checkbox";
 import UserModel from "models/User";
 import React from "react";
+import { Badge } from "react-bootstrap";
 
 export type Props = {
   announcer: UserModel.PublicInfo;
@@ -8,6 +11,41 @@ export type Props = {
   isRead: boolean;
 };
 
+export type TMessage = React.FunctionComponent<Props>;
+
 export default function Message(props: Props) {
-  return <div></div>;
+  return (
+    <div className="messages_message">
+      <Checkbox size="1rem" />
+
+      <Avatar
+        className="messages_message_avatar"
+        user={props.announcer}
+        size="2rem"
+        namePosition={NamePosition.Right}
+        gap="0.8rem"
+      />
+
+      {props.isRead ? (
+        <Badge pill variant="info">
+          已读
+        </Badge>
+      ) : (
+        <Badge pill variant="danger">
+          未读
+        </Badge>
+      )}
+
+      <div className="messages_message_description_wrapper">
+        <p className="messages_message_description">
+          {props.description} Lorem ipsum dolor sit amet consectetur adipisicing
+          elit. Aut nostrum eligendi at eos, accusantium veniam, consectetur
+          quis placeat maiores molestiae soluta, totam laborum cumque veritatis
+          blanditiis nobis qui consequatur! Quasi.
+        </p>
+        <div className="messages_message_description_mask"></div>
+      </div>
+      <time>{props.updateTime}</time>
+    </div>
+  );
 }

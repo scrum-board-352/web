@@ -3,8 +3,12 @@
   align-items: center;
   justify-content: center;
   padding: 1px;
-  border: 2px solid var(--gray);
+  border: 2px solid #ccc;
   color: var(--green);
   border-radius: 20%;
   cursor: pointer;
+}
+
+.checkbox.checked {
+  border-color: var(--green);
 }

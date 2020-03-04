@@ -1,23 +1,17 @@
+import MessageModel from "models/Message";
 import React, { useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
-import testUserData from "utils/testUserData";
+import testMessageData from "utils/testMessageData";
 import Message from "./Message";
+import MessageContainer from "./MessageContainer";
 import "./style.css";
 
 export default function Messages() {
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<MessageModel.Info[]>([]);
 
   useEffect(() => {
     // TODO: fetch messages.
-    const messages = [
-      {
-        id: 1,
-        announcer: testUserData.publicInfo.mokuo,
-        description: "还在睡！起来修Bug！Pipeline都红成猴屁股了！",
-        updateTime: "2020-03-01",
-        isRead: false,
-      },
-    ];
+    const messages = [testMessageData.info.msg1, testMessageData.info.msg2];
     setMessages(messages);
   }, []);
 
@@ -26,15 +20,18 @@ export default function Messages() {
       <Row className="align-item-center">
         <h1>Messages</h1>
       </Row>
-      <Row className="flex-column">
-        {messages.map((msg) => (
-          <Message
-            announcer={msg.announcer}
-            description={msg.description}
-            updateTime={msg.updateTime}
-            isRead={msg.isRead}
-          />
-        ))}
+      <Row>
+        <MessageContainer>
+          {messages.map((msg) => (
+            <Message
+              key={msg.id}
+              announcer={msg.announcer}
+              description={msg.description}
+              updateTime={msg.updateTime}
+              isRead={msg.isRead}
+            />
+          ))}
+        </MessageContainer>
       </Row>
     </Container>
   );

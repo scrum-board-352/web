@@ -8,7 +8,7 @@ const mokuo: UserModel.PublicInfo = {
 
 const emmm: UserModel.PublicInfo = {
   id: 212418,
-  name: "Emmm",
+  name: "Emm",
   avatar: "https://via.placeholder.com/100/6610f2/ffffff",
 };
 

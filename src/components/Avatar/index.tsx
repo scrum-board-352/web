@@ -31,9 +31,8 @@ export default function Avatar(props: Props) {
     <div className={`${containerClassName} ${props.className ?? ""}`}>
       <img
         src={props.user.avatar}
-        width={props.size}
         alt=""
-        style={{ borderRadius: "50%" }}
+        style={{ borderRadius: "50%", width: props.size, height: props.size }}
       />
       <span style={nameStyle}>{props.user.name}</span>
     </div>

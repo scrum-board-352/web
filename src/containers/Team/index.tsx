@@ -84,7 +84,7 @@ export default function Team() {
               </thead>
               <tbody>
                 {teams.map((team, i) => (
-                  <tr>
+                  <tr key={team.id}>
                     <td>{i + 1}</td>
                     <td>
                       <a href="/">{team.name}</a>

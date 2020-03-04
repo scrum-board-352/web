@@ -1,32 +1,19 @@
 import Avatar from "components/Avatar";
 import Searchbar from "components/Searchbar";
+import ProjectModel from "models/Project";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Row, Table } from "react-bootstrap";
-import testUserData from "utils/testUserData";
+import testProjectData from "utils/testProjectData";
 import "./style.css";
 
 export default function ProjectBrowser() {
-  const [projectData, setProjectData] = useState<any[]>([]);
+  const [projectData, setProjectData] = useState<ProjectModel.Info[]>([]);
 
   useEffect(() => {
     // TODO: fetch project data.
     const projectData = [
-      {
-        id: 1,
-        url: "/",
-        name: "Shit Mountain",
-        createTime: "2020-03-01",
-        iteration: 14,
-        creator: testUserData.mokuo,
-      },
-      {
-        id: 2,
-        url: "/",
-        name: "Shit Mountain v2",
-        createTime: "2020-03-01",
-        iteration: 7,
-        creator: testUserData.emmm,
-      },
+      testProjectData.info.shitMountain,
+      testProjectData.info.shitMountainv2,
     ];
     console.log("fetch data:", projectData);
     setProjectData(projectData);
@@ -71,7 +58,7 @@ export default function ProjectBrowser() {
               <tr key={project.id}>
                 <td>{i + 1}</td>
                 <td>
-                  <a href={project.url}>{project.name}</a>
+                  <a href="/">{project.name}</a>
                 </td>
                 <td>{project.createTime}</td>
                 <td>{project.iteration}</td>

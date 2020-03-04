@@ -15,13 +15,16 @@ export default function Team() {
 
   useEffect(() => {
     // TODO: fetch people.
-    const people = [testUserData.mokuo, testUserData.emmm];
+    const people = [
+      testUserData.publicInfo.mokuo,
+      testUserData.publicInfo.emmm,
+    ];
     setPeople(people);
   }, []);
 
   useEffect(() => {
     // TODO: fetch teams.
-    const teams = [testTeamData.lgtm, testTeamData.shit];
+    const teams = [testTeamData.info.lgtm, testTeamData.info.shit];
     setTeams(teams);
   }, []);
 

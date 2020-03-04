@@ -17,7 +17,7 @@ import {
   useHistory,
   useRouteMatch,
 } from "react-router-dom";
-import TestUser from "utils/testUserData";
+import testUserData from "utils/testUserData";
 import "./style.css";
 
 enum Path {
@@ -35,7 +35,7 @@ export default function Dashboard() {
       <Sidebar>
         <Sidebar.Title>
           <Avatar
-            user={TestUser.mokuo}
+            user={testUserData.publicInfo.mokuo}
             size="50px"
             className="dashboard_sidebar_avatar"
           />

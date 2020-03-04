@@ -1,18 +1,20 @@
 import UserModel from "models/User";
 
 const mokuo: UserModel.PublicInfo = {
-  id: 1,
+  id: 1124123,
   name: "Mokuo",
-  avatar: "holder.js/50x50?bg=20c997&fg=ffffff",
+  avatar: "https://via.placeholder.com/100/20c997/ffffff",
 };
 
 const emmm: UserModel.PublicInfo = {
-  id: 2,
+  id: 212418,
   name: "Emmm",
-  avatar: "holder.js/50x50?bg=6610f2&fg=ffffff",
+  avatar: "https://via.placeholder.com/100/6610f2/ffffff",
 };
 
 export default {
-  mokuo,
-  emmm,
+  publicInfo: {
+    mokuo,
+    emmm,
+  },
 };

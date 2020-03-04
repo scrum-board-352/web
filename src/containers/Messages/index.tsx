@@ -12,7 +12,7 @@ export default function Messages() {
     const messages = [
       {
         id: 1,
-        announcer: testUserData.mokuo,
+        announcer: testUserData.publicInfo.mokuo,
         description: "还在睡！起来修Bug！Pipeline都红成猴屁股了！",
         updateTime: "2020-03-01",
         isRead: false,

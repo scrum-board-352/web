@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, useRef } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 
 export type Props = {
@@ -43,7 +43,7 @@ function Sidebar(props: Props) {
           style={{ backgroundColor: props.backgroundColor }}
         >
           <button
-            className="sidebar_toggle_btn trans hover_shadow"
+            className="sidebar_toggle_btn iconshadow"
             onClick={toggleShow}
           >
             {show ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}

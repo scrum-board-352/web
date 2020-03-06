@@ -45,6 +45,7 @@ export default function Message(props: Props) {
         </p>
         <div className="messages_message_description_mask"></div>
       </div>
+
       <time>{props.updateTime}</time>
     </div>
   );

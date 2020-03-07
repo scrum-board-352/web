@@ -20,5 +20,6 @@ const loginQuery = `
 export async function login(
   loginInfo: UserModel.LoginInfo
 ): Promise<UserModel.PrivateInfo> {
-  return client.request(loginQuery, loginInfo);
+  const data = await client.request(loginQuery, loginInfo);
+  return data.login;
 }

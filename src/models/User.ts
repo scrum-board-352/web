@@ -1,5 +1,4 @@
 namespace UserModel {
-
   export interface LoginInfo {
     username: string;
     password: string;
@@ -12,7 +11,7 @@ namespace UserModel {
   }
 
   export interface PublicInfo {
-    id: number;
+    id: string;
     name: string;
     avatar: string;
   }
@@ -20,7 +19,6 @@ namespace UserModel {
   export interface PrivateInfo extends PublicInfo {
     email: string;
   }
-  
 }
 
 export default UserModel;

@@ -2,7 +2,7 @@ import UserModel from "./User";
 
 namespace TeamModel {
   export interface Info {
-    id: number;
+    id: string;
     name: string;
     creator: UserModel.PublicInfo;
     description: string;

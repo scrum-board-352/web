@@ -2,7 +2,7 @@ import UserModel from "./User";
 
 namespace MessageModel {
   export interface Info {
-    id: number;
+    id: string;
     announcer: UserModel.PublicInfo;
     description: string;
     updateTime: string;

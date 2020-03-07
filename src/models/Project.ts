@@ -2,7 +2,7 @@ import UserModel from "./User";
 
 namespace ProjectModel {
   export interface Info {
-    id: number;
+    id: string;
     name: string;
     createTime: string;
     iteration: number;

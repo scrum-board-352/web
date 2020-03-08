@@ -1,4 +1,4 @@
-import { login, logout, register } from "graphql/User";
+import { login, logout, register, update } from "graphql/User";
 import ResultOutput from "models/ResultOutput";
 import UserModel from "models/User";
 
@@ -20,11 +20,20 @@ describe("user api tests", () => {
 
   test("should get user register", async () => {
     const registerInfo: UserModel.RegisterInfo = {
-      username: process.env.REACT_APP_REJISTER_USERNAME ?? "",
-      password: process.env.REACT_APP_REJISTER_PASSWORD ?? "",
-      email: process.env.REACT_APP_REJISTER_EMAIL ?? "",
+      username: process.env.REACT_APP_REGISTER_USERNAME ?? "",
+      password: process.env.REACT_APP_REGISTER_PASSWORD ?? "",
+      email: process.env.REACT_APP_REGISTER_EMAIL ?? "",
     };
     const result: ResultOutput.Info = await register(registerInfo);
     expect(result.success).toEqual(false);
+  });
+
+  test("should get user update", async () => {
+    const updateInfo: UserModel.UpdateInfo = {
+      username: process.env.REACT_APP_UPDATE_USERNAME ?? "",
+      password: process.env.REACT_APP_UPDATE_PASSWORD ?? "",
+    };
+    const result: ResultOutput.Info = await update(updateInfo);
+    expect(result.success).toEqual(true);
   });
 });

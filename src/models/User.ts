@@ -19,6 +19,13 @@ namespace UserModel {
   export interface PrivateInfo extends PublicInfo {
     email: string;
   }
+
+  export interface UpdateInfo {
+    username: string;
+    password?: string;
+    power?: string;
+    avatar?: string
+  }
 }
 
 export default UserModel;

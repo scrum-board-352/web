@@ -23,19 +23,4 @@ const logoutQuery = `
   }
 `;
 
-const registerQuery = `
-  query register($username: String!, $password: String!, $email: String!) {
-    register(selectionInput:{
-      userInput: {
-        username: $username
-        password: $password
-        email: $email
-      }
-    }){
-      success: susses
-  	  message
-    }
-  }
-`;
-
-export default {loginQuery, logoutQuery, registerQuery};
+export default {loginQuery, logoutQuery};

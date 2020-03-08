@@ -1,3 +1,4 @@
+import UserMutation from "graphql/mutation/UserMutation";
 import UserQuery from "graphql/query/UserQuery";
 import ResultOutput from "models/ResultOutput";
 import UserModel from "models/User";
@@ -11,7 +12,7 @@ export async function login(
 }
 
 export async function logout(username: {
-  username: String;
+  username: string;
 }): Promise<ResultOutput.Info> {
   const data = await client.request(UserQuery.logoutQuery, username);
   return data.logout;
@@ -20,6 +21,16 @@ export async function logout(username: {
 export async function register(
   registerInfo: UserModel.RegisterInfo
 ): Promise<ResultOutput.Info> {
-  const data = await client.request(UserQuery.registerQuery, registerInfo);
+  const data = await client.request(
+    UserMutation.registerMutation,
+    registerInfo
+  );
   return data.register;
+}
+
+export async function update(
+  updateInfo: UserModel.UpdateInfo
+): Promise<ResultOutput.Info> {
+  const data = await client.request(UserMutation.updateMutation, updateInfo);
+  return data.updateUser;
 }

@@ -14,7 +14,7 @@ describe("user api tests", () => {
 
   test("should get user logout", async () => {
     const username = { username: process.env.REACT_APP_LOGIN_USERNAME ?? "" };
-    const result: ResultOutput.Info = await logout(username);
+    const result: ResultOutput = await logout(username);
     expect(result.success).toEqual(true);
   });
 
@@ -24,7 +24,7 @@ describe("user api tests", () => {
       password: process.env.REACT_APP_REGISTER_PASSWORD ?? "",
       email: process.env.REACT_APP_REGISTER_EMAIL ?? "",
     };
-    const result: ResultOutput.Info = await register(registerInfo);
+    const result: ResultOutput = await register(registerInfo);
     expect(result.success).toEqual(false);
   });
 
@@ -33,7 +33,7 @@ describe("user api tests", () => {
       username: process.env.REACT_APP_UPDATE_USERNAME ?? "",
       password: process.env.REACT_APP_UPDATE_PASSWORD ?? "",
     };
-    const result: ResultOutput.Info = await update(updateInfo);
+    const result: ResultOutput = await update(updateInfo);
     expect(result.success).toEqual(true);
   });
 });

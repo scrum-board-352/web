@@ -24,7 +24,7 @@ namespace UserModel {
     username: string;
     password?: string;
     power?: string;
-    avatar?: string
+    avatar?: string;
   }
 }
 

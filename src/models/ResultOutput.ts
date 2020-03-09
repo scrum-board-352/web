@@ -1,8 +1,4 @@
-namespace ResultOutput {
-  export interface Info {
-    success: boolean;
-    message: String
-  }
+export default interface ResultOutput {
+  success: boolean;
+  message: string;
 }
-
-export default ResultOutput;

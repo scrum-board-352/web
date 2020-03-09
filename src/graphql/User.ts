@@ -13,14 +13,14 @@ export async function login(
 
 export async function logout(username: {
   username: string;
-}): Promise<ResultOutput.Info> {
+}): Promise<ResultOutput> {
   const data = await client.request(UserQuery.logoutQuery, username);
   return data.logout;
 }
 
 export async function register(
   registerInfo: UserModel.RegisterInfo
-): Promise<ResultOutput.Info> {
+): Promise<ResultOutput> {
   const data = await client.request(
     UserMutation.registerMutation,
     registerInfo
@@ -30,7 +30,7 @@ export async function register(
 
 export async function update(
   updateInfo: UserModel.UpdateInfo
-): Promise<ResultOutput.Info> {
+): Promise<ResultOutput> {
   const data = await client.request(UserMutation.updateMutation, updateInfo);
   return data.updateUser;
 }

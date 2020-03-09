@@ -2,7 +2,7 @@ import ProjectModel from "models/Project";
 import testUserData from "./testUserData";
 
 const shitMountain: ProjectModel.Info = {
-  id: 5683,
+  id: "5683",
   name: "Shit Mountain",
   createTime: "2020-03-01",
   iteration: 14,
@@ -10,7 +10,7 @@ const shitMountain: ProjectModel.Info = {
 };
 
 const shitMountainv2: ProjectModel.Info = {
-  id: 846383,
+  id: "846383",
   name: "Shit Mountain v2",
   createTime: "2020-03-01",
   iteration: 7,

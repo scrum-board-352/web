@@ -1,48 +1,117 @@
+import { message, Type } from "components/MessageBox";
+import { login } from "graphql/User";
 import useFormData from "hooks/useFromData";
+import useLoading from "hooks/useLoading";
 import UserModel from "models/User";
-import React from "react";
-import { Button, Form } from "react-bootstrap";
+import React, { Fragment, useState } from "react";
+import { Button, Form, Spinner } from "react-bootstrap";
 
 export type Props = {
   className?: string;
 };
 
 export default function LoginForm(props?: Props) {
+  const [loading, loadingOps] = useLoading();
+  const [usernameInputOk, setUsernameInputOk] = useState(true);
+  const [passwordInputOk, setPasswordInputOk] = useState(true);
   const [loginForm, handleInputChange] = useFormData<UserModel.LoginInfo>({
     username: "",
     password: "",
   });
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function checkLoginFormData({
+    username,
+    password,
+  }: UserModel.LoginInfo): boolean {
+    if (username && password) {
+      return true;
+    }
+    if (!username) {
+      setUsernameInputOk(false);
+    }
+    if (!password) {
+      setPasswordInputOk(false);
+    }
+    return false;
+  }
+
+  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(loginForm);
+
+    if (!checkLoginFormData(loginForm)) {
+      return;
+    }
+
+    const userInfo = await loadingOps<UserModel.PrivateInfo>(login, loginForm);
+    if (null === userInfo.id) {
+      message({
+        type: Type.Error,
+        title: "Login Failed!",
+        content: "No such user or password not match.",
+      });
+      setUsernameInputOk(false);
+      setPasswordInputOk(false);
+    } else {
+      message({
+        type: Type.Success,
+        title: "Login Succed!",
+      });
+      console.log(userInfo);
+    }
   }
 
   return (
     <div className={props?.className}>
       <h1 className="login_h1">Sign In</h1>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleLogin}>
         <Form.Group controlId="username">
           <Form.Label>Username</Form.Label>
           <Form.Control
+            disabled={loading}
             placeholder="Username"
             name="username"
-            onChange={handleInputChange}
+            className={usernameInputOk ? "" : "is-invalid"}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              if (!usernameInputOk) {
+                setUsernameInputOk(true);
+              }
+              handleInputChange(e);
+            }}
           />
         </Form.Group>
 
         <Form.Group controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control
+            disabled={loading}
             type="password"
             placeholder="Password"
             name="password"
-            onChange={handleInputChange}
+            className={passwordInputOk ? "" : "is-invalid"}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              if (!passwordInputOk) {
+                setPasswordInputOk(true);
+              }
+              handleInputChange(e);
+            }}
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit" block>
-          LOGIN
+        <Button variant="primary" type="submit" block disabled={loading}>
+          {loading ? (
+            <Fragment>
+              <Spinner
+                as="span"
+                animation="grow"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              Logining...
+            </Fragment>
+          ) : (
+            "LOGIN"
+          )}
         </Button>
       </Form>
     </div>

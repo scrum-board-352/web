@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Alert } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./style.css";
@@ -12,7 +12,7 @@ export enum Type {
 export interface Message {
   type: Type;
   title: string;
-  content: string;
+  content?: string;
   timerId?: number;
   id?: number;
 }

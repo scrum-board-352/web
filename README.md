@@ -6,12 +6,13 @@
 
 ## It's using:
 
+- TypeScript
+- GraphQL
 - ReactJS (with hooks)
 - React-Bootstrap
 - react-router-dom
 - react-transition-group
 - react-icons
 - Animate.css
-- TypeScript
 - Prettier (Code formatter)
 - Husky (Git hooks manager)

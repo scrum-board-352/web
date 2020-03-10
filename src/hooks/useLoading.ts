@@ -5,9 +5,11 @@ export default function useLoading(): [boolean, typeof loadingOps] {
 
   async function loadingOps<T>(f: Function, ...args: any[]): Promise<T> {
     setLoading(true);
-    const res: T = await f(...args);
-    setLoading(false);
-    return res;
+    try {
+      return await f(...args);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return [loading, loadingOps];

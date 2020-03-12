@@ -2,7 +2,6 @@ import { message, Type } from "components/MessageBox";
 import { register } from "graphql/User";
 import useFormData from "hooks/useFromData";
 import useLoading from "hooks/useLoading";
-import ResultOutput from "models/ResultOutput";
 import UserModel from "models/User";
 import React, { Fragment, useState } from "react";
 import { Button, Form, Spinner } from "react-bootstrap";
@@ -51,7 +50,7 @@ export default function RegisterForm(props?: Props) {
       return;
     }
 
-    const res = await loadingOps<ResultOutput>(register, registerForm);
+    const res = await loadingOps(register, registerForm);
     if (res.success) {
       message({
         type: Type.Success,

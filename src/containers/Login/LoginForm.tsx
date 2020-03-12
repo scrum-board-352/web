@@ -42,7 +42,7 @@ export default function LoginForm(props?: Props) {
       return;
     }
 
-    const userInfo = await loadingOps<UserModel.PrivateInfo>(login, loginForm);
+    const userInfo = await loadingOps(login, loginForm);
     if (null === userInfo.id) {
       message({
         type: Type.Error,
@@ -107,7 +107,7 @@ export default function LoginForm(props?: Props) {
                 role="status"
                 aria-hidden="true"
               />
-              Logining...
+              Logging in...
             </Fragment>
           ) : (
             "LOGIN"

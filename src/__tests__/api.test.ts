@@ -1,4 +1,6 @@
+import { getCommitByReceiver } from "graphql/Message";
 import { login, logout, register, update } from "graphql/User";
+import Message from "models/Message";
 import ResultOutput from "models/ResultOutput";
 import UserModel from "models/User";
 
@@ -35,5 +37,15 @@ describe("user api tests", () => {
     };
     const result: ResultOutput = await update(updateInfo);
     expect(result.success).toEqual(true);
+  });
+});
+
+describe("message api tests", () => {
+  test("should get message by receiver", async () => {
+    const receiver = {
+      receiver: process.env.REACT_APP_RECEIVER_USERNAME ?? "",
+    };
+    const result: [Message.Info] = await getCommitByReceiver(receiver);
+    expect(result.length).toEqual(2);
   });
 });

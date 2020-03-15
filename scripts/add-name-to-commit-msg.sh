@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+. "$(dirname $0)/utils.sh"
+
 file=$HUSKY_GIT_PARAMS
 user=$(git config --local user.name)
 
@@ -9,5 +11,9 @@ if [ -z "$user" ]; then
 fi
 
 message=$(cat $file)
+prefix="[$user]"
 
-echo "[$user] $message" > $file
+start_with "$message" "$prefix"
+if [ $? -eq 0 ]; then
+  echo "$prefix $message" > $file
+fi

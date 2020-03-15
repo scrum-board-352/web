@@ -43,7 +43,7 @@ export default function ProjectBrowser() {
         </div>
       </Row>
       <Row>
-        <Table hover>
+        <Table hover borderless={true}>
           <thead>
             <tr>
               <th>#</th>

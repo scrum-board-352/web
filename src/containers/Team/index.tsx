@@ -73,7 +73,7 @@ export default function Team() {
             <h2>Your Teams</h2>
           </Row>
           <Row>
-            <Table hover>
+            <Table hover borderless={true}>
               <thead>
                 <tr>
                   <th>#</th>

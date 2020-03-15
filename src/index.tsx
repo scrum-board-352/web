@@ -1,17 +1,18 @@
+import MessageBox from "components/MessageBox";
+import Dashboard from "containers/Dashboard";
+import User from "containers/User";
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   Redirect,
+  Route,
+  Switch,
 } from "react-router-dom";
-import "./style.css";
 import Home from "./containers/Home";
-import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
-import MessageBox from "components/MessageBox";
-import Dashboard from "containers/Dashboard";
+import NotFound from "./containers/NotFound";
+import "./style.css";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/404" exact component={NotFound} />
           <Route path="/login" exact component={Login} />
           <Route path="/dashboard" component={Dashboard} />
+          <Route path="/user/:username" exact component={User} />
           <Route path="*">
             <Redirect to="/404" />
           </Route>

@@ -1,0 +1,60 @@
+.top_banner {
+  width: 100%;
+  height: 12rem;
+  background: linear-gradient(
+    to right,
+    rgb(127, 243, 195),
+    rgba(127, 243, 195, 0.2)
+  );
+}
+
+.user_info_side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.avatar {
+  position: absolute;
+  top: -7rem;
+
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  border: 5px solid white;
+}
+
+.username {
+  margin-top: 4rem;
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.content_container {
+  padding: 1rem;
+}
+
+.content_container h2 {
+  font-weight: lighter;
+  font-style: italic;
+  font-size: 1.2rem;
+}
+
+.content {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10rem;
+}
+
+.placeholder p {
+  margin-bottom: 0;
+  margin-left: 3rem;
+}

@@ -27,6 +27,6 @@ mutation updateUser($username: String!, $password: String, $power: String, $icon
     message
   }
 }
-`
+`;
 
-export default {registerMutation, updateMutation};
+export default { registerMutation, updateMutation };

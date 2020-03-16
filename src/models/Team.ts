@@ -1,10 +1,8 @@
-import UserModel from "./User";
-
 namespace TeamModel {
   export interface Info {
-    id: string;
+    id?: string;
     name: string;
-    creator: UserModel.PublicInfo;
+    creator: string;
     description: string;
   }
 }

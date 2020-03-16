@@ -1,7 +1,9 @@
 import { getCommitByReceiver } from "graphql/Message";
+import { createTeam } from "graphql/Team";
 import { login, logout, register, update } from "graphql/User";
 import Message from "models/Message";
 import ResultOutput from "models/ResultOutput";
+import TeamModel from "models/Team";
 import UserModel from "models/User";
 
 describe("user api tests", () => {
@@ -47,5 +49,17 @@ describe("message api tests", () => {
     };
     const result: [Message.Info] = await getCommitByReceiver(receiver);
     expect(result.length).toEqual(2);
+  });
+});
+
+describe("team api tests", () => {
+  test("should get team create", async () => {
+    const teamInfo: TeamModel.Info = {
+      creator: process.env.REACT_APP_TEAM_CREATOR ?? "",
+      name: process.env.REACT_APP_TEAM_NAME ?? "",
+      description: process.env.REACT_APP_TEAM_DESCRIPTION ?? "",
+    };
+    const result: ResultOutput = await createTeam(teamInfo);
+    expect(result.message).toEqual("one creator can not create same name team");
   });
 });

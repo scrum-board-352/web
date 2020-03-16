@@ -1,4 +1,3 @@
-import Avatar from "components/Avatar";
 import TeamModel from "models/Team";
 import React from "react";
 import { Table } from "react-bootstrap";
@@ -24,9 +23,7 @@ export default function Teams(props: Props) {
             <td>
               <a href="/">{team.name}</a>
             </td>
-            <td>
-              <Avatar user={team.creator} size="15px" gap="0.5rem" />
-            </td>
+            <td>{team.creator}</td>
           </tr>
         ))}
       </tbody>

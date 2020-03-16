@@ -1,4 +1,3 @@
-import Avatar from "components/Avatar";
 import PeopleCard from "components/PeopleCard";
 import Searchbar from "components/Searchbar";
 import TeamModel from "models/Team";
@@ -89,9 +88,7 @@ export default function Team() {
                     <td>
                       <a href="/">{team.name}</a>
                     </td>
-                    <td>
-                      <Avatar user={team.creator} size="15px" gap="0.5rem" />
-                    </td>
+                    <td>{team.creator}</td>
                     <td>{team.description}</td>
                   </tr>
                 ))}

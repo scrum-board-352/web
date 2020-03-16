@@ -1,4 +1,3 @@
-import Avatar from "components/Avatar";
 import ProjectModel from "models/Project";
 import React from "react";
 import { Table } from "react-bootstrap";
@@ -26,9 +25,7 @@ export default function Projects(props: Props) {
               <a href="/">{project.name}</a>
             </td>
             <td>{project.createTime}</td>
-            <td>
-              <Avatar user={project.creator} size="15px" gap="0.5rem" />
-            </td>
+            <td>{project.creator}</td>
           </tr>
         ))}
       </tbody>

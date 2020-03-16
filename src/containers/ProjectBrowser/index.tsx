@@ -1,4 +1,3 @@
-import Avatar from "components/Avatar";
 import Searchbar from "components/Searchbar";
 import ProjectModel from "models/Project";
 import React, { useEffect, useState } from "react";
@@ -62,9 +61,7 @@ export default function ProjectBrowser() {
                 </td>
                 <td>{project.createTime}</td>
                 <td>{project.iteration}</td>
-                <td>
-                  <Avatar user={project.creator} size="15px" gap="0.5rem" />
-                </td>
+                <td>{project.creator}</td>
               </tr>
             ))}
           </tbody>

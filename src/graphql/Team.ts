@@ -4,7 +4,7 @@ import client from "./client";
 import TeamMutation from "./mutation/TeamMutation";
 
 export async function createTeam(
-  teamInfo: TeamModel.Info
+  teamInfo: TeamModel.CreateInfo
 ): Promise<ResultOutput> {
   const data = await client.request(TeamMutation.createTeamMutation, teamInfo);
   return data.createTeam;

@@ -1,9 +1,12 @@
 namespace TeamModel {
-  export interface Info {
-    id?: string;
+  export interface CreateInfo {
     name: string;
     creator: string;
     description: string;
+  }
+
+  export interface Info extends CreateInfo {
+    id: string;
   }
 }
 

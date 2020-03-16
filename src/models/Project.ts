@@ -1,12 +1,18 @@
-import UserModel from "./User";
-
 namespace ProjectModel {
-  export interface Info {
-    id: string;
+  interface KanbanInfo {
+    row: string[];
+    col: string[];
+  }
+
+  export interface CreateInfo extends KanbanInfo {
     name: string;
-    createTime: string;
     iteration: number;
-    creator: UserModel.PublicInfo;
+  }
+
+  export interface Info extends CreateInfo {
+    id: string;
+    createTime: string;
+    creator: string;
   }
 }
 

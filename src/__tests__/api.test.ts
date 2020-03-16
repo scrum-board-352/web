@@ -54,7 +54,7 @@ describe("message api tests", () => {
 
 describe("team api tests", () => {
   test("should get team create", async () => {
-    const teamInfo: TeamModel.Info = {
+    const teamInfo: TeamModel.CreateInfo = {
       creator: process.env.REACT_APP_TEAM_CREATOR ?? "",
       name: process.env.REACT_APP_TEAM_NAME ?? "",
       description: process.env.REACT_APP_TEAM_DESCRIPTION ?? "",

@@ -1,4 +1,4 @@
-import Avatar, { NamePosition } from "components/Avatar";
+import Avatar from "components/Avatar";
 import UserModel from "models/User";
 import React from "react";
 
@@ -20,8 +20,9 @@ export default function PeopleCard(props: Props) {
     >
       <Avatar
         size={props.size}
-        user={props.user}
-        namePosition={NamePosition.Bottom}
+        name={props.user.name}
+        avatar={props.user.avatar}
+        namePosition="bottom"
       />
     </div>
   );

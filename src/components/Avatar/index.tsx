@@ -1,28 +1,24 @@
-import UserModel from "models/User";
 import React from "react";
-
-export enum NamePosition {
-  Right = "right",
-  Bottom = "bottom",
-}
+import placeholderImg from "./user.png";
 
 export type Props = {
-  user: UserModel.PublicInfo;
+  name: string;
+  avatar?: string;
   size: string;
-  namePosition?: NamePosition;
+  namePosition?: "right" | "bottom";
   gap?: string;
   className?: string;
 };
 
 export default function Avatar(props: Props) {
-  const namePos = props.namePosition ?? NamePosition.Right;
+  const namePos = props.namePosition ?? "right";
   const gap = props.gap ?? "1rem";
   let containerClassName = "d-flex align-items-center";
   let nameStyle: React.CSSProperties = {};
-  if (namePos === NamePosition.Right) {
+  if (namePos === "right") {
     nameStyle.marginLeft = gap;
   }
-  if (namePos === NamePosition.Bottom) {
+  if (namePos === "bottom") {
     nameStyle.marginTop = gap;
     containerClassName += " flex-column";
   }
@@ -30,11 +26,11 @@ export default function Avatar(props: Props) {
   return (
     <div className={`${containerClassName} ${props.className ?? ""}`}>
       <img
-        src={props.user.avatar}
+        src={props.avatar ?? placeholderImg}
         alt=""
         style={{ borderRadius: "50%", width: props.size, height: props.size }}
       />
-      <span style={nameStyle}>{props.user.name}</span>
+      <span style={nameStyle}>{props.name}</span>
     </div>
   );
 }

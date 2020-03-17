@@ -1,4 +1,4 @@
-import Avatar, { NamePosition } from "components/Avatar";
+import Avatar from "components/Avatar";
 import Checkbox from "components/Checkbox";
 import UserModel from "models/User";
 import React from "react";
@@ -20,9 +20,10 @@ export default function Message(props: Props) {
 
       <Avatar
         className="messages_message_avatar"
-        user={props.announcer}
+        name={props.announcer.name}
+        avatar={props.announcer.avatar}
         size="2rem"
-        namePosition={NamePosition.Right}
+        namePosition="right"
         gap="0.8rem"
       />
 

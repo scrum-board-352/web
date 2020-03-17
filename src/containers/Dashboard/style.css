@@ -11,7 +11,7 @@
 
 .dashboard_content_container {
   flex-grow: 1;
-  padding: 1.5rem 2rem;
+  height: 100vh;
 }
 
 .dashboard_sidebar_avatar {

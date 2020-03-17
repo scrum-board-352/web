@@ -1,0 +1,8 @@
+.setting_btn {
+  border: 0;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 400ms ease-in-out;
+}

@@ -1,6 +1,7 @@
 import { getCommitByReceiver } from "graphql/Message";
-import { createTeam } from "graphql/Team";
+import { createTeam, sendEmailToInviteReceiverJoinTeam } from "graphql/Team";
 import { login, logout, register, update } from "graphql/User";
+import EmailModel from "models/Email";
 import Message from "models/Message";
 import ResultOutput from "models/ResultOutput";
 import TeamModel from "models/Team";
@@ -61,5 +62,17 @@ describe("team api tests", () => {
     };
     const result: ResultOutput = await createTeam(teamInfo);
     expect(result.message).toEqual("one creator can not create same name team");
+  });
+
+  test("should get email send", async () => {
+    const teamInfo: EmailModel.TeamInfo = {
+      receiverMail: process.env.REACT_APP_EMAIL_RECEIVERMAIL ?? "",
+      announcer: process.env.REACT_APP_EMAIL_ANNOUNCER ?? "",
+      teamId: process.env.REACT_APP_EAMIL_TEAMID ?? "",
+    };
+    const result: ResultOutput = await sendEmailToInviteReceiverJoinTeam(
+      teamInfo
+    );
+    expect(result.success).toEqual(true);
   });
 });

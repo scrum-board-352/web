@@ -7,7 +7,7 @@ const shitMountain: ProjectModel.Info = {
   createTime: "2020-03-01",
   iteration: 14,
   creator: testUserData.publicInfo.mokuo.name,
-  row: ["stage1"],
+  row: ["stage1", "stage2"],
   col: ["Backlog", "In Analysis", "In progress", "Done"],
 };
 

@@ -20,6 +20,7 @@ body {
   font-size: 14px;
   line-height: 1;
   color: #253858;
+  max-width: 100vw;
   overflow-x: hidden;
 }
 
@@ -53,6 +54,10 @@ button::-moz-focus-inner {
 .cardshadow:hover {
   box-shadow: rgba(9, 30, 66, 0.25) 0px 8px 16px -4px,
     rgba(9, 30, 66, 0.31) 0px 0px 1px;
+}
+
+.dashboard_page_container {
+  padding: 1rem 2.5rem;
 }
 
 .dashboard_page_container > .row:first-child {

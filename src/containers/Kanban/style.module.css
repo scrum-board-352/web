@@ -1,0 +1,32 @@
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: 100%;
+  padding: 1.5rem 1rem 0.5rem 1.5rem;
+}
+
+.topbar h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.topbar > * {
+  margin-right: 1rem;
+}
+
+.topbar > *:last-child {
+  margin-right: 0;
+}
+
+.topbar_search {
+  margin-left: auto;
+}

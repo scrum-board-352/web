@@ -2,11 +2,14 @@ import Searchbar from "components/Searchbar";
 import ProjectModel from "models/Project";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Row, Table } from "react-bootstrap";
+import { Link, useRouteMatch } from "react-router-dom";
+import joinUrl from "utils/join-url";
 import testProjectData from "utils/testProjectData";
 import "./style.css";
 
 export default function ProjectBrowser() {
   const [projectData, setProjectData] = useState<ProjectModel.Info[]>([]);
+  const { url } = useRouteMatch();
 
   useEffect(() => {
     // TODO: fetch project data.
@@ -57,7 +60,7 @@ export default function ProjectBrowser() {
               <tr key={project.id}>
                 <td>{i + 1}</td>
                 <td>
-                  <a href="/">{project.name}</a>
+                  <Link to={joinUrl(url, project.id)}>{project.name}</Link>
                 </td>
                 <td>{project.createTime}</td>
                 <td>{project.iteration}</td>

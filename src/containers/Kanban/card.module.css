@@ -1,0 +1,56 @@
+.card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 0.5rem;
+  padding: 1rem;
+  cursor: move;
+  background-color: white;
+  transition: box-shadow 300ms;
+}
+
+.card:hover {
+  box-shadow: 0 1px 3px rgba(106, 115, 125, 0.3);
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.description {
+  color: var(--gray);
+  line-height: 1rem;
+  font-size: 13px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.priority {
+  display: flex;
+  align-items: center;
+  color: var(--gray);
+}
+
+.priority_test::first-letter {
+  text-transform: capitalize;
+}
+
+.high {
+  color: rgb(207, 0, 0);
+}
+
+.medium {
+  color: rgb(235, 124, 36);
+}
+
+.low {
+  color: rgb(42, 135, 52);
+}
+
+.lowest {
+  color: rgb(84, 165, 86);
+}

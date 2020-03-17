@@ -1,0 +1,7 @@
+.card_col {
+  border: 1px dashed #ddd;
+  border-radius: 10px;
+  width: 16rem;
+  height: 95%;
+  margin-right: 1rem;
+}

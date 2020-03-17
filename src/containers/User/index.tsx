@@ -44,7 +44,7 @@ export default function User() {
             <span className={style.username}>{userInfo.name}</span>
           </Col>
           <Col md={9}>
-            <div className={`${style.content_container} ${style.projects}`}>
+            <div className={style.content_container}>
               <h2>Recent 5 new projects</h2>
               <div className={style.content}>
                 {projects.length ? (
@@ -57,7 +57,7 @@ export default function User() {
                 )}
               </div>
             </div>
-            <div className={`${style.content_container} ${style.teams}`}>
+            <div className={style.content_container}>
               <h2>Recent 5 new teams</h2>
               <div className={style.content}>
                 {teams.length ? (

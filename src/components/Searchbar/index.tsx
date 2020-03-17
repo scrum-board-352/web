@@ -3,15 +3,35 @@ import { GoSearch } from "react-icons/go";
 import "./style.css";
 
 export type Props = {
-  size: string;
-  color: string;
-  activeColor: string;
+  className?: string;
+  type?: "line" | "round";
+  size?: string;
+  color?: string;
+  activeColor?: string;
   placeholder?: string;
   onChange?: (newVal: string) => void;
-  onSearch: (val: string) => void;
+  onSearch?: (val: string) => void;
 };
 
+function typeClass(type: Props["type"]) {
+  switch (type) {
+    case "line":
+      return "searchbar_input_line";
+
+    case "round":
+      return "searchbar_input_round";
+
+    default:
+      return "";
+  }
+}
+
 export default function Searchbar(props: Props) {
+  const type = props.type ?? "line";
+  const size = props.size ?? "1.2rem";
+  const color = props.color ?? "var(--gray)";
+  const activeColor = props.activeColor ?? "var(--blue)";
+
   const searchTextRef = useRef<string>("");
   const [focus, setFocus] = useState(false);
 
@@ -19,7 +39,7 @@ export default function Searchbar(props: Props) {
     if (e.keyCode !== 13) {
       return;
     }
-    props.onSearch(searchTextRef.current);
+    props.onSearch?.(searchTextRef.current);
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -28,18 +48,17 @@ export default function Searchbar(props: Props) {
   }
 
   function handleClick() {
-    props.onSearch(searchTextRef.current);
+    props.onSearch?.(searchTextRef.current);
   }
 
-  const color = focus ? props.activeColor : props.color;
+  const currentColor = focus ? activeColor : color;
 
   return (
     <div
-      className="searchbar"
+      className={`${props.className ?? ""} searchbar`}
       style={{
-        height: props.size,
-        fontSize: props.size,
-        color: color,
+        height: size,
+        fontSize: size,
       }}
       onFocus={() => setFocus(true)}
       onBlur={() => setFocus(false)}
@@ -49,13 +68,13 @@ export default function Searchbar(props: Props) {
         type="text"
         onKeyUp={handleEnter}
         onChange={handleChange}
+        className={typeClass(type)}
         style={{
-          color: props.color,
-          borderBottomColor: color,
-          caretColor: color,
+          borderColor: currentColor,
+          caretColor: currentColor,
         }}
       />
-      <button onClick={handleClick}>
+      <button onClick={handleClick} style={{ color: currentColor }}>
         <GoSearch size="80%" />
       </button>
     </div>

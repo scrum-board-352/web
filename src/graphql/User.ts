@@ -34,3 +34,10 @@ export async function update(
   const data = await client.request(UserMutation.updateMutation, updateInfo);
   return data.updateUser;
 }
+
+export async function selectUserBySubstring(usernameSubstring: {
+  usernameSubstring: string;
+}): Promise<[UserModel.PrivateInfo]> {
+  const data = await client.request(UserQuery.selectUser, usernameSubstring);
+  return data.selectUserBySubstring;
+}

@@ -23,4 +23,14 @@ const logoutQuery = `
   }
 `;
 
-export default {loginQuery, logoutQuery};
+const selectUser = `
+query selectUserBySubstring($usernameSubstring: String!){
+  selectUserBySubstring(usernameSubstring: $usernameSubstring) {
+    id
+    name: username
+    email
+    avatar: icon
+  }
+}
+`;
+export default { loginQuery, logoutQuery, selectUser };

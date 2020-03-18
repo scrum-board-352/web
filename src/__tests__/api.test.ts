@@ -1,6 +1,12 @@
 import { getCommitByReceiver } from "graphql/Message";
 import { createTeam, sendEmailToInviteReceiverJoinTeam } from "graphql/Team";
-import { login, logout, register, update } from "graphql/User";
+import {
+  login,
+  logout,
+  register,
+  selectUserBySubstring,
+  update,
+} from "graphql/User";
 import EmailModel from "models/Email";
 import Message from "models/Message";
 import ResultOutput from "models/ResultOutput";
@@ -40,6 +46,16 @@ describe("user api tests", () => {
     };
     const result: ResultOutput = await update(updateInfo);
     expect(result.success).toEqual(true);
+  });
+
+  test("should get user select by substring", async () => {
+    const usernameSubstring = {
+      usernameSubstring: process.env.REACT_APP_SELECT_SUBSTRING ?? "",
+    };
+    const result: [UserModel.PrivateInfo] = await selectUserBySubstring(
+      usernameSubstring
+    );
+    expect(result.length).toEqual(2);
   });
 });
 

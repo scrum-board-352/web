@@ -1,5 +1,9 @@
 import { getCommitByReceiver } from "graphql/Message";
-import { createTeam, sendEmailToInviteReceiverJoinTeam } from "graphql/Team";
+import {
+  createTeam,
+  sendEmailToInviteReceiverJoinTeam,
+  updateTeam,
+} from "graphql/Team";
 import {
   login,
   logout,
@@ -89,6 +93,17 @@ describe("team api tests", () => {
     const result: ResultOutput = await sendEmailToInviteReceiverJoinTeam(
       teamInfo
     );
+    expect(result.success).toEqual(true);
+  });
+
+  test("should get team update", async () => {
+    const teamInfo: TeamModel.Info = {
+      id: process.env.REACT_APP_TEAM_ID ?? "",
+      creator: process.env.REACT_APP_TEAM_CREATOR ?? "",
+      name: process.env.REACT_APP_TEAM_NAME ?? "",
+      description: process.env.REACT_APP_TEAM_DESCRIPTION ?? "",
+    };
+    const result: ResultOutput = await updateTeam(teamInfo);
     expect(result.success).toEqual(true);
   });
 });

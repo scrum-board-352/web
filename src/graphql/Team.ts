@@ -18,3 +18,10 @@ export async function sendEmailToInviteReceiverJoinTeam(
   const data = await client.request(TeamQuery.sendEmailQuery, teamInfo);
   return data.sendEmailToInviteReceiverJoinTeam;
 }
+
+export async function updateTeam(
+  teamInfo: TeamModel.Info
+): Promise<ResultOutput> {
+  const date = await client.request(TeamMutation.updateTeam, teamInfo);
+  return date.updateTeam;
+}

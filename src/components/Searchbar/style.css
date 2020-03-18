@@ -15,6 +15,11 @@
   background-color: transparent;
   font-weight: 600;
   font-size: 0.6em;
+  color: var(--gray);
+}
+
+.searchbar input::placeholder {
+  color: #bbb;
 }
 
 .searchbar_input_line {
@@ -26,12 +31,12 @@
 
 .searchbar_input_round {
   border: 2px solid;
-  border-radius: 15px;
   padding: 10px;
 }
 
 .searchbar_input_round + button {
-  transform: translate(-5px, 1px);
+  height: 100%;
+  transform: translateX(-5px);
 }
 
 .searchbar button {

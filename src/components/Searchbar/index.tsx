@@ -19,7 +19,7 @@ function typeClass(type: Props["type"]) {
       return "searchbar_input_line";
 
     case "round":
-      return "searchbar_input_round";
+      return "rounded-pill searchbar_input_round";
 
     default:
       return "";

@@ -75,7 +75,7 @@ export default function Searchbar(props: Props) {
         }}
       />
       <button onClick={handleClick} style={{ color: currentColor }}>
-        <GoSearch size="80%" />
+        <GoSearch style={{ height: "70%" }} />
       </button>
     </div>
   );

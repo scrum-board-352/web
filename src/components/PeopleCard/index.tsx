@@ -1,6 +1,8 @@
 import Avatar from "components/Avatar";
 import UserModel from "models/User";
 import React from "react";
+import className from "utils/class-name";
+import style from "./style.module.css";
 
 type Props = {
   user: UserModel.PublicInfo;
@@ -10,12 +12,18 @@ type Props = {
 };
 
 export default function PeopleCard(props: Props) {
-  const className = props.className ?? "";
-
   return (
     <div
-      className={`${className} cardshadow d-flex align-items-center justify-centent-center p-4 rounded-lg`}
-      style={{ cursor: "pointer" }}
+      className={className(
+        style.card,
+        props.className,
+        "cardshadow",
+        "d-flex",
+        "align-items-center",
+        "justify-centent-center",
+        "p-4",
+        "rounded-lg"
+      )}
       onClick={props.onClick}
     >
       <Avatar

@@ -22,14 +22,8 @@ function typeClass(type: Props["type"]) {
 export default function ScrollBox(props: Props) {
   const type = props.type ?? "horizontal";
   return (
-    <div className={style.box}>
-      <div
-        className={className(
-          style.content_container,
-          typeClass(type),
-          props.className
-        )}
-      >
+    <div className={className(style.box, props.className)}>
+      <div className={className(style.content_container, typeClass(type))}>
         {props.children}
       </div>
     </div>

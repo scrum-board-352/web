@@ -7,6 +7,7 @@ namespace ProjectModel {
   export interface CreateInfo extends KanbanInfo {
     name: string;
     iteration: number;
+    teamId: number;
   }
 
   export interface Info extends CreateInfo {

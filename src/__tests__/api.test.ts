@@ -1,4 +1,5 @@
 import { getCommitByReceiver } from "graphql/Message";
+import { selectProjectByCreator } from "graphql/Project";
 import {
   createTeam,
   sendEmailToInviteReceiverJoinTeam,
@@ -13,6 +14,7 @@ import {
 } from "graphql/User";
 import EmailModel from "models/Email";
 import Message from "models/Message";
+import ProjectModel from "models/Project";
 import ResultOutput from "models/ResultOutput";
 import TeamModel from "models/Team";
 import UserModel from "models/User";
@@ -105,5 +107,15 @@ describe("team api tests", () => {
     };
     const result: ResultOutput = await updateTeam(teamInfo);
     expect(result.success).toEqual(true);
+  });
+});
+
+describe("project api tests", () => {
+  test("should get project by creator", async () => {
+    const creator = {
+      creator: process.env.REACT_APP_PROJECT_CREATOR ?? "",
+    };
+    const result: [ProjectModel.Info] = await selectProjectByCreator(creator);
+    expect(result.length).toEqual(1);
   });
 });

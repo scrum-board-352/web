@@ -8,8 +8,8 @@ import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import testCardData from "utils/testCardData";
 import testProjectData from "utils/testProjectData";
-import Card from "./Card";
 import CardCol from "./CardCol";
+import { CardsManager } from "./CardsManager";
 import style from "./style.module.css";
 
 export default function Kanban() {
@@ -39,7 +39,8 @@ export default function Kanban() {
   useEffect(() => {
     (async () => {
       // TODO: fetch project info.
-      const project = await testProjectData.info.shitMountain;
+      // await sleep(3000);
+      const project = testProjectData.info.shitMountain;
       if (projectId !== project.id) {
         history.replace("/404");
         return;
@@ -75,6 +76,7 @@ export default function Kanban() {
               placeholder="Search card"
               type="round"
               color="#ddd"
+              size="1.5rem"
             />
             <SettingButton
               size="1.5rem"
@@ -83,12 +85,11 @@ export default function Kanban() {
             />
           </div>
           <ScrollBox>
-            <CardCol>
-              <Card card={testCardData.info.card1} />
-            </CardCol>
-            <CardCol>
-              <Card card={testCardData.info.card2} />
-            </CardCol>
+            <CardsManager cards={testCardData.info.cards}>
+              {project.col.map((col) => (
+                <CardCol key={col} colName={col} />
+              ))}
+            </CardsManager>
           </ScrollBox>
         </Fragment>
       )}

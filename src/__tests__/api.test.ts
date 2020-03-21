@@ -118,4 +118,14 @@ describe("project api tests", () => {
     const result: [ProjectModel.Info] = await selectProjectByCreator(creator);
     expect(result.length).toEqual(1);
   });
+
+  // run this test will create new project by jianglianEin, it will let previous test error.
+  // test("should get project create", async () => {
+  //   const projectCreateModel: ProjectModel.CreateInfo = {
+  //     creator: process.env.REACT_APP_PROJECT_CREATOR ?? "",
+  //     name: process.env.REACT_APP_PROJECT_NAME ?? "",
+  //   };
+  //   const result: ResultOutput = await createProject(projectCreateModel);
+  //   expect(result.success).toEqual(true);
+  // });
 });

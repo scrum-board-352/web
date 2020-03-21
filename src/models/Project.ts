@@ -1,19 +1,19 @@
 namespace ProjectModel {
   interface KanbanInfo {
-    row: string[];
-    col: string[];
+    row?: string[];
+    col?: string[];
   }
 
   export interface CreateInfo extends KanbanInfo {
+    creator: string;
     name: string;
-    iteration: number;
-    teamId: number;
+    iteration?: number;
+    teamId?: number;
   }
 
   export interface Info extends CreateInfo {
     id: string;
     createTime: string;
-    creator: string;
   }
 }
 

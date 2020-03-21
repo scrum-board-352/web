@@ -1,5 +1,7 @@
+import ProjectMutation from "graphql/mutation/ProjectMutation";
 import ProjectQuery from "graphql/query/ProjectQuery";
 import ProjectModel from "models/Project";
+import ResultOutput from "models/ResultOutput";
 import client from "./client";
 
 export async function selectProjectByCreator(creator: {
@@ -10,4 +12,14 @@ export async function selectProjectByCreator(creator: {
     creator
   );
   return data.selectProjectByCreator;
+}
+
+export async function createProject(
+  projeceCreateModel: ProjectModel.CreateInfo
+): Promise<ResultOutput> {
+  const data = await client.request(
+    ProjectMutation.createProject,
+    projeceCreateModel
+  );
+  return data.createProject;
 }

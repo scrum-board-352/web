@@ -2,12 +2,12 @@ const selectProjectByCreatorQuery = `
   query selectProjectByCreator($creator: String!) {
     selectProjectByCreator(creator: $creator) {
         id
-        projectName
+        name: projectName
         creator
         teamId
         createTime
-        colTitle
-        rowTitle
+        col: colTitle
+        row: rowTitle
         iteration
       }
   }

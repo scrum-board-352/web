@@ -17,4 +17,22 @@ mutation createProjec($creator: String, $name: String, $teamId: String, $col: [S
 }
 `;
 
-export default { createProject };
+const updateProject = `
+mutation updateProject($id: String, $name: String, $teamId: String, $col: [String], $row: [String], $iteration: Int){
+  updateProject(selectionInput: {
+    projectInput: {
+      id: $id
+      projectName: $name
+      teamId: $teamId
+      colTitle: $col
+      rowTitle: $row
+      iteration: $iteration
+    }
+  }){
+    success: susses
+    message
+  }
+}
+`;
+
+export default { createProject, updateProject };

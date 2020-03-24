@@ -1,5 +1,5 @@
 import { getCommitByReceiver } from "graphql/Message";
-import { selectProjectByCreator } from "graphql/Project";
+import { selectProjectByCreator, updateProject } from "graphql/Project";
 import {
   createTeam,
   sendEmailToInviteReceiverJoinTeam,
@@ -128,4 +128,13 @@ describe("project api tests", () => {
   //   const result: ResultOutput = await createProject(projectCreateModel);
   //   expect(result.success).toEqual(true);
   // });
+
+  test("should get project update", async () => {
+    const projectCreateModel: ProjectModel.UpdateInfo = {
+      id: process.env.REACT_APP_PROJECT_ID ?? "",
+      name: process.env.REACT_APP_PROJECT_NAME ?? "",
+    };
+    const result: ResultOutput = await updateProject(projectCreateModel);
+    expect(result.success).toEqual(true);
+  });
 });

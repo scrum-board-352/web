@@ -23,3 +23,13 @@ export async function createProject(
   );
   return data.createProject;
 }
+
+export async function updateProject(
+  projeceUpdateModel: ProjectModel.UpdateInfo
+): Promise<ResultOutput> {
+  const data = await client.request(
+    ProjectMutation.updateProject,
+    projeceUpdateModel
+  );
+  return data.updateProject;
+}

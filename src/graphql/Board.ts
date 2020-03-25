@@ -1,5 +1,6 @@
 import BoardMutation from "graphql/mutation/BoardMutation";
-import Board from "models/Board";
+import BoardQuery from "graphql/query/BoardQuery";
+import { default as Board, default as BoardModel } from "models/Board";
 import ResultOutput from "models/ResultOutput";
 import client from "./client";
 
@@ -8,4 +9,21 @@ export async function createBoard(
 ): Promise<ResultOutput> {
   const data = await client.request(BoardMutation.createBoard, createInfo);
   return data.createBoard;
+}
+
+export async function removeBoard(boardId: {
+  boardId: string;
+}): Promise<ResultOutput> {
+  const data = await client.request(BoardMutation.removeBoard, boardId);
+  return data.removeBoard;
+}
+
+export async function selectBoardsByProjectId(projectId: {
+  projectId: string;
+}): Promise<[BoardModel.Info]> {
+  const data = await client.request(
+    BoardQuery.selectBoardsByProjectIdQuery,
+    projectId
+  );
+  return data.selectBoardsByProjectId;
 }

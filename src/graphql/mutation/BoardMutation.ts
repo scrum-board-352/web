@@ -10,4 +10,13 @@ mutation createBoard($projectId: String) {
   }
 }
 `;
-export default { createBoard };
+
+const removeBoard = `
+mutation removeBoard($boardId: String) {
+  removeBoard(boardId: $boardId) {
+    success: susses
+    message
+  }
+}
+`;
+export default { createBoard, removeBoard };

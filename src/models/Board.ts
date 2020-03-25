@@ -3,7 +3,7 @@ namespace BoardModel {
     projectId: string;
   }
 
-  export interface Info extends CreateInfo {
+  export interface Info {
     id: string;
     createTime: string;
   }

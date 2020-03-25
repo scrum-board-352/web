@@ -1,4 +1,4 @@
-import { createBoard } from "graphql/Board";
+import { selectBoardsByProjectId } from "graphql/Board";
 import { getCommitByReceiver } from "graphql/Message";
 import { selectProjectByCreator, updateProject } from "graphql/Project";
 import {
@@ -150,11 +150,27 @@ describe("project api tests", () => {
 });
 
 describe("board api tests", () => {
-  test("should get board create", async () => {
-    const boardCreateInfo: BoardModel.CreateInfo = {
+  // test("should get board create", async () => {
+  //   const boardCreateInfo: BoardModel.CreateInfo = {
+  //     projectId: process.env.REACT_APP_BOARD_PROJECTID ?? "",
+  //   };
+  //   const result: ResultOutput = await createBoard(boardCreateInfo);
+  //   expect(result.success).toEqual(true);
+  // });
+
+  test("should get board select by projectId", async () => {
+    const projectId = {
       projectId: process.env.REACT_APP_BOARD_PROJECTID ?? "",
     };
-    const result: ResultOutput = await createBoard(boardCreateInfo);
-    expect(result.success).toEqual(true);
+    const result: [BoardModel.Info] = await selectBoardsByProjectId(projectId);
+    expect(result.length).toEqual(1);
   });
+
+  // test("should get board remove", async () => {
+  //   const boardId = {
+  //     boardId: process.env.REACT_APP_BOARD_ID ?? "",
+  //   };
+  //   const result: ResultOutput = await removeBoard(boardId);
+  //   expect(result.success).toEqual(true);
+  // });
 });

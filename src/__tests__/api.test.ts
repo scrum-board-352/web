@@ -1,3 +1,4 @@
+import { createBoard } from "graphql/Board";
 import { getCommitByReceiver } from "graphql/Message";
 import { selectProjectByCreator, updateProject } from "graphql/Project";
 import {
@@ -12,6 +13,7 @@ import {
   selectUserBySubstring,
   update,
 } from "graphql/User";
+import BoardModel from "models/Board";
 import EmailModel from "models/Email";
 import Message from "models/Message";
 import ProjectModel from "models/Project";
@@ -145,4 +147,14 @@ describe("project api tests", () => {
   //   const result: ResultOutput = await removeProject(projectId);
   //   expect(result.success).toEqual(true);
   // });
+});
+
+describe("board api tests", () => {
+  test("should get board create", async () => {
+    const boardCreateInfo: BoardModel.CreateInfo = {
+      projectId: process.env.REACT_APP_BOARD_PROJECTID ?? "",
+    };
+    const result: ResultOutput = await createBoard(boardCreateInfo);
+    expect(result.success).toEqual(true);
+  });
 });

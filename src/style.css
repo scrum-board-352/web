@@ -1,3 +1,9 @@
+:root {
+  --dark-blue: #0069d9;
+  --blue-green: #02c385;
+  --yellow-green: #75d701;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -80,11 +86,11 @@ select {
 }
 
 .scrollbar_thumb_green .scroll-box-thumb.vertical {
-  background: linear-gradient(to top, #02c385, #75d701);
+  background: linear-gradient(to top, var(--blue-green), var(--yellow-green));
 }
 
 .scrollbar_thumb_green .scroll-box-thumb.horizontal {
-  background: linear-gradient(to left, #02c385, #75d701);
+  background: linear-gradient(to left, var(--blue-green), var(--yellow-green));
 }
 
 .scrollbar_thumb_green .scroll-box-track {

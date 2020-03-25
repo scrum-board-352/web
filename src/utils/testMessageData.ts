@@ -28,18 +28,24 @@ const commentMsg = [
   "嗯？",
 ];
 
-function randomComment() {
-  const len = commentMsg.length;
-  return commentMsg[Math.round(Math.random() * len)];
+function randomComment(): MessageModel.Info {
+  const commentLen = commentMsg.length;
+  const description = commentMsg[Math.floor(Math.random() * commentLen)];
+  const users = Object.values(testUserData.publicInfo);
+  const userLen = users.length;
+  const user = users[Math.floor(Math.random() * userLen)];
+  return {
+    id: Math.round(Math.random() * 10000).toString(),
+    announcer: user,
+    description,
+    updateTime: "2020-03-01 12:04",
+    isRead: false,
+  };
 }
 
-const comments: MessageModel.Info[] = new Array(10).fill(null).map((_, i) => ({
-  id: i.toString(),
-  announcer: testUserData.publicInfo.mokuo,
-  description: randomComment(),
-  updateTime: "2020-03-01 12:04",
-  isRead: false,
-}));
+const comments: MessageModel.Info[] = new Array(10)
+  .fill(null)
+  .map(randomComment);
 
 export default {
   info: {

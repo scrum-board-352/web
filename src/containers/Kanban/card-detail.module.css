@@ -1,33 +1,86 @@
 .dialog {
   max-width: none;
-  width: 65%;
+  width: 50%;
 }
 
 .body {
   display: flex;
+  justify-content: space-between;
   height: 30rem;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .comment_area {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  margin-right: 2rem;
 }
 
-.comment_area_title {
-  font-size: 1.2rem;
+.scroll_area {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.comment_input {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.comment_input > img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.comment_input > input {
+  height: 2rem;
+  padding: 0 1rem;
+  margin: 0 1rem;
+  border-radius: 50rem;
+  border: 0;
+  background-color: #eee;
+  flex-grow: 1;
+  color: inherit;
+}
+
+.comment_input > button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 0;
+  background: linear-gradient(
+    to right top,
+    var(--blue-green),
+    var(--yellow-green)
+  );
   font-weight: 700;
+  color: white;
+  transition: all 300ms;
+}
+
+.comment_input > button:hover {
+  background-color: var(--dark-blue);
 }
 
 .card_info {
-  width: 15rem;
-  padding-left: 0.5rem;
   display: flex;
   flex-direction: column;
+  width: 45%;
+  height: 100%;
 }
 
 .info_field {
   margin-bottom: 1rem;
+}
+
+.info_field:first-child {
+  margin-top: 1rem;
 }
 
 .info_field > p:first-child {
@@ -45,8 +98,8 @@
 
 .card_create_time {
   margin-top: auto;
+  margin-bottom: calc(1rem + 2px);
   padding-top: 1rem;
-  border-top: 1px solid #ccc;
 }
 
 .card_create_time > time {

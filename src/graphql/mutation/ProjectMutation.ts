@@ -35,4 +35,12 @@ mutation updateProject($id: String, $name: String, $teamId: String, $col: [Strin
 }
 `;
 
-export default { createProject, updateProject };
+const removeProject = `
+mutation removeProject($projectId: String){
+  removeProject(projectId: $projectId) {
+    success: susses
+    message
+  }
+}
+`;
+export default { createProject, updateProject, removeProject };

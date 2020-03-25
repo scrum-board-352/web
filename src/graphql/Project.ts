@@ -33,3 +33,10 @@ export async function updateProject(
   );
   return data.updateProject;
 }
+
+export async function removeProject(projectId: {
+  projectId: string;
+}): Promise<ResultOutput> {
+  const data = await client.request(ProjectMutation.removeProject, projectId);
+  return data.removeProject;
+}

@@ -137,4 +137,12 @@ describe("project api tests", () => {
     const result: ResultOutput = await updateProject(projectCreateModel);
     expect(result.success).toEqual(true);
   });
+
+  // test("should get project remove", async () => {
+  //   const projectId = {
+  //     projectId: process.env.REACT_APP_PROJECT_ID ?? "",
+  //   };
+  //   const result: ResultOutput = await removeProject(projectId);
+  //   expect(result.success).toEqual(true);
+  // });
 });

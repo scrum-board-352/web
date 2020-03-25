@@ -9,6 +9,7 @@ import { useHistory, useParams } from "react-router-dom";
 import testCardData from "utils/testCardData";
 import testProjectData from "utils/testProjectData";
 import CardCol from "./CardCol";
+import CardDetail from "./CardDetail";
 import { CardsManager } from "./CardsManager";
 import style from "./style.module.css";
 
@@ -93,6 +94,7 @@ export default function Kanban() {
               </CardsManager>
             </div>
           </ScrollBox>
+          <CardDetail show={true} card={testCardData.info.card1} />
         </Fragment>
       )}
     </div>

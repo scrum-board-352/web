@@ -1,7 +1,8 @@
 .setting_btn {
+  color: inherit;
   border: 0;
   background-color: transparent;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: color 400ms ease-in-out;

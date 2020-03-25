@@ -1,5 +1,4 @@
 import React from "react";
-import placeholderImg from "./user.png";
 
 export type Props = {
   name: string;
@@ -9,6 +8,8 @@ export type Props = {
   gap?: string;
   className?: string;
 };
+
+const placeholderImg = process.env.PUBLIC_URL + "/img/user.png";
 
 export default function Avatar(props: Props) {
   const namePos = props.namePosition ?? "right";

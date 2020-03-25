@@ -1,0 +1,55 @@
+.dialog {
+  max-width: none;
+  width: 65%;
+}
+
+.body {
+  display: flex;
+  height: 30rem;
+}
+
+.comment_area {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.comment_area_title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.card_info {
+  width: 15rem;
+  padding-left: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.info_field {
+  margin-bottom: 1rem;
+}
+
+.info_field > p:first-child {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.info_field > p:nth-child(2) {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.card_create_time {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+.card_create_time > time {
+  font-style: italic;
+  font-weight: 700;
+}

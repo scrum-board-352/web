@@ -1,10 +1,10 @@
 import Loading from "components/Loading";
-import ScrollBox from "components/ScrollBox";
 import Searchbar from "components/Searchbar";
 import Select, { Option } from "components/Select";
 import SettingButton from "components/SettingButton";
 import ProjectModel from "models/Project";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
+import ScrollBox from "react-responsive-scrollbox";
 import { useHistory, useParams } from "react-router-dom";
 import testCardData from "utils/testCardData";
 import testProjectData from "utils/testProjectData";
@@ -84,12 +84,14 @@ export default function Kanban() {
               hoverColor="var(--blue)"
             />
           </div>
-          <ScrollBox>
-            <CardsManager cards={testCardData.info.cards}>
-              {project.col.map((col) => (
-                <CardCol key={col} colName={col} />
-              ))}
-            </CardsManager>
+          <ScrollBox className="scrollbar_thumb_green">
+            <div className={style.card_col_container}>
+              <CardsManager cards={testCardData.info.cards}>
+                {project.col.map((col) => (
+                  <CardCol key={col} colName={col} />
+                ))}
+              </CardsManager>
+            </div>
           </ScrollBox>
         </Fragment>
       )}

@@ -30,3 +30,17 @@
 .topbar_search {
   margin-left: auto;
 }
+
+.card_col_container {
+  height: 100%;
+  display: flex;
+  position: absolute;
+}
+
+.card_col_container > *:first-child {
+  margin-left: 1rem;
+}
+
+.card_col_container > *:last-child {
+  margin-right: 1rem;
+}

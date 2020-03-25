@@ -78,3 +78,15 @@ select {
 .dashboard_page_container h2 {
   font-size: 1.1rem;
 }
+
+.scrollbar_thumb_green .scroll-box-thumb.vertical {
+  background: linear-gradient(to top, #02c385, #75d701);
+}
+
+.scrollbar_thumb_green .scroll-box-thumb.horizontal {
+  background: linear-gradient(to left, #02c385, #75d701);
+}
+
+.scrollbar_thumb_green .scroll-box-track {
+  background-color: transparent;
+}

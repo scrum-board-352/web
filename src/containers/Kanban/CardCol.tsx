@@ -1,6 +1,6 @@
-import ScrollBox from "components/ScrollBox";
 import React, { useContext } from "react";
 import { IoMdAdd } from "react-icons/io";
+import ScrollBox from "react-responsive-scrollbox";
 import className from "utils/class-name";
 import Card from "./Card";
 import style from "./card-col.module.css";
@@ -83,8 +83,11 @@ export default function CardCol(props: Props) {
         <span>New Card</span>
       </button>
       <ScrollBox
-        type="vertical"
-        className={className(style.cards_container, dropClass)}
+        className={className(
+          style.cards_container,
+          dropClass,
+          "scrollbar_thumb_green"
+        )}
       >
         {cards.map((card) => (
           <Card key={card.id} card={card} />

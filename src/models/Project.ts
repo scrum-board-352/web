@@ -8,11 +8,13 @@ namespace ProjectModel {
     col?: string[];
   }
 
-  export interface UpdateInfo extends KanbanInfo {
+  export interface UpdateInfo {
     id: string;
     name: string;
     iteration?: number;
     teamId?: number;
+    row?: string[];
+    col?: string[];
   }
 
   export interface Info extends CreateInfo {

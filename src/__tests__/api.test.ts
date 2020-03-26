@@ -174,3 +174,16 @@ describe("board api tests", () => {
   //   expect(result.success).toEqual(true);
   // });
 });
+
+// describe("card api tests", () => {
+//   test("should get card create", async () => {
+//     const cardCreateInfo: CardModel.CreateInfo = {
+//       title: process.env.REACT_APP_CARD_TITLE ?? "",
+//       status: process.env.REACT_APP_CARD_STATUS ?? "",
+//       founder: process.env.REACT_APP_CARD_FOUNDER ?? "",
+//       boardId: process.env.REACT_APP_CARD_BOARDID ?? "",
+//     };
+//     const result: ResultOutput = await createCard(cardCreateInfo);
+//     expect(result.success).toEqual(true);
+//   });
+// });

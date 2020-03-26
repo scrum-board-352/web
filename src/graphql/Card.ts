@@ -9,3 +9,10 @@ export async function createCard(
   const data = await client.request(CardMutation.createCard, createInfo);
   return data.createCard;
 }
+
+export async function updateCard(
+  updateInfo: Card.UpdateInfo
+): Promise<ResultOutput> {
+  const data = await client.request(CardMutation.updateCard, updateInfo);
+  return data.updateCard;
+}

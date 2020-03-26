@@ -25,4 +25,29 @@ mutation createCard($title: String,
 }
 `;
 
-export default { createCard };
+const updateCard = `
+mutation updateCard($id: String,
+  $title: String, 
+  $description: String, 
+  $storyPoints: Int, 
+  $priority: String, 
+  $processor: String, 
+  $status: String) {
+  updateCard(selectionInput: {
+    cardInput: {
+      id: $id
+      title: $title
+      description:  $description
+      storyPoints: $storyPoints
+      priority: $priority
+      processor: $processor
+      status: $status
+    }
+  }){
+    success: susses
+    message
+  }
+}
+`;
+
+export default { createCard, updateCard };

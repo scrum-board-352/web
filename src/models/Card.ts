@@ -10,6 +10,16 @@ namespace CardModel {
     processor?: string;
   }
 
+  export interface UpdateInfo {
+    id: string;
+    title?: string;
+    status?: string;
+    description?: string;
+    storyPoints?: number;
+    priority?: "high" | "medium" | "low" | "lowest";
+    processor?: string;
+  }
+
   export interface Info extends CreateInfo {
     id: string;
     createTime: string;

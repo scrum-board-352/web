@@ -1,4 +1,5 @@
 import { selectBoardsByProjectId } from "graphql/Board";
+import { updateCard } from "graphql/Card";
 import { getCommitByReceiver } from "graphql/Message";
 import { selectProjectByCreator, updateProject } from "graphql/Project";
 import {
@@ -14,6 +15,7 @@ import {
   update,
 } from "graphql/User";
 import BoardModel from "models/Board";
+import CardModel from "models/Card";
 import EmailModel from "models/Email";
 import Message from "models/Message";
 import ProjectModel from "models/Project";
@@ -175,15 +177,22 @@ describe("board api tests", () => {
   // });
 });
 
-// describe("card api tests", () => {
-//   test("should get card create", async () => {
-//     const cardCreateInfo: CardModel.CreateInfo = {
-//       title: process.env.REACT_APP_CARD_TITLE ?? "",
-//       status: process.env.REACT_APP_CARD_STATUS ?? "",
-//       founder: process.env.REACT_APP_CARD_FOUNDER ?? "",
-//       boardId: process.env.REACT_APP_CARD_BOARDID ?? "",
-//     };
-//     const result: ResultOutput = await createCard(cardCreateInfo);
-//     expect(result.success).toEqual(true);
-//   });
-// });
+describe("card api tests", () => {
+  //   test("should get card create", async () => {
+  //     const cardCreateInfo: CardModel.CreateInfo = {
+  //       title: process.env.REACT_APP_CARD_TITLE ?? "",
+  //       status: process.env.REACT_APP_CARD_STATUS ?? "",
+  //       founder: process.env.REACT_APP_CARD_FOUNDER ?? "",
+  //       boardId: process.env.REACT_APP_CARD_BOARDID ?? "",
+  //     };
+  //     const result: ResultOutput = await createCard(cardCreateInfo);
+  //     expect(result.success).toEqual(true);
+  //   });
+  test("should get card update", async () => {
+    const cardUpdateInfo: CardModel.UpdateInfo = {
+      id: process.env.REACT_APP_CARD_ID ?? "",
+    };
+    const result: ResultOutput = await updateCard(cardUpdateInfo);
+    expect(result.success).toEqual(true);
+  });
+});

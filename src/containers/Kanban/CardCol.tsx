@@ -8,6 +8,7 @@ import { CardsContext } from "./CardsManager";
 
 type Props = {
   colName: string;
+  onClickCard?: (cardId: string) => void;
 } & Pick<
   React.HTMLAttributes<HTMLElement>,
   "onDrop" | "onDragOver" | "onDragEnter" | "onDragLeave"
@@ -90,7 +91,11 @@ export default function CardCol(props: Props) {
         )}
       >
         {cards.map((card) => (
-          <Card key={card.id} card={card} />
+          <Card
+            key={card.id}
+            card={card}
+            onClick={() => props.onClickCard?.(card.id)}
+          />
         ))}
       </ScrollBox>
     </div>

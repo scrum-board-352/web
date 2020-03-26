@@ -70,6 +70,14 @@ const initCardsManager = {
   endDrag,
 };
 
+export function getCardById(id: string) {
+  return cards.find((card) => card.id === id);
+}
+
+export async function createCard(card: CardModel.CreateInfo) {
+  update();
+}
+
 export const CardsContext = React.createContext(initCardsManager);
 
 type Props = {

@@ -76,7 +76,7 @@ export default function Dashboard() {
             <ProjectBrowser />
           </Route>
 
-          <Route exact path={`${path}/${Path.Projects}/:projectId/:stage?`}>
+          <Route exact path={`${path}/${Path.Projects}/:projectId/:iteration?`}>
             <Kanban />
           </Route>
 

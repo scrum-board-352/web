@@ -1,5 +1,5 @@
 import { selectBoardsByProjectId } from "graphql/Board";
-import { updateCard } from "graphql/Card";
+import { selectCardsByBoardId, updateCard } from "graphql/Card";
 import { getCommitByReceiver } from "graphql/Message";
 import { selectProjectByCreator, updateProject } from "graphql/Project";
 import {
@@ -198,5 +198,13 @@ describe("card api tests", () => {
     };
     const result: ResultOutput = await updateCard(cardUpdateInfo);
     expect(result.success).toEqual(true);
+  });
+
+  test("should get card select by board", async () => {
+    const boardId = {
+      boardId: process.env.REACT_APP_CARD_BOARDID ?? "",
+    };
+    const result: Array<CardModel.Info> = await selectCardsByBoardId(boardId);
+    expect(result.length).toEqual(1);
   });
 });

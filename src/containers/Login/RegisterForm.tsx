@@ -1,4 +1,4 @@
-import { message, Type } from "components/MessageBox";
+import { message } from "components/MessageBox";
 import { register } from "graphql/User";
 import useFormData from "hooks/useFromData";
 import useLoading from "hooks/useLoading";
@@ -53,12 +53,12 @@ export default function RegisterForm(props?: Props) {
     const res = await loadingOps(register, registerForm);
     if (res.success) {
       message({
-        type: Type.Success,
+        type: "success",
         title: "Register Succed!",
       });
     } else {
       message({
-        type: Type.Error,
+        type: "error",
         title: "Register Failed!",
         content: res.message,
       });

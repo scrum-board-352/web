@@ -1,4 +1,4 @@
-import { message, Type } from "components/MessageBox";
+import { message } from "components/MessageBox";
 import { login } from "graphql/User";
 import useFormData from "hooks/useFromData";
 import useLoading from "hooks/useLoading";
@@ -45,7 +45,7 @@ export default function LoginForm(props?: Props) {
     const userInfo = await loadingOps(login, loginForm);
     if (null === userInfo.id) {
       message({
-        type: Type.Error,
+        type: "error",
         title: "Login Failed!",
         content: "No such user or password not match.",
       });
@@ -53,7 +53,7 @@ export default function LoginForm(props?: Props) {
       setPasswordInputOk(false);
     } else {
       message({
-        type: Type.Success,
+        type: "success",
         title: "Login Succed!",
       });
       console.log(userInfo);

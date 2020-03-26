@@ -3,18 +3,19 @@ import { Alert } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./style.css";
 
-export enum Type {
-  Success = "success",
-  Error = "danger",
-  Info = "info",
-}
-
 export interface Message {
-  type: Type;
+  type: "success" | "error" | "info";
   title: string;
   content?: string;
   timerId?: number;
   id?: number;
+}
+
+function type(t: Message["type"]) {
+  if (t === "error") {
+    return "danger";
+  }
+  return t;
 }
 
 const AUTO_CLOSE_TIMEOUT = 4000;
@@ -48,7 +49,7 @@ export default function MessageBox() {
             classNames="messagebox"
           >
             <Alert
-              variant={msg.type}
+              variant={type(msg.type)}
               show={true}
               dismissible
               onClose={() => close(msg)}

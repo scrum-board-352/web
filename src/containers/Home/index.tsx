@@ -1,12 +1,12 @@
 import Comment from "components/Comment";
-import { message, Type } from "components/MessageBox";
+import { message, Message } from "components/MessageBox";
 import ModalForm, { Template, Values } from "components/ModalForm";
 import React, { Fragment, useState } from "react";
 import { Button } from "react-bootstrap";
 import testTextPlaceholder from "utils/testTextPlaceholder";
 
 function Home() {
-  function showMsg(t: Type) {
+  function showMsg(t: Message["type"]) {
     console.log("click");
     message({
       type: t,
@@ -43,9 +43,9 @@ function Home() {
   return (
     <Fragment>
       <h1>This is Home</h1>
-      <Button onClick={() => showMsg(Type.Success)}>Show success</Button>
-      <Button onClick={() => showMsg(Type.Error)}>Show error</Button>
-      <Button onClick={() => showMsg(Type.Info)}>Show info</Button>
+      <Button onClick={() => showMsg("success")}>Show success</Button>
+      <Button onClick={() => showMsg("error")}>Show error</Button>
+      <Button onClick={() => showMsg("info")}>Show info</Button>
       <Button onClick={() => setShow(true)}>show modal</Button>
       <ModalForm
         title="Test"

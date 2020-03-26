@@ -8,6 +8,7 @@ import Priority from "./Priority";
 
 type Props = {
   card: CardModel.Info;
+  onClick?: () => void;
 };
 
 export default function Card(props: Props) {
@@ -31,12 +32,13 @@ export default function Card(props: Props) {
       draggable="true"
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
+      onClick={props.onClick}
     >
       <div className={style.header}>
         <p className={style.title}>{props.card.title}</p>
         <SettingButton type="dot-h" size="1rem" />
       </div>
-      <p className={style.description}>{props.card.description}</p>
+      <p className={style.description}>{props.card.description ?? "None"}</p>
       <div className={style.footer}>
         <Avatar
           size="1rem"

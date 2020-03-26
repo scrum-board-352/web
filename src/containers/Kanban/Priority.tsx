@@ -35,7 +35,7 @@ export default function Priority(props: Props) {
   return (
     <span className={style.priority}>
       <span className={colorClass}>{arrow}</span>
-      <span className={style.priority_test}>{props.priority}</span>
+      <span className={style.priority_text}>{props.priority ?? "None"}</span>
     </span>
   );
 }

@@ -7,6 +7,7 @@ const content =
 
 const card1: CardModel.Info = {
   id: "0",
+  boardId: "0",
   title: "Fix bug",
   description: content,
   createTime: "2020-03-17",
@@ -18,6 +19,7 @@ const card1: CardModel.Info = {
 
 const card2: CardModel.Info = {
   id: "1545345",
+  boardId: "1",
   title: "Add new feature",
   description: content,
   createTime: "2020-03-17",
@@ -30,7 +32,7 @@ const card2: CardModel.Info = {
 const cards = new Array(10)
   .fill(null)
   .map((_, i) => {
-    return { ...card1, id: String(i) };
+    return { ...card1, id: i.toString(), boardId: i.toString() };
   })
   .concat(card2);
 

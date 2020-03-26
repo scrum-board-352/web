@@ -4,7 +4,7 @@ import client from "./client";
 
 export async function getCommitByReceiver(receiver: {
   receiver: string;
-}): Promise<[Message.Info]> {
+}): Promise<Array<Message.Info>> {
   const data = await client.request(
     MessageQuery.getCommitByReceiverQuery,
     receiver

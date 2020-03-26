@@ -62,7 +62,7 @@ describe("user api tests", () => {
     const usernameSubstring = {
       usernameSubstring: process.env.REACT_APP_SELECT_SUBSTRING ?? "",
     };
-    const result: [UserModel.PrivateInfo] = await selectUserBySubstring(
+    const result: Array<UserModel.PrivateInfo> = await selectUserBySubstring(
       usernameSubstring
     );
     expect(result.length).toEqual(2);
@@ -74,7 +74,7 @@ describe("message api tests", () => {
     const receiver = {
       receiver: process.env.REACT_APP_RECEIVER_USERNAME ?? "",
     };
-    const result: [Message.Info] = await getCommitByReceiver(receiver);
+    const result: Array<Message.Info> = await getCommitByReceiver(receiver);
     expect(result.length).toEqual(2);
   });
 });
@@ -119,7 +119,9 @@ describe("project api tests", () => {
     const creator = {
       creator: process.env.REACT_APP_PROJECT_CREATOR ?? "",
     };
-    const result: [ProjectModel.Info] = await selectProjectByCreator(creator);
+    const result: Array<ProjectModel.Info> = await selectProjectByCreator(
+      creator
+    );
     expect(result.length).toEqual(1);
   });
 
@@ -164,7 +166,9 @@ describe("board api tests", () => {
     const projectId = {
       projectId: process.env.REACT_APP_BOARD_PROJECTID ?? "",
     };
-    const result: [BoardModel.Info] = await selectBoardsByProjectId(projectId);
+    const result: Array<BoardModel.Info> = await selectBoardsByProjectId(
+      projectId
+    );
     expect(result.length).toEqual(1);
   });
 

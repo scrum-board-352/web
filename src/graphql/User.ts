@@ -37,7 +37,7 @@ export async function update(
 
 export async function selectUserBySubstring(usernameSubstring: {
   usernameSubstring: string;
-}): Promise<[UserModel.PrivateInfo]> {
+}): Promise<Array<UserModel.PrivateInfo>> {
   const data = await client.request(UserQuery.selectUser, usernameSubstring);
   return data.selectUserBySubstring;
 }

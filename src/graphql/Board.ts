@@ -20,7 +20,7 @@ export async function removeBoard(boardId: {
 
 export async function selectBoardsByProjectId(projectId: {
   projectId: string;
-}): Promise<[BoardModel.Info]> {
+}): Promise<Array<BoardModel.Info>> {
   const data = await client.request(
     BoardQuery.selectBoardsByProjectIdQuery,
     projectId

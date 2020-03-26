@@ -6,7 +6,7 @@ import client from "./client";
 
 export async function selectProjectByCreator(creator: {
   creator: string;
-}): Promise<[ProjectModel.Info]> {
+}): Promise<Array<ProjectModel.Info>> {
   const data = await client.request(
     ProjectQuery.selectProjectByCreatorQuery,
     creator

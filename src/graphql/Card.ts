@@ -24,3 +24,10 @@ export async function selectCardsByBoardId(boardId: {
   const data = await client.request(CardQuery.selectCardsByBoardId, boardId);
   return data.selectCardsByBoardId;
 }
+
+export async function removeCard(cardId: {
+  cardId: string;
+}): Promise<ResultOutput> {
+  const data = await client.request(CardMutation.removeCard, cardId);
+  return data.removeCard;
+}

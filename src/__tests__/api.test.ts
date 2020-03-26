@@ -182,16 +182,16 @@ describe("board api tests", () => {
 });
 
 describe("card api tests", () => {
-  //   test("should get card create", async () => {
-  //     const cardCreateInfo: CardModel.CreateInfo = {
-  //       title: process.env.REACT_APP_CARD_TITLE ?? "",
-  //       status: process.env.REACT_APP_CARD_STATUS ?? "",
-  //       founder: process.env.REACT_APP_CARD_FOUNDER ?? "",
-  //       boardId: process.env.REACT_APP_CARD_BOARDID ?? "",
-  //     };
-  //     const result: ResultOutput = await createCard(cardCreateInfo);
-  //     expect(result.success).toEqual(true);
-  //   });
+  // test("should get card create", async () => {
+  //   const cardCreateInfo: CardModel.CreateInfo = {
+  //     title: process.env.REACT_APP_CARD_TITLE ?? "",
+  //     status: process.env.REACT_APP_CARD_STATUS ?? "",
+  //     founder: process.env.REACT_APP_CARD_FOUNDER ?? "",
+  //     boardId: process.env.REACT_APP_CARD_BOARDID ?? "",
+  //   };
+  //   const result: ResultOutput = await createCard(cardCreateInfo);
+  //   expect(result.success).toEqual(true);
+  // });
   test("should get card update", async () => {
     const cardUpdateInfo: CardModel.UpdateInfo = {
       id: process.env.REACT_APP_CARD_ID ?? "",
@@ -207,4 +207,12 @@ describe("card api tests", () => {
     const result: Array<CardModel.Info> = await selectCardsByBoardId(boardId);
     expect(result.length).toEqual(1);
   });
+
+  // test("should get card remove", async () => {
+  //   const cardId = {
+  //     cardId: process.env.REACT_APP_CARD_ID ?? "",
+  //   };
+  //   const result: ResultOutput = await removeCard(cardId);
+  //   expect(result.success).toEqual(true);
+  // });
 });

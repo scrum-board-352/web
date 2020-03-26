@@ -50,4 +50,14 @@ mutation updateCard($id: String,
 }
 `;
 
-export default { createCard, updateCard };
+const removeCard = `
+mutation removeCard($cardId: String){
+  removeCard(cardId: $cardId) {
+    success: susses
+    message
+  }
+}
+
+`;
+
+export default { createCard, updateCard, removeCard };

@@ -1,6 +1,6 @@
 import Comment from "components/Comment";
 import { message, Message } from "components/MessageBox";
-import ModalForm, { Template, Values } from "components/ModalForm";
+import ModalForm, { Template } from "components/ModalForm";
 import React, { Fragment, useState } from "react";
 import { Button } from "react-bootstrap";
 import testTextPlaceholder from "utils/testTextPlaceholder";
@@ -16,17 +16,26 @@ function Home() {
     });
   }
 
-  const templates: Template[] = [
+  type FormDataType = {
+    teamName: string;
+    value: number;
+    description: string;
+  };
+
+  const templates: Template<FormDataType>[] = [
     {
-      name: "Team name",
+      name: "teamName",
+      label: "Team name",
       type: "text",
     },
     {
       name: "value",
+      label: "value",
       type: "number",
     },
     {
-      name: "Description",
+      name: "description",
+      label: "Description",
       type: "textarea",
     },
   ];
@@ -34,7 +43,7 @@ function Home() {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  function handleSubmit(values: Values) {
+  function handleSubmit(values: FormDataType) {
     setLoading(true);
     console.log(values);
     setTimeout(setLoading, 5000, false);
@@ -47,7 +56,7 @@ function Home() {
       <Button onClick={() => showMsg("error")}>Show error</Button>
       <Button onClick={() => showMsg("info")}>Show info</Button>
       <Button onClick={() => setShow(true)}>show modal</Button>
-      <ModalForm
+      <ModalForm<FormDataType>
         title="Test"
         loading={loading}
         templates={templates}

@@ -1,27 +1,65 @@
-import useFormData from "hooks/useFromData";
+import useFormData from "hooks/useFormData";
 import React, { Fragment } from "react";
 import { Button, Form, Modal, Spinner } from "react-bootstrap";
 
-export interface Template {
-  name: string;
-  type: string;
+type Option = {
+  label: string;
+  value: string;
+};
+
+export interface Template<T extends Object> {
+  name: keyof T;
+  label: string;
+  type: "text" | "number" | "textarea" | "select";
+  options?: Array<Option>;
 }
 
-export interface Values {
-  [name: string]: string;
-}
-
-type Props = {
+type Props<T> = {
   title: string;
-  templates: Template[];
+  templates: Template<T>[];
   show: boolean;
   loading: boolean;
   onClose: () => void;
-  onSubmit: (values: Values) => void;
+  onSubmit: (values: T) => void;
 };
 
-export default function ModalForm(props: Props) {
-  const [values, handleInputChange] = useFormData<Values>({});
+function asType(type: Template<any>["type"]) {
+  switch (type) {
+    case "text":
+    case "number":
+      return "input";
+
+    case "textarea":
+      return "textarea";
+
+    case "select":
+      return "select";
+
+    default:
+      throw new TypeError(`can not use type '${type}' as form element type!`);
+  }
+}
+
+function generateOptions(options?: Array<Option>) {
+  if (!options) {
+    return null;
+  }
+  return (
+    <Fragment>
+      <option key="nonenone" value="">
+        None
+      </option>
+      {options.map((o) => (
+        <option key={o.value} value={o.value}>
+          {o.label}
+        </option>
+      ))}
+    </Fragment>
+  );
+}
+
+export default function ModalForm<T extends object>(props: Props<T>) {
+  const [values, handleInputChange, clear] = useFormData<T>();
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -30,22 +68,32 @@ export default function ModalForm(props: Props) {
 
   return (
     <Fragment>
-      <Modal show={props.show} onHide={props.onClose} centered>
+      <Modal
+        show={props.show}
+        onHide={() => {
+          props.onClose();
+          clear();
+        }}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={submit}>
             {props.templates.map((t) => (
-              <Form.Group key={t.name}>
-                <Form.Label>{t.name}</Form.Label>
+              <Form.Group key={String(t.name)}>
+                <Form.Label>{t.label}</Form.Label>
                 <Form.Control
                   disabled={props.loading}
                   type={t.type}
                   name={t.name}
+                  value={String(values[t.name] ?? "")}
                   onChange={handleInputChange}
-                  as={t.type === "textarea" ? "textarea" : "input"}
-                />
+                  as={asType(t.type)}
+                >
+                  {t.type === "select" ? generateOptions(t.options) : null}
+                </Form.Control>
               </Form.Group>
             ))}
 

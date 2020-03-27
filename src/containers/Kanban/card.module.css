@@ -1,4 +1,7 @@
 .card {
+  min-height: 11rem;
+  display: flex;
+  flex-direction: column;
   border: 1px solid #ddd;
   border-radius: 6px;
   margin-bottom: 1rem;
@@ -26,6 +29,7 @@
   color: var(--gray);
   line-height: 1rem;
   font-size: 13px;
+  flex-grow: 1;
 }
 
 .header {

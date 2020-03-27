@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import ModalForm, { Template } from "components/ModalForm";
+import CardModel from "models/Card";
+import React, { Fragment, useContext, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import ScrollBox from "react-responsive-scrollbox";
 import className from "utils/class-name";
 import Card from "./Card";
 import style from "./card-col.module.css";
-import { CardsContext } from "./CardsManager";
+import { CardsContext, createCard } from "./CardsManager";
 
 type Props = {
   colName: string;
@@ -17,6 +19,52 @@ type Props = {
 function handleDragOver(e: React.DragEvent) {
   e.preventDefault();
 }
+
+const createCardFormTemplate: Template<CardModel.CreateInfo>[] = [
+  {
+    label: "Title",
+    name: "title",
+    type: "text",
+  },
+  {
+    label: "Description",
+    name: "description",
+    type: "textarea",
+  },
+  {
+    label: "Story Points",
+    name: "storyPoints",
+    type: "number",
+  },
+  {
+    label: "Priority",
+    name: "priority",
+    type: "select",
+    options: [
+      {
+        label: "High",
+        value: "high",
+      },
+      {
+        label: "Medium",
+        value: "medium",
+      },
+      {
+        label: "Low",
+        value: "low",
+      },
+      {
+        label: "Lowest",
+        value: "lowest",
+      },
+    ],
+  },
+  {
+    label: "Processor",
+    name: "processor",
+    type: "text",
+  },
+];
 
 export default function CardCol(props: Props) {
   let droppable = false;
@@ -67,37 +115,60 @@ export default function CardCol(props: Props) {
     ? style.droppable
     : "";
 
+  const [showCreateCard, setShowCreateCard] = useState(false);
+  const [createCardLoading, setCreateCardLoading] = useState(false);
+
+  async function submitCreateCard(values: CardModel.CreateInfo) {
+    values.status = props.colName;
+    console.log(values);
+    await createCard(values);
+  }
+
+  function showCreateCardDialog() {
+    setShowCreateCard(true);
+  }
+
   return (
-    <div
-      className={style.card_col}
-      data-col-name={props.colName}
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
-      onDragEnter={handleDragEnter}
-      onDragLeave={handleDragLeave}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-    >
-      <p className={style.title}>{props.colName}</p>
-      <button className={style.add_card_btn}>
-        <IoMdAdd />
-        <span>New Card</span>
-      </button>
-      <ScrollBox
-        className={className(
-          style.cards_container,
-          dropClass,
-          "scrollbar_thumb_green"
-        )}
+    <Fragment>
+      <ModalForm<CardModel.CreateInfo>
+        title="Create New Card"
+        templates={createCardFormTemplate}
+        show={showCreateCard}
+        onClose={() => setShowCreateCard(false)}
+        onSubmit={submitCreateCard}
+        loading={createCardLoading}
+      />
+      <div
+        className={style.card_col}
+        data-col-name={props.colName}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
       >
-        {cards.map((card) => (
-          <Card
-            key={card.id}
-            card={card}
-            onClick={() => props.onClickCard?.(card.id)}
-          />
-        ))}
-      </ScrollBox>
-    </div>
+        <p className={style.title}>{props.colName}</p>
+        <button className={style.add_card_btn} onClick={showCreateCardDialog}>
+          <IoMdAdd />
+          <span>New Card</span>
+        </button>
+        <ScrollBox
+          className={className(
+            style.cards_container,
+            dropClass,
+            "scrollbar_thumb_green"
+          )}
+        >
+          {cards.map((card) => (
+            <Card
+              key={card.id}
+              card={card}
+              onClick={() => props.onClickCard?.(card.id)}
+            />
+          ))}
+        </ScrollBox>
+      </div>
+    </Fragment>
   );
 }

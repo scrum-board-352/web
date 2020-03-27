@@ -75,6 +75,12 @@ export function getCardById(id: string) {
 }
 
 export async function createCard(card: CardModel.CreateInfo) {
+  const createdCard: CardModel.Info = {
+    ...card,
+    id: Math.random().toString(),
+    createTime: "2020-03-27",
+  };
+  cards.push(createdCard);
   update();
 }
 

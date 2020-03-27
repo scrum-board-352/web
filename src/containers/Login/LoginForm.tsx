@@ -1,6 +1,6 @@
 import { message } from "components/MessageBox";
 import { login } from "graphql/User";
-import useFormData from "hooks/useFromData";
+import useFormData from "hooks/useFormData";
 import useLoading from "hooks/useLoading";
 import UserModel from "models/User";
 import React, { Fragment, useState } from "react";

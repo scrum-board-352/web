@@ -19,4 +19,24 @@ mutation createCommit($description: String, $announcer: String, $receiver: Strin
 }
 `;
 
-export default { createCommit };
+const updateCommit = `
+mutation updateCommit($description: String, $read: Boolean, $id: String){
+  updateCommit(selectionInput: {
+    commitInput: {
+      description: $description
+      read: $read
+      id: $id
+    }
+  }){
+    id
+    description
+    announcer
+    receiver
+    updateTime
+    cardId
+    read
+  }
+}
+`;
+
+export default { createCommit, updateCommit };

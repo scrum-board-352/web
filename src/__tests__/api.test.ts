@@ -1,5 +1,6 @@
 import { selectBoardsByProjectId } from "graphql/Board";
 import { selectCardsByBoardId, updateCard } from "graphql/Card";
+import { updateCommit } from "graphql/Commit";
 import { getCommitByReceiver } from "graphql/Message";
 import { selectProjectByCreator, updateProject } from "graphql/Project";
 import {
@@ -17,7 +18,7 @@ import {
 import BoardModel from "models/Board";
 import CardModel from "models/Card";
 import EmailModel from "models/Email";
-import Message from "models/Message";
+import Message, { default as Commit } from "models/Message";
 import ProjectModel from "models/Project";
 import ResultOutput from "models/ResultOutput";
 import TeamModel from "models/Team";
@@ -230,13 +231,17 @@ describe("commit api tests", () => {
   //     process.env.REACT_APP_COMMIT_DESCRIPTION
   //   );
   // });
-  // test("should get card update", async () => {
-  //   const cardUpdateInfo: CardModel.UpdateInfo = {
-  //     id: process.env.REACT_APP_CARD_ID ?? "",
-  //   };
-  //   const result: ResultOutput = await updateCard(cardUpdateInfo);
-  //   expect(result.success).toEqual(true);
-  // });
+  test("should get commit update", async () => {
+    const commitUpdateInfo: Commit.UpdateInfo = {
+      id: process.env.REACT_APP_COMMIT_ID ?? "",
+      read: (process.env.REACT_APP_COMMIT_READ ?? "") === "true",
+      description: process.env.REACT_APP_COMMIT_DESCRIPTION_UPDATE ?? "",
+    };
+    const result: Commit.Info = await updateCommit(commitUpdateInfo);
+    expect(result.description).toEqual(
+      process.env.REACT_APP_COMMIT_DESCRIPTION_UPDATE
+    );
+  });
   // test("should get card select by board", async () => {
   //   const boardId = {
   //     boardId: process.env.REACT_APP_CARD_BOARDID ?? "",

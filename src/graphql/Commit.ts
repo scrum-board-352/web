@@ -8,3 +8,10 @@ export async function createCommit(
   const data = await client.request(CommitMutation.createCommit, createInfo);
   return data.createCommit;
 }
+
+export async function updateCommit(
+  updateInfo: Commit.UpdateInfo
+): Promise<Commit.Info> {
+  const data = await client.request(CommitMutation.updateCommit, updateInfo);
+  return data.updateCommit;
+}

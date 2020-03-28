@@ -15,6 +15,12 @@ namespace MessageModel {
     receiver: string;
     cardId: string;
   }
+
+  export interface UpdateInfo {
+    description?: string;
+    read?: boolean;
+    id: string;
+  }
 }
 
 export default MessageModel;

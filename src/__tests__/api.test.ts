@@ -216,3 +216,39 @@ describe("card api tests", () => {
   //   expect(result.success).toEqual(true);
   // });
 });
+
+describe("commit api tests", () => {
+  // test("should get commit create", async () => {
+  //   const commitCreateInfo: Commit.CreateInfo = {
+  //     description: process.env.REACT_APP_COMMIT_DESCRIPTION ?? "",
+  //     announcer: process.env.REACT_APP_COMMIT_ANNOUNCER ?? "",
+  //     receiver: process.env.REACT_APP_COMMIT_RECEIVER ?? "",
+  //     cardId: process.env.REACT_APP_COMMIT_CARDID ?? "",
+  //   };
+  //   const result: Commit.Info = await createCommit(commitCreateInfo);
+  //   expect(result.description).toEqual(
+  //     process.env.REACT_APP_COMMIT_DESCRIPTION
+  //   );
+  // });
+  // test("should get card update", async () => {
+  //   const cardUpdateInfo: CardModel.UpdateInfo = {
+  //     id: process.env.REACT_APP_CARD_ID ?? "",
+  //   };
+  //   const result: ResultOutput = await updateCard(cardUpdateInfo);
+  //   expect(result.success).toEqual(true);
+  // });
+  // test("should get card select by board", async () => {
+  //   const boardId = {
+  //     boardId: process.env.REACT_APP_CARD_BOARDID ?? "",
+  //   };
+  //   const result: Array<CardModel.Info> = await selectCardsByBoardId(boardId);
+  //   expect(result.length).toEqual(1);
+  // });
+  // test("should get card remove", async () => {
+  //   const cardId = {
+  //     cardId: process.env.REACT_APP_CARD_ID ?? "",
+  //   };
+  //   const result: ResultOutput = await removeCard(cardId);
+  //   expect(result.success).toEqual(true);
+  // });
+});

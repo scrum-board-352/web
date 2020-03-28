@@ -16,7 +16,7 @@ export async function selectProjectByCreator(creator: {
 
 export async function createProject(
   projeceCreateModel: ProjectModel.CreateInfo
-): Promise<ResultOutput> {
+): Promise<ProjectModel.Info> {
   const data = await client.request(
     ProjectMutation.createProject,
     projeceCreateModel
@@ -26,7 +26,7 @@ export async function createProject(
 
 export async function updateProject(
   projeceUpdateModel: ProjectModel.UpdateInfo
-): Promise<ResultOutput> {
+): Promise<ProjectModel.Info> {
   const data = await client.request(
     ProjectMutation.updateProject,
     projeceUpdateModel

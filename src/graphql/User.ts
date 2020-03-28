@@ -30,7 +30,7 @@ export async function register(
 
 export async function update(
   updateInfo: UserModel.UpdateInfo
-): Promise<ResultOutput> {
+): Promise<UserModel.PrivateInfo> {
   const data = await client.request(UserMutation.updateMutation, updateInfo);
   return data.updateUser;
 }

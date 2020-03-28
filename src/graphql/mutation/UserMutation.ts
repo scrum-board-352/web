@@ -23,8 +23,10 @@ mutation updateUser($username: String!, $password: String, $power: String, $icon
       icon: $icon
     }
   }){
-    success: susses
-    message
+      id
+      name: username
+      email
+      avatar: icon
   }
 }
 `;

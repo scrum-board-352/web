@@ -7,7 +7,7 @@ import TeamQuery from "./query/TeamQuery";
 
 export async function createTeam(
   teamInfo: TeamModel.CreateInfo
-): Promise<ResultOutput> {
+): Promise<TeamModel.Info> {
   const data = await client.request(TeamMutation.createTeamMutation, teamInfo);
   return data.createTeam;
 }
@@ -21,7 +21,7 @@ export async function sendEmailToInviteReceiverJoinTeam(
 
 export async function updateTeam(
   teamInfo: TeamModel.Info
-): Promise<ResultOutput> {
+): Promise<TeamModel.Info> {
   const date = await client.request(TeamMutation.updateTeam, teamInfo);
   return date.updateTeam;
 }

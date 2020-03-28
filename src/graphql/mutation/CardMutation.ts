@@ -19,8 +19,15 @@ mutation createCard($title: String,
       boardId: $boardId
     }
   }){
-    success: susses
-    message
+    id
+    createTime
+    title
+  	description
+    priority
+    storyPoints
+    processor
+    founder
+    status
   }
 }
 `;
@@ -44,8 +51,15 @@ mutation updateCard($id: String,
       status: $status
     }
   }){
-    success: susses
-    message
+    id
+    createTime
+    title
+  	description
+    priority
+    storyPoints
+    processor
+    founder
+    status
   }
 }
 `;

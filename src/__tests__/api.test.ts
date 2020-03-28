@@ -54,8 +54,8 @@ describe("user api tests", () => {
       username: process.env.REACT_APP_UPDATE_USERNAME ?? "",
       password: process.env.REACT_APP_UPDATE_PASSWORD ?? "",
     };
-    const result: ResultOutput = await update(updateInfo);
-    expect(result.success).toEqual(true);
+    const result: UserModel.PrivateInfo = await update(updateInfo);
+    expect(result.name).toEqual(process.env.REACT_APP_UPDATE_USERNAME);
   });
 
   test("should get user select by substring", async () => {
@@ -118,8 +118,10 @@ describe("team api tests", () => {
       name: process.env.REACT_APP_TEAM_NAME ?? "",
       description: process.env.REACT_APP_TEAM_DESCRIPTION ?? "",
     };
-    const result: ResultOutput = await createTeam(teamInfo);
-    expect(result.message).toEqual("one creator can not create same name team");
+    const result: TeamModel.Info = await createTeam(teamInfo);
+    expect(result.description).toEqual(
+      "one creator can not create same name team"
+    );
   });
 
   test("should get email send", async () => {
@@ -141,8 +143,8 @@ describe("team api tests", () => {
       name: process.env.REACT_APP_TEAM_NAME ?? "",
       description: process.env.REACT_APP_TEAM_DESCRIPTION ?? "",
     };
-    const result: ResultOutput = await updateTeam(teamInfo);
-    expect(result.success).toEqual(true);
+    const result: TeamModel.Info = await updateTeam(teamInfo);
+    expect(result.description).toEqual(process.env.REACT_APP_TEAM_DESCRIPTION);
   });
 });
 
@@ -163,8 +165,8 @@ describe("project api tests", () => {
   //     creator: process.env.REACT_APP_PROJECT_CREATOR ?? "",
   //     name: process.env.REACT_APP_PROJECT_NAME ?? "",
   //   };
-  //   const result: ResultOutput = await createProject(projectCreateModel);
-  //   expect(result.success).toEqual(true);
+  //   const result: ProjectModel.Info = await createProject(projectCreateModel);
+  //   expect(result.creator).toEqual( process.env.REACT_APP_PROJECT_CREATOR);
   // });
 
   test("should get project update", async () => {
@@ -172,8 +174,8 @@ describe("project api tests", () => {
       id: process.env.REACT_APP_PROJECT_ID ?? "",
       name: process.env.REACT_APP_PROJECT_NAME ?? "",
     };
-    const result: ResultOutput = await updateProject(projectCreateModel);
-    expect(result.success).toEqual(true);
+    const result: ProjectModel.Info = await updateProject(projectCreateModel);
+    expect(result.name).toEqual(process.env.REACT_APP_PROJECT_NAME);
   });
 
   // test("should get project remove", async () => {
@@ -190,8 +192,8 @@ describe("board api tests", () => {
   //   const boardCreateInfo: BoardModel.CreateInfo = {
   //     projectId: process.env.REACT_APP_BOARD_PROJECTID ?? "",
   //   };
-  //   const result: ResultOutput = await createBoard(boardCreateInfo);
-  //   expect(result.success).toEqual(true);
+  //   const result: BoardModel.Info = await createBoard(boardCreateInfo);
+  //   expect(result.id).not.toBeNull();
   // });
 
   test("should get board select by projectId", async () => {
@@ -201,7 +203,7 @@ describe("board api tests", () => {
     const result: Array<BoardModel.Info> = await selectBoardsByProjectId(
       projectId
     );
-    expect(result.length).toEqual(1);
+    expect(result.length).toEqual(2);
   });
 
   // test("should get board remove", async () => {
@@ -221,15 +223,16 @@ describe("card api tests", () => {
   //     founder: process.env.REACT_APP_CARD_FOUNDER ?? "",
   //     boardId: process.env.REACT_APP_CARD_BOARDID ?? "",
   //   };
-  //   const result: ResultOutput = await createCard(cardCreateInfo);
-  //   expect(result.success).toEqual(true);
+  //   const result: CardModel.Info = await createCard(cardCreateInfo);
+  //   expect(result.title).toEqual(process.env.REACT_APP_CARD_TITLE);
   // });
   test("should get card update", async () => {
     const cardUpdateInfo: CardModel.UpdateInfo = {
       id: process.env.REACT_APP_CARD_ID ?? "",
+      title: process.env.REACT_APP_CARD_TITLE_UPDATE ?? "",
     };
-    const result: ResultOutput = await updateCard(cardUpdateInfo);
-    expect(result.success).toEqual(true);
+    const result: CardModel.Info = await updateCard(cardUpdateInfo);
+    expect(result.title).toEqual(process.env.REACT_APP_CARD_TITLE_UPDATE);
   });
 
   test("should get card select by board", async () => {

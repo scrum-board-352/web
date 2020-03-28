@@ -7,8 +7,10 @@ mutation createTeam($creator:String, $name:String, $description: String){
       description: $description
     }
   }){
-    success: susses
-    message
+    id
+    name: teamname
+    creator
+    description
   }
 }
 `;
@@ -22,8 +24,10 @@ mutation updateTeam($id:String, $creator:String, $name:String, $description:Stri
       description: $description
     }
   }){
-    success: susses
-    message
+    id
+    name: teamname
+    creator
+    description
   }
 }
 `;

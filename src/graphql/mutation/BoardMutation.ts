@@ -5,8 +5,8 @@ mutation createBoard($projectId: String) {
       projectId: $projectId
     }
   }){
-  	success: susses
-    message
+  	id
+    createTime
   }
 }
 `;

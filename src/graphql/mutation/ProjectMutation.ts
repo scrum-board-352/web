@@ -11,8 +11,14 @@ mutation createProjec($creator: String, $name: String, $teamId: String, $col: [S
       
     }
   }){
-    success: susses
-    message
+    id
+    name: projectName
+    creator
+    teamId
+    createTime
+    col: colTitle
+    row: rowTitle
+    iteration
   }
 }
 `;
@@ -29,8 +35,14 @@ mutation updateProject($id: String, $name: String, $teamId: String, $col: [Strin
       iteration: $iteration
     }
   }){
-    success: susses
-    message
+    id
+    name: projectName
+    creator
+    teamId
+    createTime
+    col: colTitle
+    row: rowTitle
+    iteration
   }
 }
 `;

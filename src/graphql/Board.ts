@@ -6,7 +6,7 @@ import client from "./client";
 
 export async function createBoard(
   createInfo: Board.CreateInfo
-): Promise<ResultOutput> {
+): Promise<BoardModel.Info> {
   const data = await client.request(BoardMutation.createBoard, createInfo);
   return data.createBoard;
 }

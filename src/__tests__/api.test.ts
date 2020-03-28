@@ -4,6 +4,7 @@ import { getCommitByReceiver, updateCommit } from "graphql/Message";
 import { selectProjectByCreator, updateProject } from "graphql/Project";
 import {
   createTeam,
+  selectTeamByUser,
   sendEmailToInviteReceiverJoinTeam,
   updateTeam,
 } from "graphql/Team";
@@ -145,6 +146,14 @@ describe("team api tests", () => {
     };
     const result: TeamModel.Info = await updateTeam(teamInfo);
     expect(result.description).toEqual(process.env.REACT_APP_TEAM_DESCRIPTION);
+  });
+
+  test("should get teamList by user", async () => {
+    const username = {
+      username: process.env.REACT_APP_TEAM_CREATOR ?? "",
+    };
+    const result: Array<TeamModel.Info> = await selectTeamByUser(username);
+    expect(result.length).toEqual(1);
   });
 });
 

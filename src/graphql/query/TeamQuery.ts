@@ -11,4 +11,15 @@ query sendEmailToInviteReceiverJoinTeam($receiverMail: String!, $announcer: Stri
 }
 `;
 
-export default { sendEmailQuery };
+const selectTeamByUser = `
+query selectTeamByUser($username: String!){
+  selectTeamByUsername(username: $username) {
+    id
+    name: teamname
+    creator
+    description
+  }
+}
+`;
+
+export default { sendEmailQuery, selectTeamByUser };

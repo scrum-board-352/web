@@ -1,7 +1,6 @@
 import { selectBoardsByProjectId } from "graphql/Board";
 import { selectCardsByBoardId, updateCard } from "graphql/Card";
-import { updateCommit } from "graphql/Commit";
-import { getCommitByReceiver } from "graphql/Message";
+import { getCommitByReceiver, updateCommit } from "graphql/Message";
 import { selectProjectByCreator, updateProject } from "graphql/Project";
 import {
   createTeam,
@@ -18,7 +17,7 @@ import {
 import BoardModel from "models/Board";
 import CardModel from "models/Card";
 import EmailModel from "models/Email";
-import Message, { default as Commit } from "models/Message";
+import Message from "models/Message";
 import ProjectModel from "models/Project";
 import ResultOutput from "models/ResultOutput";
 import TeamModel from "models/Team";
@@ -78,6 +77,38 @@ describe("message api tests", () => {
     const result: Array<Message.Info> = await getCommitByReceiver(receiver);
     expect(result.length).toEqual(2);
   });
+
+  // test("should get commit create", async () => {
+  //   const commitCreateInfo: Commit.CreateInfo = {
+  //     description: process.env.REACT_APP_COMMIT_DESCRIPTION ?? "",
+  //     announcer: process.env.REACT_APP_COMMIT_ANNOUNCER ?? "",
+  //     receiver: process.env.REACT_APP_COMMIT_RECEIVER ?? "",
+  //     cardId: process.env.REACT_APP_COMMIT_CARDID ?? "",
+  //   };
+  //   const result: Commit.Info = await createCommit(commitCreateInfo);
+  //   expect(result.description).toEqual(
+  //     process.env.REACT_APP_COMMIT_DESCRIPTION
+  //   );
+  // });
+  test("should get commit update", async () => {
+    const commitUpdateInfo: Message.UpdateInfo = {
+      id: process.env.REACT_APP_COMMIT_ID ?? "",
+      read: (process.env.REACT_APP_COMMIT_READ ?? "") === "true",
+      description: process.env.REACT_APP_COMMIT_DESCRIPTION_UPDATE ?? "",
+    };
+    const result: Message.Info = await updateCommit(commitUpdateInfo);
+    expect(result.description).toEqual(
+      process.env.REACT_APP_COMMIT_DESCRIPTION_UPDATE
+    );
+  });
+
+  // test("should get commit remove", async () => {
+  //   const commitId = {
+  //     commitId: process.env.REACT_APP_COMMIT_ID ?? "",
+  //   };
+  //   const result: ResultOutput = await removeCommit(commitId);
+  //   expect(result.success).toEqual(true);
+  // });
 });
 
 describe("team api tests", () => {
@@ -209,46 +240,6 @@ describe("card api tests", () => {
     expect(result.length).toEqual(1);
   });
 
-  // test("should get card remove", async () => {
-  //   const cardId = {
-  //     cardId: process.env.REACT_APP_CARD_ID ?? "",
-  //   };
-  //   const result: ResultOutput = await removeCard(cardId);
-  //   expect(result.success).toEqual(true);
-  // });
-});
-
-describe("commit api tests", () => {
-  // test("should get commit create", async () => {
-  //   const commitCreateInfo: Commit.CreateInfo = {
-  //     description: process.env.REACT_APP_COMMIT_DESCRIPTION ?? "",
-  //     announcer: process.env.REACT_APP_COMMIT_ANNOUNCER ?? "",
-  //     receiver: process.env.REACT_APP_COMMIT_RECEIVER ?? "",
-  //     cardId: process.env.REACT_APP_COMMIT_CARDID ?? "",
-  //   };
-  //   const result: Commit.Info = await createCommit(commitCreateInfo);
-  //   expect(result.description).toEqual(
-  //     process.env.REACT_APP_COMMIT_DESCRIPTION
-  //   );
-  // });
-  test("should get commit update", async () => {
-    const commitUpdateInfo: Commit.UpdateInfo = {
-      id: process.env.REACT_APP_COMMIT_ID ?? "",
-      read: (process.env.REACT_APP_COMMIT_READ ?? "") === "true",
-      description: process.env.REACT_APP_COMMIT_DESCRIPTION_UPDATE ?? "",
-    };
-    const result: Commit.Info = await updateCommit(commitUpdateInfo);
-    expect(result.description).toEqual(
-      process.env.REACT_APP_COMMIT_DESCRIPTION_UPDATE
-    );
-  });
-  // test("should get card select by board", async () => {
-  //   const boardId = {
-  //     boardId: process.env.REACT_APP_CARD_BOARDID ?? "",
-  //   };
-  //   const result: Array<CardModel.Info> = await selectCardsByBoardId(boardId);
-  //   expect(result.length).toEqual(1);
-  // });
   // test("should get card remove", async () => {
   //   const cardId = {
   //     cardId: process.env.REACT_APP_CARD_ID ?? "",

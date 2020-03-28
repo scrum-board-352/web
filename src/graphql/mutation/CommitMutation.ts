@@ -39,4 +39,13 @@ mutation updateCommit($description: String, $read: Boolean, $id: String){
 }
 `;
 
-export default { createCommit, updateCommit };
+const removeCommit = `
+mutation removeCommit($commitId: String){
+  removeCommit(commitId: $commitId) {
+    success: susses
+    message
+  }
+}
+`;
+
+export default { createCommit, updateCommit, removeCommit };

@@ -11,6 +11,10 @@ export type Props = {
 
 const placeholderImg = process.env.PUBLIC_URL + "/img/user.png";
 
+function avatar(url: string | undefined) {
+  return url ? url : placeholderImg;
+}
+
 export default function Avatar(props: Props) {
   const namePos = props.namePosition ?? "right";
   const gap = props.gap ?? "1rem";
@@ -27,7 +31,7 @@ export default function Avatar(props: Props) {
   return (
     <div className={`${containerClassName} ${props.className ?? ""}`}>
       <img
-        src={props.avatar ?? placeholderImg}
+        src={avatar(props.avatar)}
         alt=""
         style={{ borderRadius: "50%", width: props.size, height: props.size }}
       />

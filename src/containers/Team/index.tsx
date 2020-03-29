@@ -2,6 +2,7 @@ import Empty from "components/Empty";
 import ModalForm, { Template } from "components/ModalForm";
 import PeopleCard from "components/PeopleCard";
 import Searchbar from "components/Searchbar";
+import useFilter from "hooks/useFilter";
 import TeamModel from "models/Team";
 import UserModel from "models/User";
 import React, { useEffect, useState } from "react";
@@ -31,6 +32,8 @@ export default function Team() {
   const [teams, setTeams] = useState<TeamModel.Info[]>([]);
   const [filteredPeople, setFilteredPeople] = useState<UserModel.PublicInfo[]>([]);
   const [filteredTeams, setFilteredTeams] = useState<TeamModel.Info[]>([]);
+  const [noPeopleMatched, filterPeople] = useFilter();
+  const [noTeamMatched, filterTeams] = useFilter();
 
   useEffect(() => {
     // TODO: fetch people.
@@ -50,13 +53,8 @@ export default function Team() {
   }, [teams, people]);
 
   function searchTeamOrPeople(name: string) {
-    if (!name) {
-      setFilteredPeople(people);
-      setFilteredTeams(teams);
-      return;
-    }
-    setFilteredPeople([]);
-    setFilteredTeams([]);
+    setFilteredPeople(filterPeople(people, (p) => p.name.includes(name)));
+    setFilteredTeams(filterTeams(teams, (t) => t.name.includes(name)));
   }
 
   const [showCreateTeam, setShowCreateTeam] = useState(false);
@@ -105,12 +103,12 @@ export default function Team() {
               <h2>People</h2>
             </Row>
             <Row>
-              {filteredPeople.length ? (
+              {noPeopleMatched ? (
+                <Empty size="8rem" message="No people matched" />
+              ) : (
                 filteredPeople.map((p) => (
                   <PeopleCard key={p.id} className="mb-3 mr-3" size="60px" user={p} />
                 ))
-              ) : (
-                <Empty size="8rem" message="No people matched" />
               )}
             </Row>
           </Container>
@@ -121,7 +119,9 @@ export default function Team() {
               <h2>Your Teams</h2>
             </Row>
             <Row>
-              {filteredTeams.length ? (
+              {noTeamMatched ? (
+                <Empty size="8rem" message="No team matched" />
+              ) : (
                 <Table hover borderless={true}>
                   <thead>
                     <tr>
@@ -144,8 +144,6 @@ export default function Team() {
                     ))}
                   </tbody>
                 </Table>
-              ) : (
-                <Empty size="8rem" message="No team matched" />
               )}
             </Row>
           </Container>

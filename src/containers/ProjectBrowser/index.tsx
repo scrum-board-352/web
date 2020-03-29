@@ -1,6 +1,7 @@
 import Empty from "components/Empty";
 import ModalForm, { Template } from "components/ModalForm";
 import Searchbar from "components/Searchbar";
+import useFilter from "hooks/useFilter";
 import ProjectModel from "models/Project";
 import TeamModel from "models/Team";
 import UserModel from "models/User";
@@ -35,17 +36,14 @@ export default function ProjectBrowser() {
   }, []);
 
   const [filteredProjectData, setFilteredProjectData] = useState<ProjectModel.Info[]>([]);
+  const [noProjectMatched, filterProject] = useFilter();
 
   useEffect(() => {
     setFilteredProjectData(projectData);
   }, [projectData]);
 
   function searchProject(name: string) {
-    if (name) {
-      setFilteredProjectData(projectData.filter((p) => p.name.includes(name)));
-      return;
-    }
-    setFilteredProjectData(projectData);
+    setFilteredProjectData(filterProject(projectData, (p) => p.name.includes(name)));
   }
 
   const [showCreateProject, setShowCreateProject] = useState(false);
@@ -127,7 +125,9 @@ export default function ProjectBrowser() {
           </div>
         </Row>
         <Row>
-          {filteredProjectData.length ? (
+          {noProjectMatched ? (
+            <Empty size="8rem" message="No project matched" />
+          ) : (
             <Table hover borderless={true}>
               <thead>
                 <tr>
@@ -152,8 +152,6 @@ export default function ProjectBrowser() {
                 ))}
               </tbody>
             </Table>
-          ) : (
-            <Empty size="8rem" message="No project matched" />
           )}
         </Row>
       </Container>

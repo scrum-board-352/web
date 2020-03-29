@@ -142,30 +142,18 @@ export default function Kanban() {
               color="#ddd"
               size="1.5rem"
             />
-            <SettingButton
-              size="1.5rem"
-              color="#ddd"
-              hoverColor="var(--blue)"
-            />
+            <SettingButton size="1.5rem" color="#ddd" hoverColor="var(--blue)" />
           </div>
           <ScrollBox className="scrollbar_thumb_green">
             <div className={style.card_col_container}>
               <CardsManager cards={testCardData.info.cards}>
                 {project.col.map((col) => (
-                  <CardCol
-                    key={col}
-                    colName={col}
-                    onClickCard={showCardDetail}
-                  />
+                  <CardCol key={col} colName={col} onClickCard={showCardDetail} />
                 ))}
               </CardsManager>
             </div>
           </ScrollBox>
-          <CardDetail
-            show={showCardDetailFlag}
-            onHide={() => setShowCardDetailFlag(false)}
-            card={cardDetail}
-          />
+          <CardDetail show={showCardDetailFlag} onHide={() => setShowCardDetailFlag(false)} card={cardDetail} />
         </Fragment>
       )}
     </div>

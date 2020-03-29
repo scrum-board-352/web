@@ -11,13 +11,12 @@ import "./style.css";
 export default function Team() {
   const [people, setPeople] = useState<UserModel.PublicInfo[]>([]);
   const [teams, setTeams] = useState<TeamModel.Info[]>([]);
+  const [filterdPeople, setFilterdPeople] = useState<UserModel.PublicInfo[]>(people);
+  const [filterdTeams, setFilterdTeams] = useState<TeamModel.Info[]>(teams);
 
   useEffect(() => {
     // TODO: fetch people.
-    const people = [
-      testUserData.publicInfo.mokuo,
-      testUserData.publicInfo.emmm,
-    ];
+    const people = [testUserData.publicInfo.mokuo, testUserData.publicInfo.emmm];
     setPeople(people);
   }, []);
 
@@ -27,8 +26,9 @@ export default function Team() {
     setTeams(teams);
   }, []);
 
-  function searchTeam(name: string) {
+  function searchTeamOrPeople(name: string) {
     console.log("search", name);
+    setFilterdPeople([]);
   }
 
   return (
@@ -45,8 +45,8 @@ export default function Team() {
           color="var(--gray)"
           activeColor="var(--blue)"
           size="2rem"
-          onSearch={searchTeam}
-          onChange={(s) => console.log(s)}
+          onSearch={searchTeamOrPeople}
+          // onChange={(s) => console.log(s)}
         />
       </Row>
       <Row>
@@ -56,12 +56,7 @@ export default function Team() {
           </Row>
           <Row>
             {people.map((p) => (
-              <PeopleCard
-                key={p.id}
-                className="mb-3 mr-3"
-                size="60px"
-                user={p}
-              />
+              <PeopleCard key={p.id} className="mb-3 mr-3" size="60px" user={p} />
             ))}
           </Row>
         </Container>

@@ -1,10 +1,4 @@
-import React, {
-  ReactNode,
-  Fragment,
-  useRef,
-  createContext,
-  useCallback,
-} from "react";
+import React, { createContext, Fragment, ReactNode, useCallback, useRef } from "react";
 
 export type ItemContextValue = {
   setActiveItem: (item: HTMLElement) => void;
@@ -68,9 +62,7 @@ function Items(props: Props) {
 
   return (
     <Fragment>
-      <ItemContext.Provider value={{ setActiveItem }}>
-        {props.children}
-      </ItemContext.Provider>
+      <ItemContext.Provider value={{ setActiveItem }}>{props.children}</ItemContext.Provider>
     </Fragment>
   );
 }

@@ -1,8 +1,8 @@
-import _Sidebar, { TSidebar as _TSidebar } from "./Sidebar";
-import Title, { TTitle } from "./Title";
 import Item, { TItem } from "./Item";
 import Items, { TItems } from "./Items";
+import _Sidebar, { TSidebar as _TSidebar } from "./Sidebar";
 import "./style.css";
+import Title, { TTitle } from "./Title";
 
 export type TSidebar = _TSidebar & {
   Title: TTitle;

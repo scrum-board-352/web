@@ -3,12 +3,7 @@ import Dashboard from "containers/Dashboard";
 import User from "containers/User";
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import rlax from "rlax";
 import store from "store";
 import Home from "./containers/Home";

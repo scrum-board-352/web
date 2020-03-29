@@ -49,8 +49,7 @@ export default function SettingButton(props: Props) {
         width: props.size ?? "",
         height: props.size ?? "",
       }}
-      onClick={props.onClick}
-    >
+      onClick={props.onClick}>
       {icon(type)}
     </button>
   );

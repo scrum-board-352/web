@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef, useContext } from "react";
+import React, { ReactNode, useContext, useRef } from "react";
 import { ItemContext } from "./Items";
 
 export type Props = {
@@ -20,8 +20,7 @@ function Item(props: Props) {
         setActiveItem(itemRef.current as HTMLButtonElement);
         props.onClick?.();
       }}
-      className={`sidebar_item ${props.className ?? ""}`}
-    >
+      className={`sidebar_item ${props.className ?? ""}`}>
       <div className="sidebar_item_content">{props.children}</div>
     </button>
   );

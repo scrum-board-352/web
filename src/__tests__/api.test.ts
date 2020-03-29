@@ -2,19 +2,8 @@ import { selectBoardsByProjectId } from "graphql/Board";
 import { selectCardsByBoardId, updateCard } from "graphql/Card";
 import { getCommitByReceiver, updateCommit } from "graphql/Message";
 import { selectProjectByCreator, updateProject } from "graphql/Project";
-import {
-  createTeam,
-  selectTeamByUser,
-  sendEmailToInviteReceiverJoinTeam,
-  updateTeam,
-} from "graphql/Team";
-import {
-  login,
-  logout,
-  register,
-  selectUserBySubstring,
-  update,
-} from "graphql/User";
+import { createTeam, selectTeamByUser, sendEmailToInviteReceiverJoinTeam, updateTeam } from "graphql/Team";
+import { login, logout, register, selectUserBySubstring, update } from "graphql/User";
 import BoardModel from "models/Board";
 import CardModel from "models/Card";
 import EmailModel from "models/Email";
@@ -63,9 +52,7 @@ describe("user api tests", () => {
     const usernameSubstring = {
       usernameSubstring: process.env.REACT_APP_SELECT_SUBSTRING ?? "",
     };
-    const result: Array<UserModel.PrivateInfo> = await selectUserBySubstring(
-      usernameSubstring
-    );
+    const result: Array<UserModel.PrivateInfo> = await selectUserBySubstring(usernameSubstring);
     expect(result.length).toEqual(2);
   });
 });
@@ -98,9 +85,7 @@ describe("message api tests", () => {
       description: process.env.REACT_APP_COMMIT_DESCRIPTION_UPDATE ?? "",
     };
     const result: Message.Info = await updateCommit(commitUpdateInfo);
-    expect(result.description).toEqual(
-      process.env.REACT_APP_COMMIT_DESCRIPTION_UPDATE
-    );
+    expect(result.description).toEqual(process.env.REACT_APP_COMMIT_DESCRIPTION_UPDATE);
   });
 
   // test("should get commit remove", async () => {
@@ -120,9 +105,7 @@ describe("team api tests", () => {
       description: process.env.REACT_APP_TEAM_DESCRIPTION ?? "",
     };
     const result: TeamModel.Info = await createTeam(teamInfo);
-    expect(result.description).toEqual(
-      "one creator can not create same name team"
-    );
+    expect(result.description).toEqual("one creator can not create same name team");
   });
 
   test("should get email send", async () => {
@@ -131,9 +114,7 @@ describe("team api tests", () => {
       announcer: process.env.REACT_APP_EMAIL_ANNOUNCER ?? "",
       teamId: process.env.REACT_APP_EAMIL_TEAMID ?? "",
     };
-    const result: ResultOutput = await sendEmailToInviteReceiverJoinTeam(
-      teamInfo
-    );
+    const result: ResultOutput = await sendEmailToInviteReceiverJoinTeam(teamInfo);
     expect(result.success).toEqual(true);
   });
 
@@ -162,9 +143,7 @@ describe("project api tests", () => {
     const creator = {
       creator: process.env.REACT_APP_PROJECT_CREATOR ?? "",
     };
-    const result: Array<ProjectModel.Info> = await selectProjectByCreator(
-      creator
-    );
+    const result: Array<ProjectModel.Info> = await selectProjectByCreator(creator);
     expect(result.length).toEqual(1);
   });
 
@@ -209,9 +188,7 @@ describe("board api tests", () => {
     const projectId = {
       projectId: process.env.REACT_APP_BOARD_PROJECTID ?? "",
     };
-    const result: Array<BoardModel.Info> = await selectBoardsByProjectId(
-      projectId
-    );
+    const result: Array<BoardModel.Info> = await selectBoardsByProjectId(projectId);
     expect(result.length).toEqual(2);
   });
 

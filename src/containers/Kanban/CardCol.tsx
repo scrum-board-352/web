@@ -11,10 +11,7 @@ import { CardsContext, createCard } from "./CardsManager";
 type Props = {
   colName: string;
   onClickCard?: (cardId: string) => void;
-} & Pick<
-  React.HTMLAttributes<HTMLElement>,
-  "onDrop" | "onDragOver" | "onDragEnter" | "onDragLeave"
->;
+} & Pick<React.HTMLAttributes<HTMLElement>, "onDrop" | "onDragOver" | "onDragEnter" | "onDragLeave">;
 
 function handleDragOver(e: React.DragEvent) {
   e.preventDefault();
@@ -109,11 +106,7 @@ export default function CardCol(props: Props) {
     }
   }
 
-  const dropClass = selected
-    ? style.selected
-    : droppable
-    ? style.droppable
-    : "";
+  const dropClass = selected ? style.selected : droppable ? style.droppable : "";
 
   const [showCreateCard, setShowCreateCard] = useState(false);
   const [createCardLoading, setCreateCardLoading] = useState(false);
@@ -146,26 +139,15 @@ export default function CardCol(props: Props) {
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-      >
+        onDragEnd={handleDragEnd}>
         <p className={style.title}>{props.colName}</p>
         <button className={style.add_card_btn} onClick={showCreateCardDialog}>
           <IoMdAdd />
           <span>New Card</span>
         </button>
-        <ScrollBox
-          className={className(
-            style.cards_container,
-            dropClass,
-            "scrollbar_thumb_green"
-          )}
-        >
+        <ScrollBox className={className(style.cards_container, dropClass, "scrollbar_thumb_green")}>
           {cards.map((card) => (
-            <Card
-              key={card.id}
-              card={card}
-              onClick={() => props.onClickCard?.(card.id)}
-            />
+            <Card key={card.id} card={card} onClick={() => props.onClickCard?.(card.id)} />
           ))}
         </ScrollBox>
       </div>

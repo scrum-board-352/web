@@ -42,18 +42,8 @@ export default function MessageBox() {
     <div className="messagebox">
       <TransitionGroup component={Fragment}>
         {msgList.map((msg) => (
-          <CSSTransition
-            key={msg.id}
-            in={true}
-            timeout={300}
-            classNames="messagebox"
-          >
-            <Alert
-              variant={type(msg.type)}
-              show={true}
-              dismissible
-              onClose={() => close(msg)}
-            >
+          <CSSTransition key={msg.id} in={true} timeout={300} classNames="messagebox">
+            <Alert variant={type(msg.type)} show={true} dismissible onClose={() => close(msg)}>
               <Alert.Heading>{msg.title}</Alert.Heading>
               <p className="mb-0">{msg.content}</p>
             </Alert>

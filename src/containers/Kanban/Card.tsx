@@ -32,19 +32,14 @@ export default function Card(props: Props) {
       draggable="true"
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      onClick={props.onClick}
-    >
+      onClick={props.onClick}>
       <div className={style.header}>
         <p className={style.title}>{props.card.title}</p>
         <SettingButton type="dot-h" size="1rem" />
       </div>
       <p className={style.description}>{props.card.description ?? "None"}</p>
       <div className={style.footer}>
-        <Avatar
-          size="1rem"
-          name={props.card.processor ?? "None"}
-          gap="0.5rem"
-        />
+        <Avatar size="1rem" name={props.card.processor ?? "None"} gap="0.5rem" />
         <Priority priority={props.card.priority} />
       </div>
     </div>

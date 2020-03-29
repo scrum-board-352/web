@@ -13,10 +13,7 @@ export default function ProjectBrowser() {
 
   useEffect(() => {
     // TODO: fetch project data.
-    const projectData = [
-      testProjectData.info.shitMountain,
-      testProjectData.info.shitMountainv2,
-    ];
+    const projectData = [testProjectData.info.shitMountain, testProjectData.info.shitMountainv2];
     console.log("fetch data:", projectData);
     setProjectData(projectData);
   }, []);

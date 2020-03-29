@@ -6,9 +6,7 @@ type ChangeEventHandler = React.ChangeEventHandler<FormElement>;
 const errMessage =
   "input element must have a 'name' property, which it's value should match the field name you want to set of the data object, and it must not be an empty string!";
 
-function useFormData<T extends object>(
-  defaultValues?: T
-): [T, ChangeEventHandler, typeof clear] {
+function useFormData<T extends object>(defaultValues?: T): [T, ChangeEventHandler, typeof clear] {
   defaultValues = defaultValues ?? ({} as T);
   const [data, setData] = useState<T>(defaultValues);
 

@@ -61,8 +61,7 @@ export default function Searchbar(props: Props) {
         fontSize: size,
       }}
       onFocus={() => setFocus(true)}
-      onBlur={() => setFocus(false)}
-    >
+      onBlur={() => setFocus(false)}>
       <input
         placeholder={props.placeholder}
         type="text"

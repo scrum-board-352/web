@@ -19,10 +19,7 @@ export default function LoginForm(props?: Props) {
   const [loginForm, handleInputChange] = useFormData<UserModel.LoginInfo>();
   const history = useHistory();
 
-  function checkLoginFormData({
-    username,
-    password,
-  }: UserModel.LoginInfo): boolean {
+  function checkLoginFormData({ username, password }: UserModel.LoginInfo): boolean {
     if (username && password) {
       return true;
     }
@@ -101,13 +98,7 @@ export default function LoginForm(props?: Props) {
         <Button variant="primary" type="submit" block disabled={loading}>
           {loading ? (
             <Fragment>
-              <Spinner
-                as="span"
-                animation="grow"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
+              <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
               Logging in...
             </Fragment>
           ) : (

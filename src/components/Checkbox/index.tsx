@@ -25,8 +25,7 @@ export default function Checkbox(props: Props) {
         width: props.size,
         height: props.size,
       }}
-      onClick={handleClick}
-    >
+      onClick={handleClick}>
       {checked ? <FaCheck size="95%" /> : null}
     </span>
   );

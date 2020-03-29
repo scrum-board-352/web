@@ -74,8 +74,7 @@ export default function ModalForm<T extends object>(props: Props<T>) {
           props.onClose();
           clear();
         }}
-        centered
-      >
+        centered>
         <Modal.Header closeButton>
           <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>
@@ -90,28 +89,14 @@ export default function ModalForm<T extends object>(props: Props<T>) {
                   name={t.name}
                   value={String(values[t.name] ?? "")}
                   onChange={handleInputChange}
-                  as={asType(t.type)}
-                >
+                  as={asType(t.type)}>
                   {t.type === "select" ? generateOptions(t.options) : null}
                 </Form.Control>
               </Form.Group>
             ))}
 
-            <Button
-              className="float-right"
-              variant="primary"
-              type="submit"
-              disabled={props.loading}
-            >
-              {props.loading ? (
-                <Spinner
-                  as="span"
-                  animation="grow"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-              ) : null}
+            <Button className="float-right" variant="primary" type="submit" disabled={props.loading}>
+              {props.loading ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> : null}
               Submit
             </Button>
           </Form>

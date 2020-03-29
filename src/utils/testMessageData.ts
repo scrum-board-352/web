@@ -43,9 +43,7 @@ function randomComment(): MessageModel.Info {
   };
 }
 
-const comments: MessageModel.Info[] = new Array(10)
-  .fill(null)
-  .map(randomComment);
+const comments: MessageModel.Info[] = new Array(10).fill(null).map(randomComment);
 
 export default {
   info: {

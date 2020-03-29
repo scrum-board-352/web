@@ -97,9 +97,5 @@ export function CardsManager(props: Props) {
     setCardsManager({ ...cardsManager });
   };
   cards = props.cards;
-  return (
-    <CardsContext.Provider value={cardsManager}>
-      {props.children}
-    </CardsContext.Provider>
-  );
+  return <CardsContext.Provider value={cardsManager}>{props.children}</CardsContext.Provider>;
 }

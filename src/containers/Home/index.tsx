@@ -11,8 +11,7 @@ function Home() {
     message({
       type: t,
       title: "Success!",
-      content:
-        "lorem ahsduhs iohioashdh a ioshdio hains hna okjnhjio sa n ijaoisn doihioah oihn o",
+      content: "lorem ahsduhs iohioashdh a ioshdio hains hna okjnhjio sa n ijaoisn doihioah oihn o",
     });
   }
 
@@ -64,11 +63,7 @@ function Home() {
         onClose={() => setShow(false)}
         onSubmit={handleSubmit}
       />
-      <Comment
-        name="Mokuo"
-        commentTime="2020-03-25 13:00"
-        content={testTextPlaceholder}
-      />
+      <Comment name="Mokuo" commentTime="2020-03-25 13:00" content={testTextPlaceholder} />
     </Fragment>
   );
 }

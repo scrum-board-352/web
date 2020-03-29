@@ -33,12 +33,7 @@ export default function CardDetail(props: Props) {
   }, [loadingOps]);
 
   return (
-    <Modal
-      show={props.show}
-      onHide={props.onHide}
-      dialogClassName={style.dialog}
-      centered
-    >
+    <Modal show={props.show} onHide={props.onHide} dialogClassName={style.dialog} centered>
       <Modal.Header closeButton>
         <Modal.Title>Card Detail</Modal.Title>
       </Modal.Header>
@@ -51,12 +46,7 @@ export default function CardDetail(props: Props) {
               <Fragment>
                 <p className={style.title}>Comments</p>
                 {comments.length ? (
-                  <ScrollBox
-                    className={className(
-                      style.scroll_area,
-                      "scrollbar_thumb_green"
-                    )}
-                  >
+                  <ScrollBox className={className(style.scroll_area, "scrollbar_thumb_green")}>
                     {comments.map((comment) => (
                       <Comment
                         key={comment.id}
@@ -82,9 +72,7 @@ export default function CardDetail(props: Props) {
           </div>
           <div className={style.card_info}>
             <p className={style.title}>Detail</p>
-            <ScrollBox
-              className={className("scrollbar_thumb_green", style.scroll_area)}
-            >
+            <ScrollBox className={className("scrollbar_thumb_green", style.scroll_area)}>
               <div className={style.info_field}>
                 <p>Title</p>
                 <p>{props.card.title}</p>

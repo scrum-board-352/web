@@ -39,9 +39,8 @@ export default function Message(props: Props) {
 
       <div className="messages_message_description_wrapper">
         <p className="messages_message_description">
-          {props.description} Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Aut nostrum eligendi at eos, accusantium veniam, consectetur
-          quis placeat maiores molestiae soluta, totam laborum cumque veritatis
+          {props.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nostrum eligendi at eos,
+          accusantium veniam, consectetur quis placeat maiores molestiae soluta, totam laborum cumque veritatis
           blanditiis nobis qui consequatur! Quasi.
         </p>
         <div className="messages_message_description_mask"></div>

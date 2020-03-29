@@ -18,11 +18,7 @@ export default function Select(props: Props) {
   }
 
   return (
-    <select
-      onChange={handleChange}
-      value={props.defaultValue}
-      className={style.select}
-    >
+    <select onChange={handleChange} value={props.defaultValue} className={style.select}>
       {props.options.map((o) => (
         <option key={o.name} value={o.value}>
           {o.name}

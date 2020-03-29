@@ -15,11 +15,7 @@ export default function Comment(props: Props) {
   return (
     <div className={style.comment}>
       <div className="avatar_container">
-        <img
-          src={props.avatar ?? avatarPlaceholder}
-          alt=""
-          className={style.avatar}
-        />
+        <img src={props.avatar ?? avatarPlaceholder} alt="" className={style.avatar} />
       </div>
       <div className={style.content_container}>
         <div className={style.info}>

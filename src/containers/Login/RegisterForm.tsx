@@ -15,15 +15,9 @@ export default function RegisterForm(props?: Props) {
   const [usernameInputOk, setUsernameInputOk] = useState(true);
   const [emailInputOk, setEmailInputOk] = useState(true);
   const [passwordInputOk, setPasswordInputOk] = useState(true);
-  const [registerForm, handleInputChange] = useFormData<
-    UserModel.RegisterInfo
-  >();
+  const [registerForm, handleInputChange] = useFormData<UserModel.RegisterInfo>();
 
-  function checkRegisterFormData({
-    username,
-    email,
-    password,
-  }: UserModel.RegisterInfo): boolean {
+  function checkRegisterFormData({ username, email, password }: UserModel.RegisterInfo): boolean {
     if (username && email && password) {
       return true;
     }
@@ -118,13 +112,7 @@ export default function RegisterForm(props?: Props) {
         <Button variant="primary" type="submit" block disabled={loading}>
           {loading ? (
             <Fragment>
-              <Spinner
-                as="span"
-                animation="grow"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
+              <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
               Registering...
             </Fragment>
           ) : (

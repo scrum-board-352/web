@@ -7,18 +7,8 @@ import Team from "containers/Team";
 import UserModel from "models/User";
 import React from "react";
 import { IconContext } from "react-icons";
-import {
-  AiOutlineMessage,
-  AiOutlineProject,
-  AiOutlineUsergroupAdd,
-} from "react-icons/ai";
-import {
-  Redirect,
-  Route,
-  Switch,
-  useHistory,
-  useRouteMatch,
-} from "react-router-dom";
+import { AiOutlineMessage, AiOutlineProject, AiOutlineUsergroupAdd } from "react-icons/ai";
+import { Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
 import { useStore } from "rlax";
 import joinUrl from "utils/join-url";
 import "./style.css";
@@ -38,18 +28,11 @@ export default function Dashboard() {
     <div className="d-flex">
       <Sidebar>
         <Sidebar.Title>
-          <Avatar
-            name={user.name}
-            avatar={user.avatar}
-            size="50px"
-            className="dashboard_sidebar_avatar"
-          />
+          <Avatar name={user.name} avatar={user.avatar} size="50px" className="dashboard_sidebar_avatar" />
         </Sidebar.Title>
         <IconContext.Provider value={{ size: "20px" }}>
           <Sidebar.Items color="var(--dark)" activeColor="yellowgreen">
-            <Sidebar.Item
-              onClick={() => history.push(joinUrl(url, Path.Projects))}
-            >
+            <Sidebar.Item onClick={() => history.push(joinUrl(url, Path.Projects))}>
               <AiOutlineProject />
               <span className="ml-3 dashboard_sidebar_item">Projects</span>
             </Sidebar.Item>
@@ -59,9 +42,7 @@ export default function Dashboard() {
               <span className="ml-3 dashboard_sidebar_item">Team</span>
             </Sidebar.Item>
 
-            <Sidebar.Item
-              onClick={() => history.push(joinUrl(url, Path.Messages))}
-            >
+            <Sidebar.Item onClick={() => history.push(joinUrl(url, Path.Messages))}>
               <AiOutlineMessage />
               <span className="ml-3 dashboard_sidebar_item">Messages</span>
             </Sidebar.Item>

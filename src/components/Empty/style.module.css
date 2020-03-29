@@ -7,13 +7,9 @@
   justify-content: center;
 }
 
-.empty > img {
-  height: 10rem;
-}
-
 .empty > p {
-  font-size: 1.5rem;
+  font-size: 0.15em;
   font-weight: 700;
   margin-top: 1rem;
-  margin-bottom: 5rem;
+  margin-bottom: 5%;
 }

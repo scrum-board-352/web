@@ -1,4 +1,4 @@
-const createCommit = `
+const createComment = `
 mutation createCommit($description: String, $announcer: String, $receiver: String, $cardId: String){
   createCommit(selectionInput: {
     commitInput: {
@@ -19,7 +19,7 @@ mutation createCommit($description: String, $announcer: String, $receiver: Strin
 }
 `;
 
-const updateCommit = `
+const updateComment = `
 mutation updateCommit($description: String, $read: Boolean, $id: String){
   updateCommit(selectionInput: {
     commitInput: {
@@ -39,7 +39,7 @@ mutation updateCommit($description: String, $read: Boolean, $id: String){
 }
 `;
 
-const removeCommit = `
+const removeComment = `
 mutation removeCommit($commitId: String){
   removeCommit(commitId: $commitId) {
     success: susses
@@ -48,4 +48,4 @@ mutation removeCommit($commitId: String){
 }
 `;
 
-export default { createCommit, updateCommit, removeCommit };
+export default { createComment, updateComment, removeComment };

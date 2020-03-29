@@ -1,4 +1,4 @@
-const getCommitByReceiverQuery = `
+const getCommentByReceiverQuery = `
   query getCommitByReceiver($receiver: String!) {
     getCommitByReceiver(receiver: $receiver) {
       id
@@ -10,4 +10,4 @@ const getCommitByReceiverQuery = `
   }
 `;
 
-export default { getCommitByReceiverQuery };
+export default { getCommentByReceiverQuery };

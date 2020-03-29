@@ -22,7 +22,7 @@ function startDrag(cardId: string, colName: string) {
 
 function endDrag() {
   const movedCard = cards.find((card) => card.id === currentCardId);
-  if (movedCard) {
+  if (movedCard && targetColName) {
     movedCard.status = targetColName;
   }
   dragging = false;

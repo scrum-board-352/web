@@ -1,6 +1,6 @@
 import { selectBoardsByProjectId } from "graphql/Board";
 import { selectCardsByBoardId, updateCard } from "graphql/Card";
-import { getCommitByReceiver, updateCommit } from "graphql/Message";
+import { getCommentByReceiver, updateComment } from "graphql/Message";
 import { selectProjectByCreator, updateProject } from "graphql/Project";
 import {
   createTeam,
@@ -75,7 +75,7 @@ describe("message api tests", () => {
     const receiver = {
       receiver: process.env.REACT_APP_RECEIVER_USERNAME ?? "",
     };
-    const result: Array<Message.Info> = await getCommitByReceiver(receiver);
+    const result: Array<Message.Info> = await getCommentByReceiver(receiver);
     expect(result.length).toEqual(2);
   });
 
@@ -97,7 +97,7 @@ describe("message api tests", () => {
       read: (process.env.REACT_APP_COMMIT_READ ?? "") === "true",
       description: process.env.REACT_APP_COMMIT_DESCRIPTION_UPDATE ?? "",
     };
-    const result: Message.Info = await updateCommit(commitUpdateInfo);
+    const result: Message.Info = await updateComment(commitUpdateInfo);
     expect(result.description).toEqual(
       process.env.REACT_APP_COMMIT_DESCRIPTION_UPDATE
     );

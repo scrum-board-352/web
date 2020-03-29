@@ -9,10 +9,17 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
+import rlax from "rlax";
+import store from "store";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
 import NotFound from "./containers/NotFound";
 import "./style.css";
+
+rlax.initStore({
+  data: store,
+  persist: "local",
+});
 
 function App() {
   return (

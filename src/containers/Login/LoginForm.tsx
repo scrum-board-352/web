@@ -5,6 +5,8 @@ import useLoading from "hooks/useLoading";
 import UserModel from "models/User";
 import React, { Fragment, useState } from "react";
 import { Button, Form, Spinner } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { setStore } from "rlax";
 
 export type Props = {
   className?: string;
@@ -15,6 +17,7 @@ export default function LoginForm(props?: Props) {
   const [usernameInputOk, setUsernameInputOk] = useState(true);
   const [passwordInputOk, setPasswordInputOk] = useState(true);
   const [loginForm, handleInputChange] = useFormData<UserModel.LoginInfo>();
+  const history = useHistory();
 
   function checkLoginFormData({
     username,
@@ -53,7 +56,8 @@ export default function LoginForm(props?: Props) {
         type: "success",
         title: "Login Succed!",
       });
-      console.log(userInfo);
+      setStore("user", userInfo);
+      history.push("/dashboard");
     }
   }
 

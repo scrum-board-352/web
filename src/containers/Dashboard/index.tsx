@@ -4,6 +4,7 @@ import Kanban from "containers/Kanban";
 import Messages from "containers/Messages";
 import ProjectBrowser from "containers/ProjectBrowser";
 import Team from "containers/Team";
+import UserModel from "models/User";
 import React from "react";
 import { IconContext } from "react-icons";
 import {
@@ -18,8 +19,8 @@ import {
   useHistory,
   useRouteMatch,
 } from "react-router-dom";
+import { useStore } from "rlax";
 import joinUrl from "utils/join-url";
-import testUserData from "utils/testUserData";
 import "./style.css";
 
 enum Path {
@@ -31,14 +32,15 @@ enum Path {
 export default function Dashboard() {
   const { path, url } = useRouteMatch();
   const history = useHistory();
+  const user: UserModel.PrivateInfo = useStore("user");
 
   return (
     <div className="d-flex">
       <Sidebar>
         <Sidebar.Title>
           <Avatar
-            name={testUserData.publicInfo.mokuo.name}
-            avatar={testUserData.publicInfo.mokuo.avatar}
+            name={user.name}
+            avatar={user.avatar}
             size="50px"
             className="dashboard_sidebar_avatar"
           />

@@ -25,7 +25,12 @@ export default function PeopleCard(props: Props) {
         "rounded-lg"
       )}
       onClick={props.onClick}>
-      <Avatar size={props.size} name={props.user.name} avatar={props.user.avatar} namePosition="bottom" />
+      <Avatar
+        size={props.size}
+        name={props.user.name}
+        avatar={props.user.avatar}
+        namePosition="bottom"
+      />
     </div>
   );
 }

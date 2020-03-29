@@ -95,8 +95,14 @@ export default function ModalForm<T extends object>(props: Props<T>) {
               </Form.Group>
             ))}
 
-            <Button className="float-right" variant="primary" type="submit" disabled={props.loading}>
-              {props.loading ? <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> : null}
+            <Button
+              className="float-right"
+              variant="primary"
+              type="submit"
+              disabled={props.loading}>
+              {props.loading ? (
+                <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+              ) : null}
               Submit
             </Button>
           </Form>

@@ -11,7 +11,10 @@ import { CardsContext, createCard } from "./CardsManager";
 type Props = {
   colName: string;
   onClickCard?: (cardId: string) => void;
-} & Pick<React.HTMLAttributes<HTMLElement>, "onDrop" | "onDragOver" | "onDragEnter" | "onDragLeave">;
+} & Pick<
+  React.HTMLAttributes<HTMLElement>,
+  "onDrop" | "onDragOver" | "onDragEnter" | "onDragLeave"
+>;
 
 function handleDragOver(e: React.DragEvent) {
   e.preventDefault();

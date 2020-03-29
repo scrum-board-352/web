@@ -153,7 +153,11 @@ export default function Kanban() {
               </CardsManager>
             </div>
           </ScrollBox>
-          <CardDetail show={showCardDetailFlag} onHide={() => setShowCardDetailFlag(false)} card={cardDetail} />
+          <CardDetail
+            show={showCardDetailFlag}
+            onHide={() => setShowCardDetailFlag(false)}
+            card={cardDetail}
+          />
         </Fragment>
       )}
     </div>

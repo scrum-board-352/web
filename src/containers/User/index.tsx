@@ -57,7 +57,11 @@ export default function User() {
             <div className={style.content_container}>
               <h2>Recent 5 new teams</h2>
               <div className={style.content}>
-                {teams.length ? <Teams data={teams} /> : <Placeholder picture={teamSvg} content="最近没有任何新团队" />}
+                {teams.length ? (
+                  <Teams data={teams} />
+                ) : (
+                  <Placeholder picture={teamSvg} content="最近没有任何新团队" />
+                )}
               </div>
             </div>
           </Col>

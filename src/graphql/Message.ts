@@ -4,7 +4,9 @@ import Message from "models/Message";
 import ResultOutput from "models/ResultOutput";
 import client from "./client";
 
-export async function getCommentByReceiver(receiver: { receiver: string }): Promise<Array<Message.Info>> {
+export async function getCommentByReceiver(receiver: {
+  receiver: string;
+}): Promise<Array<Message.Info>> {
   const data = await client.request(MessageQuery.getCommentByReceiverQuery, receiver);
   return data.getCommitByReceiver;
 }

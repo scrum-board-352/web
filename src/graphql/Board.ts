@@ -14,7 +14,9 @@ export async function removeBoard(boardId: { boardId: string }): Promise<ResultO
   return data.removeBoard;
 }
 
-export async function selectBoardsByProjectId(projectId: { projectId: string }): Promise<Array<BoardModel.Info>> {
+export async function selectBoardsByProjectId(projectId: {
+  projectId: string;
+}): Promise<Array<BoardModel.Info>> {
   const data = await client.request(BoardQuery.selectBoardsByProjectIdQuery, projectId);
   return data.selectBoardsByProjectId;
 }

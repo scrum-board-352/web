@@ -14,7 +14,9 @@ export async function updateCard(updateInfo: Card.UpdateInfo): Promise<Card.Info
   return data.updateCard;
 }
 
-export async function selectCardsByBoardId(boardId: { boardId: string }): Promise<Array<Card.Info>> {
+export async function selectCardsByBoardId(boardId: {
+  boardId: string;
+}): Promise<Array<Card.Info>> {
   const data = await client.request(CardQuery.selectCardsByBoardId, boardId);
   return data.selectCardsByBoardId;
 }

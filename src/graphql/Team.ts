@@ -10,7 +10,9 @@ export async function createTeam(teamInfo: TeamModel.CreateInfo): Promise<TeamMo
   return data.createTeam;
 }
 
-export async function sendEmailToInviteReceiverJoinTeam(teamInfo: EmailModel.TeamInfo): Promise<ResultOutput> {
+export async function sendEmailToInviteReceiverJoinTeam(
+  teamInfo: EmailModel.TeamInfo
+): Promise<ResultOutput> {
   const data = await client.request(TeamQuery.sendEmailQuery, teamInfo);
   return data.sendEmailToInviteReceiverJoinTeam;
 }
@@ -20,7 +22,9 @@ export async function updateTeam(teamInfo: TeamModel.Info): Promise<TeamModel.In
   return date.updateTeam;
 }
 
-export async function selectTeamByUser(username: { username: string }): Promise<Array<TeamModel.Info>> {
+export async function selectTeamByUser(username: {
+  username: string;
+}): Promise<Array<TeamModel.Info>> {
   const date = await client.request(TeamQuery.selectTeamByUser, username);
   return date.selectTeamByUsername;
 }

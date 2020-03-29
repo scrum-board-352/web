@@ -2,7 +2,12 @@ import { selectBoardsByProjectId } from "graphql/Board";
 import { selectCardsByBoardId, updateCard } from "graphql/Card";
 import { getCommentByReceiver, updateComment } from "graphql/Message";
 import { selectProjectByCreator, updateProject } from "graphql/Project";
-import { createTeam, selectTeamByUser, sendEmailToInviteReceiverJoinTeam, updateTeam } from "graphql/Team";
+import {
+  createTeam,
+  selectTeamByUser,
+  sendEmailToInviteReceiverJoinTeam,
+  updateTeam,
+} from "graphql/Team";
 import { login, logout, register, selectUserBySubstring, update } from "graphql/User";
 import BoardModel from "models/Board";
 import CardModel from "models/Card";

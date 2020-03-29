@@ -4,17 +4,23 @@ import ProjectModel from "models/Project";
 import ResultOutput from "models/ResultOutput";
 import client from "./client";
 
-export async function selectProjectByCreator(creator: { creator: string }): Promise<Array<ProjectModel.Info>> {
+export async function selectProjectByCreator(creator: {
+  creator: string;
+}): Promise<Array<ProjectModel.Info>> {
   const data = await client.request(ProjectQuery.selectProjectByCreatorQuery, creator);
   return data.selectProjectByCreator;
 }
 
-export async function createProject(projeceCreateModel: ProjectModel.CreateInfo): Promise<ProjectModel.Info> {
+export async function createProject(
+  projeceCreateModel: ProjectModel.CreateInfo
+): Promise<ProjectModel.Info> {
   const data = await client.request(ProjectMutation.createProject, projeceCreateModel);
   return data.createProject;
 }
 
-export async function updateProject(projeceUpdateModel: ProjectModel.UpdateInfo): Promise<ProjectModel.Info> {
+export async function updateProject(
+  projeceUpdateModel: ProjectModel.UpdateInfo
+): Promise<ProjectModel.Info> {
   const data = await client.request(ProjectMutation.updateProject, projeceUpdateModel);
   return data.updateProject;
 }

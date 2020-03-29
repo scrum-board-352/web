@@ -28,7 +28,12 @@ export default function Dashboard() {
     <div className="d-flex">
       <Sidebar>
         <Sidebar.Title>
-          <Avatar name={user.name} avatar={user.avatar} size="50px" className="dashboard_sidebar_avatar" />
+          <Avatar
+            name={user.name}
+            avatar={user.avatar}
+            size="50px"
+            className="dashboard_sidebar_avatar"
+          />
         </Sidebar.Title>
         <IconContext.Provider value={{ size: "20px" }}>
           <Sidebar.Items color="var(--dark)" activeColor="yellowgreen">

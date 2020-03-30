@@ -37,6 +37,7 @@ export default function Kanban() {
   const [boardId, setBoardId] = useState<BoardModel.Info["id"]>("");
   const [boardIds, setBoardIds] = useState<Array<BoardModel.Info["id"]>>([]);
   const [cards, setCards] = useState<Array<CardModel.Info>>([]);
+  const [filteredCards, setFilteredCards] = useState<Array<CardModel.Info>>([]);
   const [noBoard, setNoBoard] = useState(false);
   const [loading, loadingOps] = useLoading();
 
@@ -107,6 +108,14 @@ export default function Kanban() {
       setNoBoard(noBoard);
     });
   }, [loadingOps, projectId, iteration, history]);
+
+  useEffect(() => {
+    setFilteredCards(cards);
+  }, [cards]);
+
+  function handleSearchCard(keyword: string) {
+    setFilteredCards(cards.filter((c) => c.title.includes(keyword)));
+  }
 
   const [showCardDetailFlag, setShowCardDetailFlag] = useState(false);
   const [cardDetail, setCardDetail] = useState<CardModel.Info>({
@@ -188,6 +197,7 @@ export default function Kanban() {
                   type="round"
                   color="#ddd"
                   size="1.5rem"
+                  onSearch={handleSearchCard}
                 />
                 <SettingButton size="1.5rem" color="#ddd" hoverColor="var(--blue)" />
               </>
@@ -206,7 +216,7 @@ export default function Kanban() {
           ) : (
             <ScrollBox className="scrollbar_thumb_green">
               <div className={style.card_col_container}>
-                <CardsManager cards={cards}>
+                <CardsManager cards={filteredCards}>
                   {project.col.map((col) => (
                     <CardCol key={col} colName={col} onClickCard={showCardDetail} />
                   ))}

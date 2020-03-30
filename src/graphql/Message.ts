@@ -6,7 +6,7 @@ import client from "./client";
 
 export async function getCommentByReceiver(receiver: {
   receiver: string;
-}): Promise<Array<Message.Info>> {
+}): Promise<Array<Message.InfoOutput>> {
   const data = await client.request(MessageQuery.getCommentByReceiverQuery, receiver);
   return data.getCommitByReceiver;
 }

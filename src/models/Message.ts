@@ -7,6 +7,18 @@ namespace MessageModel {
     description: string;
     updateTime: string;
     isRead: boolean;
+    cardId: string;
+  }
+
+  export interface PosInfo {
+    cardId: string;
+    boardId: string;
+    projectId: string;
+  }
+
+  export interface InfoOutput {
+    info: Info;
+    posInfo: PosInfo;
   }
 
   export interface CreateInfo {

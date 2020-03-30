@@ -67,7 +67,9 @@ describe("message api tests", () => {
     const receiver = {
       receiver: process.env.REACT_APP_RECEIVER_USERNAME ?? "",
     };
-    const result: Array<Message.Info> = await getCommentByReceiver(receiver);
+    const result: Array<Message.InfoOutput> = await getCommentByReceiver(
+      receiver
+    );
     expect(result.length).toEqual(2);
   });
 

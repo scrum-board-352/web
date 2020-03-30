@@ -1,7 +1,12 @@
 import Empty from "components/Empty";
+import Loading from "components/Loading";
+import { message } from "components/MessageBox";
 import ModalForm, { Template } from "components/ModalForm";
 import Searchbar from "components/Searchbar";
+import { createProject, selectProjectByCreator } from "graphql/Project";
+import { selectTeamByUser } from "graphql/Team";
 import useFilter from "hooks/useFilter";
+import useLoading from "hooks/useLoading";
 import ProjectModel from "models/Project";
 import TeamModel from "models/Team";
 import UserModel from "models/User";
@@ -10,29 +15,40 @@ import { Button, Container, Row, Table } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
 import { useStore } from "rlax";
 import joinUrl from "utils/join-url";
-import testProjectData from "utils/testProjectData";
-import testTeamData from "utils/testTeamData";
 import "./style.css";
 
 type FormValues = Pick<ProjectModel.CreateInfo, "name" | "iteration" | "teamId"> & {
   col?: string;
 };
 
-function splitCol(col?: string) {
+function formatCol(col?: string) {
   if (col) {
-    return col.split(",").map((c) => c.trim());
+    return col
+      .split(",")
+      .map((c) => c.trim())
+      .join(",");
   }
-  return [];
+  return "";
 }
 
 export default function ProjectBrowser() {
-  const [projectData, setProjectData] = useState<ProjectModel.Info[]>([]);
   const { url } = useRouteMatch();
+  const [projectData, setProjectData] = useState<ProjectModel.Info[]>([]);
+  const [loading, loadingOps] = useLoading();
+  const [noProject, setNoProject] = useState(false);
+  const currentUser: UserModel.PrivateInfo = useStore("user");
 
   useEffect(() => {
-    // TODO: fetch project data.
-    const projectData = [testProjectData.info.shitMountain, testProjectData.info.shitMountainv2];
-    setProjectData(projectData);
+    // fetch project data.
+    loadingOps(async () => {
+      const projectData = await selectProjectByCreator({ creator: currentUser.name });
+      if (projectData.length === 0) {
+        setNoProject(true);
+      } else if (projectData.length > 0) {
+        setNoProject(false);
+      }
+      setProjectData(projectData);
+    });
   }, []);
 
   const [filteredProjectData, setFilteredProjectData] = useState<ProjectModel.Info[]>([]);
@@ -47,22 +63,38 @@ export default function ProjectBrowser() {
   }
 
   const [showCreateProject, setShowCreateProject] = useState(false);
-  const [createProjectLoading, setCreateProjectLoading] = useState(false);
-  const user: UserModel.PrivateInfo = useStore("user");
   const [teams, setTeams] = useState<Array<TeamModel.Info>>([]);
 
   useEffect(() => {
-    // TODO: fetch teams by user.
-    setTeams(Object.values(testTeamData.info));
+    // teams by user.
+    (async () => {
+      const teams = await selectTeamByUser({ username: currentUser.name });
+      setTeams(teams);
+    })();
   }, []);
 
-  function createProject(values: FormValues) {
+  const [createProjectLoading, createProjectLoadingOps] = useLoading();
+
+  async function handleCreateProject(values: FormValues) {
     const project: ProjectModel.CreateInfo = {
       ...values,
-      creator: user.name,
-      col: splitCol(values.col),
+      creator: currentUser.name,
+      col: formatCol(values.col),
     };
-    console.log(project);
+    const newProject = await createProjectLoadingOps(createProject, project);
+    if (newProject.id) {
+      message({
+        title: "Create Project Succeed!",
+        type: "success",
+      });
+      setProjectData([...projectData, newProject]);
+      setNoProject(false);
+    } else {
+      message({
+        title: "Create Project Failed!",
+        type: "success",
+      });
+    }
   }
 
   const createProjectFormTemplate: Array<Template<FormValues>> = [
@@ -92,7 +124,9 @@ export default function ProjectBrowser() {
     },
   ];
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <ModalForm<FormValues>
         title="Create Project"
@@ -100,7 +134,10 @@ export default function ProjectBrowser() {
         loading={createProjectLoading}
         templates={createProjectFormTemplate}
         onClose={() => setShowCreateProject(false)}
-        onSubmit={createProject}
+        onSubmit={async (values) => {
+          await handleCreateProject(values);
+          setShowCreateProject(false);
+        }}
       />
       <Container fluid className="dashboard_page_container">
         <Row className="align-item-center justify-content-between">
@@ -113,47 +150,53 @@ export default function ProjectBrowser() {
             Create Project
           </Button>
         </Row>
-        <Row>
-          <div className="projectbrowser_searchbar_container">
-            <Searchbar
-              size="1.5rem"
-              placeholder="Search Project"
-              color="var(--gray)"
-              activeColor="var(--blue)"
-              onSearch={searchProject}
-            />
-          </div>
-        </Row>
-        <Row>
-          {noProjectMatched ? (
-            <Empty size="8rem" message="No project matched" />
-          ) : (
-            <Table hover borderless={true}>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Project Name</th>
-                  <th>Create Time</th>
-                  <th>Iteration</th>
-                  <th>Creator</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredProjectData.map((project, i) => (
-                  <tr key={project.id}>
-                    <td>{i + 1}</td>
-                    <td>
-                      <Link to={joinUrl(url, project.id)}>{project.name}</Link>
-                    </td>
-                    <td>{project.createTime}</td>
-                    <td>{project.iteration}</td>
-                    <td>{project.creator}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          )}
-        </Row>
+        {noProject ? (
+          <Empty message="No project. Create one?" style={{ marginTop: "10rem" }} />
+        ) : (
+          <>
+            <Row>
+              <div className="projectbrowser_searchbar_container">
+                <Searchbar
+                  size="1.5rem"
+                  placeholder="Search Project"
+                  color="var(--gray)"
+                  activeColor="var(--blue)"
+                  onSearch={searchProject}
+                />
+              </div>
+            </Row>
+            <Row>
+              {noProjectMatched ? (
+                <Empty size="8rem" message="No project matched" />
+              ) : (
+                <Table hover borderless={true}>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Project Name</th>
+                      <th>Create Time</th>
+                      <th>Iteration</th>
+                      <th>Creator</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredProjectData.map((project, i) => (
+                      <tr key={project.id}>
+                        <td>{i + 1}</td>
+                        <td>
+                          <Link to={joinUrl(url, project.id)}>{project.name}</Link>
+                        </td>
+                        <td>{project.createTime}</td>
+                        <td>{project.iteration}</td>
+                        <td>{project.creator}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
+            </Row>
+          </>
+        )}
       </Container>
     </>
   );

@@ -1,9 +1,12 @@
 import React from "react";
+import className from "utils/class-name";
 import style from "./style.module.css";
 
 type Props = {
   message?: string;
   size?: string;
+  className?: string;
+  style?: React.CSSProperties;
   children?: React.ReactNode;
 };
 
@@ -14,7 +17,7 @@ export default function Empty(props: Props) {
   const fontSize = parseFloat(size) * 0.15 + "rem";
 
   return (
-    <div className={style.empty}>
+    <div className={className(style.empty, props.className)} style={props.style}>
       <img src={noDataPlaceholderSvg} alt="" style={{ height: size }} />
       <p style={{ fontSize }}>{props.message ?? "There is nothing here..."}</p>
       {props.children}

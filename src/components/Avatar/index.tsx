@@ -1,4 +1,5 @@
 import React from "react";
+import avatar from "utils/avatar";
 
 export type Props = {
   name: string;
@@ -8,12 +9,6 @@ export type Props = {
   gap?: string;
   className?: string;
 };
-
-const placeholderImg = process.env.PUBLIC_URL + "/img/user.svg";
-
-function avatar(url: string | undefined) {
-  return url ? url : placeholderImg;
-}
 
 export default function Avatar(props: Props) {
   const namePos = props.namePosition ?? "right";

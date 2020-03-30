@@ -1,5 +1,6 @@
 import SettingButton from "components/SettingButton";
 import React from "react";
+import avatar from "utils/avatar";
 import style from "./style.module.css";
 
 type Props = {
@@ -9,13 +10,11 @@ type Props = {
   content: string;
 };
 
-const avatarPlaceholder = process.env.PUBLIC_URL + "/img/user.png";
-
 export default function Comment(props: Props) {
   return (
     <div className={style.comment}>
       <div className="avatar_container">
-        <img src={props.avatar ?? avatarPlaceholder} alt="" className={style.avatar} />
+        <img src={avatar(props.avatar)} alt="" className={style.avatar} />
       </div>
       <div className={style.content_container}>
         <div className={style.info}>

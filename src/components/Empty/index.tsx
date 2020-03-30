@@ -10,10 +10,13 @@ type Props = {
 const noDataPlaceholderSvg = process.env.PUBLIC_URL + "/img/no_data.svg";
 
 export default function Empty(props: Props) {
+  const size = props.size ?? "10rem";
+  const fontSize = parseFloat(size) * 0.15 + "rem";
+
   return (
-    <div className={style.empty} style={{ fontSize: props.size }}>
-      <img src={noDataPlaceholderSvg} alt="" style={{ height: props.size ?? "10rem" }} />
-      <p>{props.message ?? "There is nothing here..."}</p>
+    <div className={style.empty}>
+      <img src={noDataPlaceholderSvg} alt="" style={{ height: size }} />
+      <p style={{ fontSize }}>{props.message ?? "There is nothing here..."}</p>
       {props.children}
     </div>
   );

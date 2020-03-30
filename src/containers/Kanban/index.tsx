@@ -175,7 +175,7 @@ export default function Kanban() {
         <Fragment>
           <div className={style.topbar}>
             <h1>{project.name}</h1>
-            {boardIds.length ? (
+            {noBoard ? null : (
               <>
                 <Select
                   options={projectIterationOptions}
@@ -191,7 +191,7 @@ export default function Kanban() {
                 />
                 <SettingButton size="1.5rem" color="#ddd" hoverColor="var(--blue)" />
               </>
-            ) : null}
+            )}
           </div>
           {noBoard ? (
             <Empty message="No board" size="10rem">

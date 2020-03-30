@@ -59,7 +59,7 @@ export default function CardDetail(props: Props) {
                     ))}
                   </ScrollBox>
                 ) : (
-                  <Empty message="No Comment" />
+                  <Empty message="No Comment" size="10rem" />
                 )}
                 <div className={style.comment_input}>
                   <img src={testUserData.publicInfo.mokuo.avatar} alt="" />

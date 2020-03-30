@@ -7,6 +7,7 @@ import TeamModel from "models/Team";
 import UserModel from "models/User";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Row, Table } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { useStore } from "rlax";
 import testTeamData from "utils/testTeamData";
 import testUserData from "utils/testUserData";
@@ -66,6 +67,12 @@ export default function Team() {
     console.log(team);
   }
 
+  const history = useHistory();
+
+  function gotoUserPage(username: string) {
+    history.push(`/user/${username}`);
+  }
+
   return (
     <>
       <ModalForm<FormValues>
@@ -107,7 +114,13 @@ export default function Team() {
                 <Empty size="8rem" message="No people matched" />
               ) : (
                 filteredPeople.map((p) => (
-                  <PeopleCard key={p.id} className="mb-3 mr-3" size="60px" user={p} />
+                  <PeopleCard
+                    key={p.id}
+                    className="mb-3 mr-3"
+                    size="60px"
+                    user={p}
+                    onClick={() => gotoUserPage(p.name)}
+                  />
                 ))
               )}
             </Row>

@@ -24,7 +24,7 @@ namespace MessageModel {
   export interface CreateInfo {
     description: string;
     announcer: string;
-    receiver: string;
+    receiver?: string;
     cardId: string;
   }
 

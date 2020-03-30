@@ -7,6 +7,7 @@ const msg1: MessageModel.Info = {
   description: "还在睡！起来修Bug！Pipeline都红成猴屁股了！",
   updateTime: "2020-03-01 12:04",
   isRead: false,
+  cardId: "0",
 };
 
 const msg2: MessageModel.Info = {
@@ -15,6 +16,7 @@ const msg2: MessageModel.Info = {
   description: "更改名称：shit -> big shit",
   updateTime: "2020-03-01 02:06",
   isRead: true,
+  cardId: "0",
 };
 
 const commentMsg = [
@@ -40,6 +42,7 @@ function randomComment(): MessageModel.Info {
     description,
     updateTime: "2020-03-01 12:04",
     isRead: false,
+    cardId: "0",
   };
 }
 

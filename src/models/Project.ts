@@ -4,8 +4,8 @@ namespace ProjectModel {
     name: string;
     iteration?: number;
     teamId?: number;
-    row?: string[];
-    col?: string[];
+    row?: string;
+    col?: string;
   }
 
   export interface UpdateInfo {
@@ -13,13 +13,17 @@ namespace ProjectModel {
     name: string;
     iteration?: number;
     teamId?: number;
-    row?: string[];
-    col?: string[];
+    row?: string;
+    col?: string;
   }
 
-  export interface Info extends CreateInfo {
+  export interface Info {
     id: string;
     createTime: string;
+    creator: string;
+    name: string;
+    iteration?: number;
+    teamId?: number;
     row: string[];
     col: string[];
   }

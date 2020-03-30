@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Container, Row, Table } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
 import { useStore } from "rlax";
+import { day } from "utils/date";
 import joinUrl from "utils/join-url";
 import "./style.css";
 
@@ -186,7 +187,7 @@ export default function ProjectBrowser() {
                         <td>
                           <Link to={joinUrl(url, project.id)}>{project.name}</Link>
                         </td>
-                        <td>{project.createTime}</td>
+                        <td>{day(project.createTime)}</td>
                         <td>{project.iteration}</td>
                         <td>{project.creator}</td>
                       </tr>

@@ -13,4 +13,19 @@ const selectProjectByCreatorQuery = `
   }
 `;
 
-export default { selectProjectByCreatorQuery };
+const selectProjectById = `
+  query selectProjectById($projectId: String!) {
+    selectProjectById(projectId: $projectId) {
+        id
+        name: projectName
+        creator
+        teamId
+        createTime
+        col: colTitle
+        row: rowTitle
+        iteration
+      }
+  }
+`;
+
+export default { selectProjectByCreatorQuery, selectProjectById };

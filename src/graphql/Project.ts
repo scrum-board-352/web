@@ -11,6 +11,13 @@ export async function selectProjectByCreator(creator: {
   return data.selectProjectByCreator;
 }
 
+export async function selectProjectById(projectId: {
+  projectId: string;
+}): Promise<ProjectModel.Info> {
+  const data = await client.request(ProjectQuery.selectProjectById, projectId);
+  return data.selectProjectById;
+}
+
 export async function createProject(
   projeceCreateModel: ProjectModel.CreateInfo
 ): Promise<ProjectModel.Info> {

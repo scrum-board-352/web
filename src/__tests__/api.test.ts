@@ -1,7 +1,7 @@
 import { selectBoardsByProjectId } from "graphql/Board";
 import { selectCardsByBoardId, updateCard } from "graphql/Card";
 import { getCommentByReceiver, updateComment } from "graphql/Message";
-import { selectProjectByCreator, updateProject } from "graphql/Project";
+import { selectProjectByCreator, selectProjectById, updateProject } from "graphql/Project";
 import {
   createTeam,
   selectTeamByUser,
@@ -150,6 +150,14 @@ describe("project api tests", () => {
     };
     const result: Array<ProjectModel.Info> = await selectProjectByCreator(creator);
     expect(result.length).toEqual(2);
+  });
+
+  test("should get project by id", async () => {
+    const projectId = {
+      projectId: process.env.REACT_APP_PROJECT_ID ?? "",
+    };
+    const result: ProjectModel.Info = await selectProjectById(projectId);
+    expect(result.name).toEqual(process.env.REACT_APP_PROJECT_NAME);
   });
 
   // run this test will create new project by jianglianEin, it will let previous test error.

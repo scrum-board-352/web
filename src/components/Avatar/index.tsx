@@ -9,7 +9,7 @@ export type Props = {
   className?: string;
 };
 
-const placeholderImg = process.env.PUBLIC_URL + "/img/user.png";
+const placeholderImg = process.env.PUBLIC_URL + "/img/user.svg";
 
 function avatar(url: string | undefined) {
   return url ? url : placeholderImg;

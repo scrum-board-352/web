@@ -9,8 +9,6 @@ import { Badge, Modal } from "react-bootstrap";
 import { FiMessageSquare } from "react-icons/fi";
 import ScrollBox from "react-responsive-scrollbox";
 import className from "utils/class-name";
-import sleep from "utils/sleep";
-import testMessageData from "utils/testMessageData";
 import testUserData from "utils/testUserData";
 import style from "./card-detail.module.css";
 import Priority from "./Priority";
@@ -26,11 +24,14 @@ export default function CardDetail(props: Props) {
   const [loading, loadingOps] = useLoading();
 
   useEffect(() => {
-    (async () => {
-      await loadingOps(sleep, 2000);
-      setComments(testMessageData.info.comments);
-    })();
-  }, [loadingOps]);
+    loadingOps(async () => {
+      // TODO: fetch card comments.
+      const cardId = props.card.id;
+      if (!cardId) {
+        return;
+      }
+    });
+  }, [loadingOps, props.card.id]);
 
   return (
     <Modal show={props.show} onHide={props.onHide} dialogClassName={style.dialog} centered>

@@ -67,9 +67,7 @@ describe("message api tests", () => {
     const receiver = {
       receiver: process.env.REACT_APP_RECEIVER_USERNAME ?? "",
     };
-    const result: Array<Message.InfoOutput> = await getCommentByReceiver(
-      receiver
-    );
+    const result: Array<Message.InfoOutput> = await getCommentByReceiver(receiver);
     expect(result.length).toEqual(2);
   });
 
@@ -151,7 +149,7 @@ describe("project api tests", () => {
       creator: process.env.REACT_APP_PROJECT_CREATOR ?? "",
     };
     const result: Array<ProjectModel.Info> = await selectProjectByCreator(creator);
-    expect(result.length).toEqual(1);
+    expect(result.length).toEqual(2);
   });
 
   // run this test will create new project by jianglianEin, it will let previous test error.

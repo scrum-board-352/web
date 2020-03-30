@@ -1,5 +1,5 @@
 const createProject = `
-mutation createProjec($creator: String, $name: String, $teamId: String, $col: [String], $row: [String], $iteration: Int){
+mutation createProjec($creator: String, $name: String, $teamId: String, $col: String, $row: String, $iteration: Int){
   createProject(selectionInput: {
     projectInput: {
       creator: $creator
@@ -24,7 +24,7 @@ mutation createProjec($creator: String, $name: String, $teamId: String, $col: [S
 `;
 
 const updateProject = `
-mutation updateProject($id: String, $name: String, $teamId: String, $col: [String], $row: [String], $iteration: Int){
+mutation updateProject($id: String, $name: String, $teamId: String, $col: String, $row: String, $iteration: Int){
   updateProject(selectionInput: {
     projectInput: {
       id: $id

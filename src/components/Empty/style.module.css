@@ -11,5 +11,8 @@
   font-size: 0.15em;
   font-weight: 700;
   margin-top: 1rem;
+}
+
+.empty > *:last-child {
   margin-bottom: 5%;
 }

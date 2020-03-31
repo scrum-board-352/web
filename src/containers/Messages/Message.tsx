@@ -9,13 +9,14 @@ export type Props = {
   description: string;
   updateTime: string;
   isRead: boolean;
+  onClick?: () => void;
 };
 
 export type TMessage = React.FunctionComponent<Props>;
 
 export default function Message(props: Props) {
   return (
-    <div className="messages_message">
+    <div className="messages_message" onClick={props.onClick}>
       <Checkbox size="1rem" />
 
       <Avatar
@@ -38,11 +39,7 @@ export default function Message(props: Props) {
       )}
 
       <div className="messages_message_description_wrapper">
-        <p className="messages_message_description">
-          {props.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nostrum
-          eligendi at eos, accusantium veniam, consectetur quis placeat maiores molestiae soluta,
-          totam laborum cumque veritatis blanditiis nobis qui consequatur! Quasi.
-        </p>
+        <p className="messages_message_description">{props.description}</p>
         <div className="messages_message_description_mask"></div>
       </div>
 

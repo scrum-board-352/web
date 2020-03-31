@@ -14,14 +14,19 @@ import CardModel from "models/Card";
 import ProjectModel from "models/Project";
 import React, { Fragment, useEffect, useState } from "react";
 import ScrollBox from "react-responsive-scrollbox";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import CardCol from "./CardCol";
 import CardDetail from "./CardDetail";
 import { CardsManager, getCardById } from "./CardsManager";
 import style from "./style.module.css";
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 export default function Kanban() {
-  const { projectId, iteration } = useParams();
+  const { projectId, boardId } = useParams();
+  const query = useQuery();
   const history = useHistory();
   const initProject: ProjectModel.Info = {
     id: "",
@@ -33,7 +38,6 @@ export default function Kanban() {
     row: [],
   };
   const [project, setProject] = useState<ProjectModel.Info>(initProject);
-  const [boardId, setBoardId] = useState<BoardModel.Info["id"]>("");
   const [boardIds, setBoardIds] = useState<Array<BoardModel.Info["id"]>>([]);
   const [cards, setCards] = useState<Array<CardModel.Info>>([]);
   const [filteredCards, setFilteredCards] = useState<Array<CardModel.Info>>([]);
@@ -48,7 +52,6 @@ export default function Kanban() {
       }
 
       let project: ProjectModel.Info = initProject;
-      let boardId: BoardModel.Info["id"] = "";
       let boardIds: Array<BoardModel.Info["id"]> = [];
       let cards: Array<CardModel.Info> = [];
       let noBoard = false;
@@ -68,19 +71,17 @@ export default function Kanban() {
           throw ErrorType.NoBoard;
         }
         boardIds = boards.map((board) => board.id);
-        if (!iteration) {
-          history.replace(`${projectId}/${boards.length}`);
+        if (!boardId) {
+          history.replace(`${projectId}/${boardIds[boardIds.length - 1]}`);
           return;
         }
-        const iterationNum = Number(iteration);
-        if (Number.isNaN(iterationNum) || !Number.isInteger(iterationNum)) {
+        if (!boardIds.includes(boardId)) {
           throw ErrorType.NotFound;
         }
-        const board = boards[iterationNum - 1];
+        const board = boards.find((b) => b.id === boardId);
         if (!board) {
           throw ErrorType.NotFound;
         }
-        boardId = board.id;
         // fetch cards.
         cards = await selectCardsByBoardId({ boardId });
       } catch (err) {
@@ -103,11 +104,10 @@ export default function Kanban() {
       }
       setProject(project);
       setBoardIds(boardIds);
-      setBoardId(boardId);
       setCards(cards);
       setNoBoard(noBoard);
     });
-  }, [loadingOps, projectId, iteration, history]);
+  }, [loadingOps, projectId, boardId]);
 
   useEffect(() => {
     setFilteredCards(cards);
@@ -126,6 +126,15 @@ export default function Kanban() {
     status: "",
     founder: "",
   });
+  const cardId = query.get("cardId");
+
+  useEffect(() => {
+    const queryCard = cards.find((card) => card.id === cardId);
+    if (queryCard) {
+      setCardDetail(queryCard);
+      setShowCardDetailFlag(true);
+    }
+  }, [cards, cardId]);
 
   function showCardDetail(cardId: string) {
     const cardDetail = getCardById(cardId);
@@ -141,9 +150,9 @@ export default function Kanban() {
     setShowCardDetailFlag(true);
   }
 
-  const projectIterationOptions: Option[] = boardIds.map((_, i) => ({
+  const projectIterationOptions: Option[] = boardIds.map((id, i) => ({
     name: `iteration${i + 1}`,
-    value: String(i + 1),
+    value: id,
   }));
 
   const [createBoardLoading, createBoardLoadingOps] = useLoading();
@@ -172,7 +181,8 @@ export default function Kanban() {
         title: "Board Created!",
         type: "success",
       });
-      history.replace(`${projectId}/1`);
+      history.replace(`${projectId}/${newBoard.id}`);
+      setNoBoard(false);
     }
   }
 
@@ -188,8 +198,8 @@ export default function Kanban() {
               <>
                 <Select
                   options={projectIterationOptions}
-                  defaultValue={iteration ?? ""}
-                  onChange={(iteration) => history.push(iteration)}
+                  defaultValue={boardId ?? ""}
+                  onChange={(id) => history.push(id)}
                 />
                 <Searchbar
                   className={style.topbar_search}
@@ -216,7 +226,7 @@ export default function Kanban() {
           ) : (
             <ScrollBox className="scrollbar_thumb_green">
               <div className={style.card_col_container}>
-                <CardsManager cards={filteredCards} boardId={boardId}>
+                <CardsManager cards={filteredCards} boardId={boardId ?? ""}>
                   {project.col.map((col) => (
                     <CardCol key={col} colName={col} onClickCard={showCardDetail} />
                   ))}

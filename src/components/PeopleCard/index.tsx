@@ -13,18 +13,7 @@ type Props = {
 
 export default function PeopleCard(props: Props) {
   return (
-    <div
-      className={className(
-        style.card,
-        props.className,
-        "cardshadow",
-        "d-flex",
-        "align-items-center",
-        "justify-centent-center",
-        "p-4",
-        "rounded-lg"
-      )}
-      onClick={props.onClick}>
+    <div className={className(style.card, props.className, "cardshadow")} onClick={props.onClick}>
       <Avatar
         size={props.size}
         name={props.user.name}

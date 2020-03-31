@@ -4,7 +4,11 @@ const getCommentByReceiverQuery = `
       info: commitType{
         id
         description
-        announcer
+        announcer{
+          id
+          name: username
+          avatar: icon
+        }
         updateTime
         isRead: read
         cardId

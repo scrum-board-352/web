@@ -33,4 +33,15 @@ query selectUserBySubstring($usernameSubstring: String!){
   }
 }
 `;
-export default { loginQuery, logoutQuery, selectUser };
+
+const selectPeopleByTeam = `
+query selectPeopleByTeam($teamId: String!){
+  selectPeopleByTeam(teamId: $teamId) {
+    id
+    name: username
+    email
+    avatar: icon
+  }
+}
+`;
+export default { loginQuery, logoutQuery, selectUser, selectPeopleByTeam };

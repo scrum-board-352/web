@@ -1,8 +1,8 @@
 const sendEmailQuery = `
-query sendEmailToInviteReceiverJoinTeam($receiverMail: String!, $announcer: String!, $teamId: String!) {
+query sendEmailToInviteReceiverJoinTeam($receiverMail: String!, $receiver: String!, $teamId: String!) {
   sendEmailToInviteReceiverJoinTeam(emailInput: {
     receiverMail: $receiverMail
-    announcer: $announcer
+    receiver: $receiver
     teamId: $teamId
   }){
     success: susses

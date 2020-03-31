@@ -124,7 +124,7 @@ describe("team api tests", () => {
   test("should get email send", async () => {
     const teamInfo: EmailModel.TeamInfo = {
       receiverMail: process.env.REACT_APP_EMAIL_RECEIVERMAIL ?? "",
-      announcer: process.env.REACT_APP_EMAIL_ANNOUNCER ?? "",
+      receiver: process.env.REACT_APP_EMAIL_RECEIVER ?? "",
       teamId: process.env.REACT_APP_EAMIL_TEAMID ?? "",
     };
     const result: ResultOutput = await sendEmailToInviteReceiverJoinTeam(teamInfo);
@@ -147,7 +147,7 @@ describe("team api tests", () => {
       username: process.env.REACT_APP_TEAM_CREATOR ?? "",
     };
     const result: Array<TeamModel.Info> = await selectTeamByUser(username);
-    expect(result.length).toEqual(1);
+    expect(result.length).toEqual(2);
   });
 });
 

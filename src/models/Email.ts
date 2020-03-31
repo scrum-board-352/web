@@ -1,7 +1,7 @@
 namespace EmailModel {
   export interface BaseInfo {
     receiverMail: string;
-    announcer: string;
+    receiver: string;
   }
 
   export interface TeamInfo extends BaseInfo {

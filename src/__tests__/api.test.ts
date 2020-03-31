@@ -1,6 +1,6 @@
 import { selectBoardsByProjectId } from "graphql/Board";
 import { selectCardsByBoardId, updateCard } from "graphql/Card";
-import { getCommentByReceiver, updateComment } from "graphql/Message";
+import { getCommentByReceiver, selectCommentsByCardId, updateComment } from "graphql/Message";
 import { selectProjectByCreator, selectProjectById, updateProject } from "graphql/Project";
 import {
   createTeam,
@@ -91,6 +91,14 @@ describe("message api tests", () => {
     };
     const result: Message.Info = await updateComment(commitUpdateInfo);
     expect(result.description).toEqual(process.env.REACT_APP_COMMIT_DESCRIPTION_UPDATE);
+  });
+
+  test("should get commit by cardId", async () => {
+    const cardId = {
+      cardId: process.env.REACT_APP_COMMIT_CARDID ?? "",
+    };
+    const result: Array<Message.Info> = await selectCommentsByCardId(cardId);
+    expect(result.length).toEqual(2);
   });
 
   // test("should get commit remove", async () => {
@@ -239,7 +247,7 @@ describe("card api tests", () => {
       boardId: process.env.REACT_APP_CARD_BOARDID ?? "",
     };
     const result: Array<CardModel.Info> = await selectCardsByBoardId(boardId);
-    expect(result.length).toEqual(1);
+    expect(result.length).toEqual(2);
   });
 
   // test("should get card remove", async () => {

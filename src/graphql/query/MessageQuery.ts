@@ -18,4 +18,17 @@ const getCommentByReceiverQuery = `
   }
 `;
 
-export default { getCommentByReceiverQuery };
+const getCommentByCardId = `
+  query selectCommentsByCardId($cardId: String!){
+    selectCommentsByCardId(cardId: $cardId){
+      id
+      description
+      announcer
+      updateTime
+      isRead: read
+      cardId
+    }
+  }
+`;
+
+export default { getCommentByReceiverQuery, getCommentByCardId };

@@ -25,3 +25,10 @@ export async function removeComment(commitId: { commitId: string }): Promise<Res
   const data = await client.request(CommentMutation.removeComment, commitId);
   return data.removeCommit;
 }
+
+export async function selectCommentsByCardId(cardId: {
+  cardId: string;
+}): Promise<Array<Message.Info>> {
+  const data = await client.request(MessageQuery.getCommentByCardId, cardId);
+  return data.selectCommentsByCardId;
+}

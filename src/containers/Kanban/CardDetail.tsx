@@ -57,6 +57,7 @@ export default function CardDetail(props: Props) {
       description: content,
       cardId: props.card.id,
     });
+    commentInput.value = "";
     setComments([...comments, newComment]);
   }
 

@@ -1,16 +1,18 @@
 import Empty from "components/Empty";
+import Loading from "components/Loading";
 import ModalForm, { Template } from "components/ModalForm";
 import PeopleCard from "components/PeopleCard";
 import Searchbar from "components/Searchbar";
-import useFilter from "hooks/useFilter";
+import { createTeam, selectTeamByUser } from "graphql/Team";
+import { selectPeopleByTeamId, selectUserBySubstring } from "graphql/User";
+import useLoading from "hooks/useLoading";
 import TeamModel from "models/Team";
 import UserModel from "models/User";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Row, Table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useStore } from "rlax";
-import testTeamData from "utils/testTeamData";
-import testUserData from "utils/testUserData";
+import { deduplication } from "utils/array";
 import "./style.css";
 
 type FormValues = Pick<TeamModel.CreateInfo, "name" | "description">;
@@ -32,39 +34,62 @@ export default function Team() {
   const [people, setPeople] = useState<UserModel.PublicInfo[]>([]);
   const [teams, setTeams] = useState<TeamModel.Info[]>([]);
   const [filteredPeople, setFilteredPeople] = useState<UserModel.PublicInfo[]>([]);
-  const [filteredTeams, setFilteredTeams] = useState<TeamModel.Info[]>([]);
-  const [noPeopleMatched, filterPeople] = useFilter();
-  const [noTeamMatched, filterTeams] = useFilter();
+  const [noPeopleMatched, setNoPeopleMatched] = useState(false);
+  const currentUser: UserModel.PrivateInfo = useStore("user");
+
+  const [teamsLoading, teamsLoadingOps] = useLoading();
 
   useEffect(() => {
-    // TODO: fetch people.
-    const people = [testUserData.publicInfo.mokuo, testUserData.publicInfo.emmm];
-    setPeople(people);
+    // fetch teams.
+    teamsLoadingOps(async () => {
+      const teams = await selectTeamByUser({ username: currentUser.name });
+      setTeams(teams);
+    });
   }, []);
 
+  const [peopleLoading, peopleLoadingOps] = useLoading();
+
   useEffect(() => {
-    // TODO: fetch teams.
-    const teams = [testTeamData.info.lgtm, testTeamData.info.shit];
-    setTeams(teams);
-  }, []);
+    // fetch people.
+    peopleLoadingOps(async () => {
+      const recentTeams = teams.length < 5 ? teams : teams.slice(0, 5);
+      const recentTeamsId = recentTeams.map((team) => team.id);
+      const recentPeople = await Promise.all(
+        recentTeamsId.map((teamId) => selectPeopleByTeamId({ teamId }))
+      );
+      setPeople(deduplication(recentPeople.flat(), (team) => team.id));
+    });
+  }, [teams]);
 
   useEffect(() => {
     setFilteredPeople(people);
-    setFilteredTeams(teams);
-  }, [teams, people]);
+  }, [people]);
 
-  function searchTeamOrPeople(name: string) {
-    setFilteredPeople(filterPeople(people, (p) => p.name.includes(name)));
-    setFilteredTeams(filterTeams(teams, (t) => t.name.includes(name)));
+  async function handleSearchPeople(name: string) {
+    if (!name) {
+      setFilteredPeople(people);
+      return;
+    }
+    const filteredPeople = await peopleLoadingOps(selectUserBySubstring, {
+      usernameSubstring: name,
+    });
+    if (filteredPeople.length) {
+      setNoPeopleMatched(false);
+      setFilteredPeople(filteredPeople);
+    } else {
+      setNoPeopleMatched(true);
+    }
   }
 
   const [showCreateTeam, setShowCreateTeam] = useState(false);
-  const [createTeamLoading, setCreateTeamLoading] = useState(false);
+  const [createTeamLoading, createTeamLoadingOps] = useLoading();
   const user: UserModel.PrivateInfo = useStore("user");
 
-  function createTeam(values: FormValues) {
+  async function handleCreateTeamSubmit(values: FormValues) {
     const team: TeamModel.CreateInfo = { ...values, creator: user.name };
-    console.log(team);
+    const newTeam = await createTeamLoadingOps(createTeam, team);
+    setShowCreateTeam(false);
+    setTeams([...teams, newTeam]);
   }
 
   const history = useHistory();
@@ -81,7 +106,7 @@ export default function Team() {
         show={showCreateTeam}
         loading={createTeamLoading}
         onClose={() => setShowCreateTeam(false)}
-        onSubmit={createTeam}
+        onSubmit={handleCreateTeamSubmit}
       />
       <Container fluid className="dashboard_page_container">
         <Row className="align-item-center justify-content-between">
@@ -96,12 +121,11 @@ export default function Team() {
         </Row>
         <Row>
           <Searchbar
-            placeholder="Search People or Team"
+            placeholder="Search People..."
             color="var(--gray)"
             activeColor="var(--blue)"
             size="2rem"
-            onSearch={searchTeamOrPeople}
-            // onChange={(s) => console.log(s)}
+            onSearch={handleSearchPeople}
           />
         </Row>
         <Row>
@@ -110,7 +134,9 @@ export default function Team() {
               <h2>People</h2>
             </Row>
             <Row>
-              {noPeopleMatched ? (
+              {peopleLoading ? (
+                <Loading />
+              ) : noPeopleMatched ? (
                 <Empty size="8rem" message="No people matched" />
               ) : (
                 filteredPeople.map((p) => (
@@ -132,8 +158,10 @@ export default function Team() {
               <h2>Your Teams</h2>
             </Row>
             <Row>
-              {noTeamMatched ? (
-                <Empty size="8rem" message="No team matched" />
+              {teamsLoading ? (
+                <Loading />
+              ) : teams.length === 0 ? (
+                <Empty size="8rem" message="No team" />
               ) : (
                 <Table hover borderless={true}>
                   <thead>
@@ -145,7 +173,7 @@ export default function Team() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredTeams.map((team, i) => (
+                    {teams.map((team, i) => (
                       <tr key={team.id}>
                         <td>{i + 1}</td>
                         <td>

@@ -34,9 +34,9 @@ query selectUserBySubstring($usernameSubstring: String!){
 }
 `;
 
-const selectPeopleByTeam = `
-query selectPeopleByTeam($teamId: String!){
-  selectPeopleByTeam(teamId: $teamId) {
+const selectPeopleByTeamId = `
+query selectPeopleByTeamId($teamId: String!){
+  selectPeopleByTeamId(teamId: $teamId) {
     id
     name: username
     email
@@ -44,4 +44,4 @@ query selectPeopleByTeam($teamId: String!){
   }
 }
 `;
-export default { loginQuery, logoutQuery, selectUser, selectPeopleByTeam };
+export default { loginQuery, logoutQuery, selectUser, selectPeopleByTeamId };

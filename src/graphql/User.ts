@@ -31,9 +31,9 @@ export async function selectUserBySubstring(usernameSubstring: {
   return data.selectUserBySubstring;
 }
 
-export async function selectPeopleByTeam(teamId: {
+export async function selectPeopleByTeamId(teamId: {
   teamId: string;
 }): Promise<Array<UserModel.PrivateInfo>> {
-  const data = await client.request(UserQuery.selectPeopleByTeam, teamId);
-  return data.selectPeopleByTeam;
+  const data = await client.request(UserQuery.selectPeopleByTeamId, teamId);
+  return data.selectPeopleByTeamId;
 }

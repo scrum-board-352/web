@@ -1,7 +1,9 @@
+import { createCard as createCardApi, updateCard } from "graphql/Card";
 import CardModel from "models/Card";
 import React, { useState } from "react";
 
 let update: () => void;
+let boardId: string;
 let cards: CardModel.Info[] = [];
 let currentCardId = "";
 let dragging = false;
@@ -24,6 +26,7 @@ function endDrag() {
   const movedCard = cards.find((card) => card.id === currentCardId);
   if (movedCard && targetColName) {
     movedCard.status = targetColName;
+    updateCard(movedCard);
   }
   dragging = false;
   originColName = "";
@@ -31,6 +34,10 @@ function endDrag() {
   selectedColName = "";
   targetColName = "";
   update();
+}
+
+function getCurrentBoardId() {
+  return boardId;
 }
 
 function setTargetColName(colName: string) {
@@ -60,6 +67,7 @@ function getCurrentCardId() {
 
 const initCardsManager = {
   isDragging,
+  getCurrentBoardId,
   getOriginColName,
   getCardsByColName,
   getCurrentCardId,
@@ -75,11 +83,7 @@ export function getCardById(id: string) {
 }
 
 export async function createCard(card: CardModel.CreateInfo) {
-  const createdCard: CardModel.Info = {
-    ...card,
-    id: Math.random().toString(),
-    createTime: "2020-03-27",
-  };
+  const createdCard = await createCardApi(card);
   cards.push(createdCard);
   update();
 }
@@ -87,6 +91,7 @@ export async function createCard(card: CardModel.CreateInfo) {
 export const CardsContext = React.createContext(initCardsManager);
 
 type Props = {
+  boardId: string;
   cards: CardModel.Info[];
   children: React.ReactNode;
 };
@@ -97,5 +102,6 @@ export function CardsManager(props: Props) {
     setCardsManager({ ...cardsManager });
   };
   cards = props.cards;
+  boardId = props.boardId;
   return <CardsContext.Provider value={cardsManager}>{props.children}</CardsContext.Provider>;
 }

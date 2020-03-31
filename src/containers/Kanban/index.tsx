@@ -5,7 +5,9 @@ import { message } from "components/MessageBox";
 import Searchbar from "components/Searchbar";
 import Select, { Option } from "components/Select";
 import SettingButton from "components/SettingButton";
-import { createBoard } from "graphql/Board";
+import { createBoard, selectBoardsByProjectId } from "graphql/Board";
+import { selectCardsByBoardId } from "graphql/Card";
+import { selectProjectById } from "graphql/Project";
 import useLoading from "hooks/useLoading";
 import BoardModel from "models/Board";
 import CardModel from "models/Card";
@@ -13,9 +15,6 @@ import ProjectModel from "models/Project";
 import React, { Fragment, useEffect, useState } from "react";
 import ScrollBox from "react-responsive-scrollbox";
 import { useHistory, useParams } from "react-router-dom";
-import testBoardData from "utils/testBoardData";
-import testCardData from "utils/testCardData";
-import testProjectData from "utils/testProjectData";
 import CardCol from "./CardCol";
 import CardDetail from "./CardDetail";
 import { CardsManager, getCardById } from "./CardsManager";
@@ -55,15 +54,16 @@ export default function Kanban() {
       let noBoard = false;
 
       try {
-        // TODO: fetch and check project.
-        const projects = Object.values(testProjectData.info);
-        const res = projects.find((p) => p.id === projectId);
-        if (!res) {
+        // fetch and check project.
+        if (!projectId) {
           throw ErrorType.NotFound;
         }
-        project = res;
-        // TODO: get all boards.
-        const boards = projectId === projects[0].id ? Object.values(testBoardData.info) : [];
+        project = await selectProjectById({ projectId });
+        if (!project.id) {
+          throw ErrorType.NotFound;
+        }
+        // get all boards.
+        const boards = await selectBoardsByProjectId({ projectId });
         if (boards.length === 0) {
           throw ErrorType.NoBoard;
         }
@@ -81,8 +81,8 @@ export default function Kanban() {
           throw ErrorType.NotFound;
         }
         boardId = board.id;
-        // TODO: fetch cards.
-        cards = projectId === projects[0].id ? testCardData.info.cards : [];
+        // fetch cards.
+        cards = await selectCardsByBoardId({ boardId });
       } catch (err) {
         switch (err) {
           case ErrorType.NotFound:
@@ -216,7 +216,7 @@ export default function Kanban() {
           ) : (
             <ScrollBox className="scrollbar_thumb_green">
               <div className={style.card_col_container}>
-                <CardsManager cards={filteredCards}>
+                <CardsManager cards={filteredCards} boardId={boardId}>
                   {project.col.map((col) => (
                     <CardCol key={col} colName={col} onClickCard={showCardDetail} />
                   ))}
@@ -224,13 +224,11 @@ export default function Kanban() {
               </div>
             </ScrollBox>
           )}
-          {cards.length ? (
-            <CardDetail
-              show={showCardDetailFlag}
-              onHide={() => setShowCardDetailFlag(false)}
-              card={cardDetail}
-            />
-          ) : null}
+          <CardDetail
+            show={showCardDetailFlag}
+            onHide={() => setShowCardDetailFlag(false)}
+            card={cardDetail}
+          />
         </Fragment>
       )}
     </div>

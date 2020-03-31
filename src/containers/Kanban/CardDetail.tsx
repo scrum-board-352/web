@@ -1,15 +1,19 @@
 import Comment from "components/Comment";
 import Empty from "components/Empty";
 import Loading from "components/Loading";
+import { createComment, selectCommentsByCardId } from "graphql/Message";
 import useLoading from "hooks/useLoading";
 import CardModel from "models/Card";
 import MessageModel from "models/Message";
-import React, { Fragment, useEffect, useState } from "react";
-import { Badge, Modal } from "react-bootstrap";
+import UserModel from "models/User";
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import { Badge, Modal, Spinner } from "react-bootstrap";
 import { FiMessageSquare } from "react-icons/fi";
 import ScrollBox from "react-responsive-scrollbox";
+import { useStore } from "rlax";
+import avatar from "utils/avatar";
 import className from "utils/class-name";
-import testUserData from "utils/testUserData";
+import { dateDistance } from "utils/date";
 import style from "./card-detail.module.css";
 import Priority from "./Priority";
 
@@ -20,18 +24,41 @@ type Props = {
 };
 
 export default function CardDetail(props: Props) {
-  const [comments, setComments] = useState<MessageModel.Info[]>([]);
+  const [comments, setComments] = useState<Array<MessageModel.Info>>([]);
   const [loading, loadingOps] = useLoading();
+  const currentUser: UserModel.PrivateInfo = useStore("user");
 
   useEffect(() => {
+    const cardId = props.card.id;
+    if (!cardId) {
+      return;
+    }
     loadingOps(async () => {
-      // TODO: fetch card comments.
-      const cardId = props.card.id;
-      if (!cardId) {
-        return;
-      }
+      // fetch card comments.
+      const comments = await selectCommentsByCardId({ cardId });
+      setComments(comments);
     });
-  }, [loadingOps, props.card.id]);
+  }, [props.card.id]);
+
+  const commentInputRef = useRef<HTMLInputElement>(null);
+  const [commentLoading, commentLoadingOps] = useLoading();
+
+  async function handleCreateCommentClick() {
+    const commentInput = commentInputRef.current;
+    if (!commentInput) {
+      return;
+    }
+    const content = commentInput.value;
+    if (!content) {
+      return;
+    }
+    const newComment = await commentLoadingOps(createComment, {
+      announcer: currentUser.name,
+      description: content,
+      cardId: props.card.id,
+    });
+    setComments([...comments, newComment]);
+  }
 
   return (
     <Modal show={props.show} onHide={props.onHide} dialogClassName={style.dialog} centered>
@@ -53,7 +80,7 @@ export default function CardDetail(props: Props) {
                         key={comment.id}
                         avatar={comment.announcer.avatar}
                         name={comment.announcer.name}
-                        commentTime={comment.updateTime}
+                        commentTime={dateDistance(comment.updateTime)}
                         content={comment.description}
                       />
                     ))}
@@ -62,10 +89,25 @@ export default function CardDetail(props: Props) {
                   <Empty message="No Comment" size="10rem" />
                 )}
                 <div className={style.comment_input}>
-                  <img src={testUserData.publicInfo.mokuo.avatar} alt="" />
-                  <input type="text" placeholder="Comment here..." />
-                  <button>
-                    <FiMessageSquare />
+                  <img src={avatar(currentUser.avatar)} alt="" />
+                  <input
+                    ref={commentInputRef}
+                    type="text"
+                    placeholder="Comment here..."
+                    disabled={commentLoading}
+                  />
+                  <button onClick={handleCreateCommentClick} disabled={commentLoading}>
+                    {commentLoading ? (
+                      <Spinner
+                        as="span"
+                        animation="grow"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <FiMessageSquare />
+                    )}
                   </button>
                 </div>
               </Fragment>
@@ -106,7 +148,7 @@ export default function CardDetail(props: Props) {
               </div>
             </ScrollBox>
             <p className={style.card_create_time}>
-              Created at <time>{props.card.createTime}</time>
+              Created at <time>{dateDistance(props.card.createTime)}</time>
             </p>
           </div>
         </div>

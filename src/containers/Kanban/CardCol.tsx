@@ -1,8 +1,11 @@
 import ModalForm, { Template } from "components/ModalForm";
+import useLoading from "hooks/useLoading";
 import CardModel from "models/Card";
+import UserModel from "models/User";
 import React, { Fragment, useContext, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import ScrollBox from "react-responsive-scrollbox";
+import { useStore } from "rlax";
 import className from "utils/class-name";
 import Card from "./Card";
 import style from "./card-col.module.css";
@@ -112,16 +115,16 @@ export default function CardCol(props: Props) {
   const dropClass = selected ? style.selected : droppable ? style.droppable : "";
 
   const [showCreateCard, setShowCreateCard] = useState(false);
-  const [createCardLoading, setCreateCardLoading] = useState(false);
+  const [createCardLoading, createCardLoadingOps] = useLoading();
+  const currentUser: UserModel.PrivateInfo = useStore("user");
+  const boardId = cardsManager.getCurrentBoardId();
 
-  async function submitCreateCard(values: CardModel.CreateInfo) {
+  async function handleSubmitCreateCard(values: CardModel.CreateInfo) {
     values.status = props.colName;
-    console.log(values);
-    await createCard(values);
-  }
-
-  function showCreateCardDialog() {
-    setShowCreateCard(true);
+    values.founder = currentUser.name;
+    values.boardId = boardId;
+    await createCardLoadingOps(createCard, values);
+    setShowCreateCard(false);
   }
 
   return (
@@ -131,7 +134,7 @@ export default function CardCol(props: Props) {
         templates={createCardFormTemplate}
         show={showCreateCard}
         onClose={() => setShowCreateCard(false)}
-        onSubmit={submitCreateCard}
+        onSubmit={handleSubmitCreateCard}
         loading={createCardLoading}
       />
       <div
@@ -144,7 +147,7 @@ export default function CardCol(props: Props) {
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}>
         <p className={style.title}>{props.colName}</p>
-        <button className={style.add_card_btn} onClick={showCreateCardDialog}>
+        <button className={style.add_card_btn} onClick={() => setShowCreateCard(true)}>
           <IoMdAdd />
           <span>New Card</span>
         </button>

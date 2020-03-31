@@ -10,7 +10,11 @@ mutation createCommit($description: String, $announcer: String, $receiver: Strin
   }){
     id
     description
-    announcer
+    announcer{
+      id
+      name: username
+      avatar: icon
+    }
     receiver
     updateTime
     cardId
@@ -30,7 +34,11 @@ mutation updateCommit($description: String, $read: Boolean, $id: String){
   }){
     id
     description
-    announcer
+    announcer{
+      id
+      name: username
+      avatar: icon
+    }
     receiver
     updateTime
     cardId

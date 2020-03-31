@@ -1,6 +1,8 @@
 import Comment from "components/Comment";
 import { message, Message } from "components/MessageBox";
 import ModalForm, { Template } from "components/ModalForm";
+import SettingButton from "components/SettingButton";
+import { MenuItem } from "components/SettingButton/Menu";
 import React, { Fragment, useState } from "react";
 import { Button } from "react-bootstrap";
 import testTextPlaceholder from "utils/testTextPlaceholder";
@@ -48,6 +50,25 @@ function Home() {
     setTimeout(setLoading, 5000, false);
   }
 
+  const menuItems: Array<MenuItem> = [
+    {
+      label: "Item 1",
+      onClick: () => alert(1),
+    },
+    {
+      label: "Item 2",
+      onClick: () => alert(2),
+    },
+    {
+      label: "Item 3",
+      onClick: () => alert(3),
+    },
+    {
+      label: "Item 4",
+      onClick: () => alert(4),
+    },
+  ];
+
   return (
     <Fragment>
       <h1>This is Home</h1>
@@ -64,6 +85,7 @@ function Home() {
         onSubmit={handleSubmit}
       />
       <Comment name="Mokuo" commentTime="2020-03-25 13:00" content={testTextPlaceholder} />
+      <SettingButton type="gear" menuItems={menuItems} size="1rem" />
     </Fragment>
   );
 }

@@ -1,0 +1,32 @@
+.menu {
+  position: absolute;
+  top: 100%;
+  right: 100%;
+  min-width: 6rem;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  animation-duration: 200ms;
+}
+
+.item {
+  width: 100%;
+  padding: 0.1rem;
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid #eee;
+  margin: 0;
+}
+
+.menu > .item:last-child {
+  border-bottom: 0;
+}
+
+.item:hover {
+  background: #eee;
+}

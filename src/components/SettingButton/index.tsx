@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { IoMdMore, IoMdSettings } from "react-icons/io";
 import { MdMoreHoriz } from "react-icons/md";
+import Menu, { MenuItem } from "./Menu";
 import style from "./style.module.css";
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
   color?: string;
   hoverColor?: string;
   type?: "dot-v" | "dot-h" | "gear";
-  onClick?: () => void;
+  menuItems?: Array<MenuItem>;
 };
 
 function icon(type: Props["type"]) {
@@ -27,6 +28,19 @@ function icon(type: Props["type"]) {
 export default function SettingButton(props: Props) {
   const type = props.type ?? "gear";
   const btnRef = useRef<HTMLButtonElement>(null);
+  const [showMenu, setShowMenu] = useState(false);
+
+  function toggleMenu() {
+    if (showMenu) {
+      return;
+    }
+    function closeMenu() {
+      setShowMenu(false);
+      document.removeEventListener("click", closeMenu);
+    }
+    document.addEventListener("click", closeMenu);
+    setShowMenu(true);
+  }
 
   return (
     <button
@@ -49,8 +63,9 @@ export default function SettingButton(props: Props) {
         width: props.size ?? "",
         height: props.size ?? "",
       }}
-      onClick={props.onClick}>
+      onClick={toggleMenu}>
       {icon(type)}
+      {showMenu ? <Menu items={props.menuItems} /> : null}
     </button>
   );
 }

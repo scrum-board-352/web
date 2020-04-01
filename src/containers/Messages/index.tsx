@@ -1,5 +1,7 @@
+import Checkbox from "components/Checkbox";
 import Loading from "components/Loading";
-import { getCommentByReceiver } from "graphql/Message";
+import LoadingButton from "components/LoadingButton";
+import { getCommentByReceiver, updateComment } from "graphql/Message";
 import useLoading from "hooks/useLoading";
 import MessageModel from "models/Message";
 import UserModel from "models/User";
@@ -7,9 +9,8 @@ import React, { useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useStore } from "rlax";
-import { dateDistance } from "utils/date";
+import { addItem, removeItem } from "utils/array";
 import Message from "./Message";
-import MessageContainer from "./MessageContainer";
 import "./style.css";
 
 export default function Messages() {
@@ -27,9 +28,58 @@ export default function Messages() {
 
   const history = useHistory();
 
-  function gotoKanban(posInfo: MessageModel.PosInfo) {
-    const { projectId, boardId, cardId } = posInfo;
+  function gotoKanban(msg: MessageModel.InfoOutput) {
+    const { projectId, boardId, cardId } = msg.posInfo;
+    readMessage(msg.info.id);
     history.push(`projects/${projectId}/${boardId}?cardId=${cardId}`);
+  }
+
+  const [selectedMessageIds, setSelectedMessageIds] = useState<Array<string>>([]);
+  const [selectAll, setSelectAll] = useState(false);
+
+  function handleSelectAllClick(selectAll: boolean) {
+    if (selectAll) {
+      setSelectedMessageIds(comments.map((c) => c.info.id));
+    } else {
+      setSelectedMessageIds([]);
+    }
+    setSelectAll(selectAll);
+  }
+
+  function handleCheckStateChange(checked: boolean, id: string) {
+    const nextSelectedMessageIds = checked
+      ? addItem(selectedMessageIds, id)
+      : removeItem(selectedMessageIds, id);
+    setSelectedMessageIds(nextSelectedMessageIds);
+  }
+
+  async function readMessage(id: string) {
+    const msg = comments.map((c) => c.info).find((msg) => msg.id === id);
+    if (!msg || msg.isRead) {
+      return;
+    }
+    return await updateComment({
+      id,
+      read: true,
+    });
+  }
+
+  const [markAsReadLoading, setMarkAsReadLoading] = useState(false);
+
+  async function handleMarkAsReadClick() {
+    setMarkAsReadLoading(true);
+    const readMessageIds = (await Promise.all(selectedMessageIds.map(readMessage))).map(
+      (msg) => msg?.id
+    );
+    setMarkAsReadLoading(false);
+    setComments((comments) =>
+      comments.map((c) => {
+        if (readMessageIds.includes(c.info.id)) {
+          c.info.isRead = true;
+        }
+        return c;
+      })
+    );
   }
 
   return loading ? (
@@ -40,18 +90,28 @@ export default function Messages() {
         <h1>Messages</h1>
       </Row>
       <Row>
-        <MessageContainer>
+        <div className="messages_message_container">
+          <div className="messages_message_control">
+            <Checkbox size="1rem" onChange={handleSelectAllClick} />
+            <span>Select All</span>
+            <LoadingButton
+              text="Mark As Read"
+              loadingText="Marking..."
+              loading={markAsReadLoading}
+              size="sm"
+              onClick={handleMarkAsReadClick}
+            />
+          </div>
           {comments.map((msg) => (
             <Message
               key={msg.info.id}
-              announcer={msg.info.announcer}
-              description={msg.info.description}
-              updateTime={dateDistance(msg.info.updateTime)}
-              isRead={msg.info.isRead}
-              onClick={() => gotoKanban(msg.posInfo)}
+              message={msg.info}
+              onClick={() => gotoKanban(msg)}
+              checked={selectAll}
+              onCheckStateChange={handleCheckStateChange}
             />
           ))}
-        </MessageContainer>
+        </div>
       </Row>
     </Container>
   );

@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import style from "./style.module.css";
 
 export type Props = {
   size: string;
+  checked?: boolean;
   onChange?: (checked: boolean) => void;
 };
 
 export default function Checkbox(props: Props) {
   const [checked, setChecked] = useState(false);
 
-  function handleClick() {
-    const nextChecked = !checked;
-    props.onChange?.(nextChecked);
-    setChecked(nextChecked);
+  useEffect(() => {
+    setChecked(props.checked ?? false);
+  }, [props.checked]);
+
+  function handleClick(e: React.MouseEvent<HTMLSpanElement>) {
+    e.stopPropagation();
+    props.onChange?.(!checked);
+    setChecked(!checked);
   }
 
   return (

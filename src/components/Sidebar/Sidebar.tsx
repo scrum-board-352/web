@@ -1,8 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 
-const logo = process.env.PUBLIC_URL + "/img/logo.png";
-
 export type Props = {
   children?: React.ReactNode;
   backgroundColor?: string;

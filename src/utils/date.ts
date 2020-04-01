@@ -7,7 +7,7 @@ export function day(timestamp: string) {
 export function dateDistance(timestamp: string) {
   const date = new Date(Number(timestamp));
   const distanceDays = differenceInDays(new Date(), date);
-  if (distanceDays > 1) {
+  if (distanceDays >= 1) {
     return format(date, "yyyy-MM-dd HH:mm");
   }
   return formatDistanceToNow(date, { addSuffix: true });

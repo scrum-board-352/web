@@ -17,7 +17,7 @@
 .sidebar {
   height: 100%;
   position: relative;
-  padding: 2rem 0;
+  padding-top: 2rem;
   display: flex;
   flex-direction: column;
   min-width: 230px;
@@ -67,8 +67,7 @@
   font-size: calc(var(--sidebar_toggle_btn_size) / 2);
   top: calc(
     var(--sidebar_toggle_btn_top) -
-      (var(--sidebar_toggle_btn_hover_size) - var(--sidebar_toggle_btn_size)) /
-      2
+      (var(--sidebar_toggle_btn_hover_size) - var(--sidebar_toggle_btn_size)) / 2
   );
   right: calc(-1 * var(--sidebar_toggle_btn_hover_size) / 2);
 }
@@ -84,6 +83,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -137,4 +137,14 @@
   justify-content: flex-start;
   min-width: calc(var(--sidebar_min_width) * 0.75);
   height: 2rem;
+}
+
+.sidebar_footer_logo {
+  width: 100%;
+  height: 60px;
+  margin-top: auto;
+  background-image: url(/img/logo.png);
+  background-position: 43% center;
+  background-repeat: no-repeat;
+  background-size: 60%;
 }

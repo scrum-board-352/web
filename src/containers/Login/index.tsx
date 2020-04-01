@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Navbar, Row } from "react-bootstrap";
 import LoginForm from "./LoginForm";
-import logo from "./logo.png";
 import RegisterForm from "./RegisterForm";
 import "./style.css";
 import welcomeSvg from "./welcome.svg";
+
+const logo = process.env.PUBLIC_URL + "/img/logo.png";
 
 enum FormType {
   Login = "login",

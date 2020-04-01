@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 
+const logo = process.env.PUBLIC_URL + "/img/logo.png";
+
 export type Props = {
   children?: React.ReactNode;
   backgroundColor?: string;
@@ -39,7 +41,10 @@ function Sidebar(props: Props) {
           <button className="sidebar_toggle_btn iconshadow" onClick={toggleShow}>
             {show ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
           </button>
-          <div className="sidebar_content_container">{props?.children}</div>
+          <div className="sidebar_content_container">
+            {props?.children}
+            <div className="sidebar_footer_logo"></div>
+          </div>
         </div>
       </div>
       <div

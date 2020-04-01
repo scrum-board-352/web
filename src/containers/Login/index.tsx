@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Navbar, Row } from "react-bootstrap";
 import LoginForm from "./LoginForm";
-import logoSvg from "./logo.svg";
+import logo from "./logo.png";
 import RegisterForm from "./RegisterForm";
 import "./style.css";
 import welcomeSvg from "./welcome.svg";
@@ -26,7 +26,7 @@ export default function Login() {
     <Container>
       <Navbar className="position-absolute">
         <Navbar.Brand>
-          <img src={logoSvg} className="login_logo_img" alt="" />
+          <img draggable="false" src={logo} className="login_logo_img" alt="" />
         </Navbar.Brand>
       </Navbar>
       <Row className="min-vh-100">

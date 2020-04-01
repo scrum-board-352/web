@@ -15,7 +15,7 @@
 }
 
 .login_logo_img {
-  margin: 2rem 1.5rem 1.5rem 0;
+  transform: translateY(-1.5rem);
   width: 200px;
 }
 

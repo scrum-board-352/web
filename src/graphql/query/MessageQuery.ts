@@ -28,7 +28,11 @@ const getCommentByReceiverQuery = `
 
 const getCommentByCardId = `
   query selectCommentsByCardId($cardId: String!){
-    selectCommentsByCardId(cardId: $cardId){
+    selectCommentsByCardId(selectionInput: {
+      commitInput: {
+        cardId:$cardId
+      }
+    }){
       id
       description
       announcer{

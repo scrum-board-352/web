@@ -1,6 +1,10 @@
 const selectBoardsByProjectIdQuery = `
 query selectBoardsByProjectId($projectId: String!){
-  selectBoardsByProjectId(projectId: $projectId) {
+  selectBoardsByProjectId(selectionInput: {
+    boardInput: {
+      projectId: $projectId
+    }
+  }) {
     id
     createTime
   }

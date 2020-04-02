@@ -66,7 +66,11 @@ mutation updateCard($id: String,
 
 const removeCard = `
 mutation removeCard($cardId: String){
-  removeCard(cardId: $cardId) {
+  removeCard(selectionInput: {
+    cardInput: {
+      id: $cardId
+    }
+  }) {
     success: susses
     message
   }

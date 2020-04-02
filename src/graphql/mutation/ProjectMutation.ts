@@ -49,7 +49,11 @@ mutation updateProject($id: String, $name: String, $teamId: String, $col: String
 
 const removeProject = `
 mutation removeProject($projectId: String){
-  removeProject(projectId: $projectId) {
+  removeProject(selectionInput: {
+    projectInput: {
+      id: $projectId
+    }
+  }) {
     success: susses
     message
   }

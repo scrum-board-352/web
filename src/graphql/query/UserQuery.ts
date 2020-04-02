@@ -16,7 +16,11 @@ const loginQuery = `
 
 const logoutQuery = `
   query logout($username: String!) {
-  	logout(username: $username) {
+  	logout(selectionInput: {
+      userInput: {
+        username: $username
+      }
+    }) {
       success: susses
   	  message
   	}
@@ -25,7 +29,11 @@ const logoutQuery = `
 
 const selectUser = `
 query selectUserBySubstring($usernameSubstring: String!){
-  selectUserBySubstring(usernameSubstring: $usernameSubstring) {
+  selectUserBySubstring(selectionInput: {
+    userInput: {
+      username: $usernameSubstring
+    }
+  }) {
     id
     name: username
     email
@@ -36,7 +44,11 @@ query selectUserBySubstring($usernameSubstring: String!){
 
 const selectPeopleByTeamId = `
 query selectPeopleByTeamId($teamId: String!){
-  selectPeopleByTeamId(teamId: $teamId) {
+  selectPeopleByTeamId(selectionInput: {
+    teamInput: {
+      id: $teamId
+    }
+  }) {
     id
     name: username
     email

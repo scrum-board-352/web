@@ -1,6 +1,10 @@
 const getCommentByReceiverQuery = `
   query getCommitByReceiver($receiver: String!){
-    getCommitByReceiver(receiver: $receiver){
+    getCommitByReceiver(selectionInput: {
+      commitInput: {
+        receiver:$receiver
+      }
+    }){
       info: commitType{
         id
         description

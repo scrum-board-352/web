@@ -1,6 +1,10 @@
 const selectProjectByCreatorQuery = `
   query selectProjectByCreator($creator: String!) {
-    selectProjectByCreator(creator: $creator) {
+    selectProjectByCreator(selectionInput: {
+      projectInput: {
+        creator: $creator
+      }
+    }) {
         id
         name: projectName
         creator
@@ -15,7 +19,11 @@ const selectProjectByCreatorQuery = `
 
 const selectProjectById = `
   query selectProjectById($projectId: String!) {
-    selectProjectById(projectId: $projectId) {
+    selectProjectById(selectionInput: {
+      projectInput: {
+        id: $projectId
+      }
+    }) {
         id
         name: projectName
         creator

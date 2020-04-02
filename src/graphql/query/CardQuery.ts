@@ -1,6 +1,10 @@
 const selectCardsByBoardId = `
 query selectCardsByBoardId($boardId: String!){
-  selectCardsByBoardId(boardId: $boardId){
+  selectCardsByBoardId(selectionInput: {
+    cardInput: {
+      boardId: $boardId
+    }
+  }){
     id
     createTime
     title

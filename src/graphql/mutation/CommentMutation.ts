@@ -49,7 +49,11 @@ mutation updateCommit($description: String, $read: Boolean, $id: String){
 
 const removeComment = `
 mutation removeCommit($commitId: String){
-  removeCommit(commitId: $commitId) {
+  removeCommit(selectionInput: {
+    commitInput: {
+      id: $commitId
+    }
+  }) {
     success: susses
     message
   }

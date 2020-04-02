@@ -1,10 +1,12 @@
 const sendEmailQuery = `
 query sendEmailToInviteReceiverJoinTeam($receiverMail: String!, $receiver: String!, $teamId: String!) {
-  sendEmailToInviteReceiverJoinTeam(emailInput: {
-    receiverMail: $receiverMail
-    receiver: $receiver
-    teamId: $teamId
-  }){
+  sendEmailToInviteReceiverJoinTeam(selectionInput: {
+    emailInput: {
+      receiverMail: $receiverMail
+      receiver: $receiver
+      teamId: $teamId
+  }
+}){
     success: susses
     message
   }
@@ -13,7 +15,11 @@ query sendEmailToInviteReceiverJoinTeam($receiverMail: String!, $receiver: Strin
 
 const selectTeamByUser = `
 query selectTeamByUser($username: String!){
-  selectTeamByUsername(username: $username) {
+  selectTeamByUsername(selectionInput: {
+    userInput: {
+      username: $username
+    }
+  }) {
     id
     name: teamname
     creator

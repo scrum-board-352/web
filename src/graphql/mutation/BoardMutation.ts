@@ -13,7 +13,11 @@ mutation createBoard($projectId: String) {
 
 const removeBoard = `
 mutation removeBoard($boardId: String) {
-  removeBoard(boardId: $boardId) {
+  removeBoard(selectionInput: {
+    boardInput: {
+      id: $boardId
+    }
+  }) {
     success: susses
     message
   }

@@ -30,42 +30,47 @@ export default function SettingButton(props: Props) {
   const btnRef = useRef<HTMLButtonElement>(null);
   const [showMenu, setShowMenu] = useState(false);
 
-  function toggleMenu() {
+  function toggleMenu(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();
     if (showMenu) {
       return;
     }
-    function closeMenu() {
-      setShowMenu(false);
-      document.removeEventListener("click", closeMenu);
-    }
-    document.addEventListener("click", closeMenu);
+    document.addEventListener(
+      "click",
+      () => {
+        setShowMenu(false);
+      },
+      { once: true }
+    );
     setShowMenu(true);
   }
 
   return (
-    <button
-      ref={btnRef}
-      onMouseEnter={() => {
-        const btn = btnRef.current;
-        if (btn !== null) {
-          btn.style.color = props.hoverColor ?? "";
-        }
-      }}
-      onMouseLeave={() => {
-        const btn = btnRef.current;
-        if (btn !== null) {
-          btn.style.color = props.color ?? "";
-        }
-      }}
-      className={style.setting_btn}
-      style={{
-        color: props.color ?? "",
-        width: props.size ?? "",
-        height: props.size ?? "",
-      }}
-      onClick={toggleMenu}>
-      {icon(type)}
+    <div className="position-relative">
+      <button
+        ref={btnRef}
+        onMouseEnter={() => {
+          const btn = btnRef.current;
+          if (btn !== null) {
+            btn.style.color = props.hoverColor ?? "";
+          }
+        }}
+        onMouseLeave={() => {
+          const btn = btnRef.current;
+          if (btn !== null) {
+            btn.style.color = props.color ?? "";
+          }
+        }}
+        className={style.setting_btn}
+        style={{
+          color: props.color ?? "",
+          width: props.size ?? "",
+          height: props.size ?? "",
+        }}
+        onClick={toggleMenu}>
+        {icon(type)}
+      </button>
       {showMenu ? <Menu items={props.menuItems} /> : null}
-    </button>
+    </div>
   );
 }

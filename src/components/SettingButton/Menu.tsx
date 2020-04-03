@@ -15,7 +15,7 @@ export default function Menu(props: Props) {
   return (
     <div className={className(style.menu, "animated", "fadeIn", "shadow")}>
       {props.items?.map((item) => (
-        <button className={style.item} onClick={item.onClick}>
+        <button key={item.label} className={style.item} onClick={item.onClick}>
           {item.label}
         </button>
       ))}

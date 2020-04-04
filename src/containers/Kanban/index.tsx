@@ -1,32 +1,29 @@
 import Empty from "components/Empty";
 import Loading from "components/Loading";
 import LoadingButton from "components/LoadingButton";
-import { message } from "components/MessageBox";
+import { message, Message } from "components/MessageBox";
 import Searchbar from "components/Searchbar";
 import Select, { Option } from "components/Select";
 import SettingButton from "components/SettingButton";
-import { createBoard, selectBoardsByProjectId } from "graphql/Board";
+import { MenuItem } from "components/SettingButton/Menu";
+import { createBoard, removeBoard, selectBoardsByProjectId } from "graphql/Board";
 import { selectCardsByBoardId } from "graphql/Card";
 import { selectProjectById } from "graphql/Project";
 import useLoading from "hooks/useLoading";
+import useQuery from "hooks/useQuery";
 import BoardModel from "models/Board";
 import CardModel from "models/Card";
 import ProjectModel from "models/Project";
 import React, { Fragment, useEffect, useState } from "react";
 import ScrollBox from "react-responsive-scrollbox";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import CardCol from "./CardCol";
 import CardDetail from "./CardDetail";
 import { CardsManager, getCardById } from "./CardsManager";
 import style from "./style.module.css";
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 export default function Kanban() {
   const { projectId, boardId } = useParams();
-  const query = useQuery();
   const history = useHistory();
   const initProject: ProjectModel.Info = {
     id: "",
@@ -126,7 +123,7 @@ export default function Kanban() {
     status: "",
     founder: "",
   });
-  const cardId = query.get("cardId");
+  const cardId = useQuery().get("cardId");
 
   useEffect(() => {
     const queryCard = cards.find((card) => card.id === cardId);
@@ -157,8 +154,8 @@ export default function Kanban() {
 
   const [createBoardLoading, createBoardLoadingOps] = useLoading();
 
-  async function handleCreateBoardClick() {
-    let newBoard: BoardModel.Info;
+  async function handleCreateBoard() {
+    let newBoard: BoardModel.Info | null = null;
     try {
       newBoard = await createBoardLoadingOps(createBoard, {
         projectId: projectId as string,
@@ -171,20 +168,92 @@ export default function Kanban() {
       });
       return;
     }
-    if (!newBoard.id) {
-      message({
-        title: "Create Board Failed!",
-        type: "error",
-      });
-    } else {
+    if (newBoard && newBoard.id) {
       message({
         title: "Board Created!",
         type: "success",
       });
+    } else {
+      message({
+        title: "Create Board Failed!",
+        type: "error",
+      });
+    }
+    return newBoard;
+  }
+
+  async function handleDeleteBoard() {
+    if (!boardId) {
+      return;
+    }
+    const res = await removeBoard({ boardId });
+    const messageOption: Message = {
+      title: "",
+      type: "error",
+      content: res.message,
+    };
+    if (res.success) {
+      messageOption.title = "Delete Succeed!";
+      messageOption.type = "success";
+    } else {
+      messageOption.title = "Delete Failed!";
+      messageOption.type = "error";
+    }
+    message(messageOption);
+    return res.success;
+  }
+
+  async function handleCreateBoardClick() {
+    const newBoard = await handleCreateBoard();
+    if (newBoard && newBoard.id) {
       history.replace(`${projectId}/${newBoard.id}`);
       setNoBoard(false);
     }
   }
+
+  const projectSettingMenu: Array<MenuItem> = [
+    {
+      label: "Add New Board",
+      async onClick() {
+        const newBoard = await handleCreateBoard();
+        if (newBoard && newBoard.id) {
+          history.push(newBoard.id);
+        }
+      },
+    },
+    {
+      label: "Delete This Board",
+      async onClick() {
+        const userConfirm = window.confirm("WARNING! Do you really want to delete this board?");
+        if (!userConfirm) {
+          return;
+        }
+        const ok = await handleDeleteBoard();
+        if (ok) {
+          const boardIdIndex = boardIds.indexOf(boardId ?? "");
+          if (boardIdIndex === -1) {
+            return;
+          }
+          let nextBoardId: string;
+          if (boardIds.length < 2) {
+            history.push(`/dashboard/projects/${projectId}`);
+            return;
+          } else if (boardIds.length - 1 === boardIdIndex) {
+            nextBoardId = boardIds[boardIdIndex - 1];
+          } else {
+            nextBoardId = boardIds[boardIdIndex + 1];
+          }
+          history.push(nextBoardId);
+        }
+      },
+    },
+    {
+      label: "Project Setting",
+      onClick() {
+        alert("ok");
+      },
+    },
+  ];
 
   return (
     <div className={style.container}>
@@ -209,7 +278,12 @@ export default function Kanban() {
                   size="1.5rem"
                   onSearch={handleSearchCard}
                 />
-                <SettingButton size="1.5rem" color="#ddd" hoverColor="var(--blue)" />
+                <SettingButton
+                  size="1.5rem"
+                  color="#ddd"
+                  hoverColor="var(--blue)"
+                  menuItems={projectSettingMenu}
+                />
               </>
             )}
           </div>

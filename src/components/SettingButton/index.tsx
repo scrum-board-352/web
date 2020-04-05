@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { IoMdMore, IoMdSettings } from "react-icons/io";
 import { MdMoreHoriz } from "react-icons/md";
+import { stopPropagation } from "utils/event";
 import Menu, { MenuItem } from "./Menu";
 import style from "./style.module.css";
 
@@ -30,8 +31,7 @@ export default function SettingButton(props: Props) {
   const btnRef = useRef<HTMLButtonElement>(null);
   const [showMenu, setShowMenu] = useState(false);
 
-  function toggleMenu(e: React.MouseEvent<HTMLButtonElement>) {
-    e.stopPropagation();
+  function toggleMenu() {
     if (showMenu) {
       return;
     }
@@ -46,7 +46,7 @@ export default function SettingButton(props: Props) {
   }
 
   return (
-    <div className="position-relative">
+    <div className="position-relative" onClick={stopPropagation}>
       <button
         ref={btnRef}
         onMouseEnter={() => {

@@ -1,10 +1,11 @@
 const loginQuery = `
-  query login($username: String!, $password: String!) {
+  query login($username: String!, $password: String!, $uid: String) {
     login(selectionInput: {
       userInput: {
         username: $username
         password: $password
       }
+      uid: $uid
     }) {
       id
       name: username
@@ -15,11 +16,12 @@ const loginQuery = `
 `;
 
 const logoutQuery = `
-  query logout($username: String!) {
+  query logout($username: String!, $uid: String) {
   	logout(selectionInput: {
       userInput: {
         username: $username
       }
+      uid: $uid
     }) {
       success: susses
   	  message
@@ -28,11 +30,12 @@ const logoutQuery = `
 `;
 
 const selectUser = `
-query selectUserBySubstring($usernameSubstring: String!){
+query selectUserBySubstring($usernameSubstring: String!, $uid: String){
   selectUserBySubstring(selectionInput: {
     userInput: {
       username: $usernameSubstring
     }
+    uid: $uid
   }) {
     id
     name: username
@@ -43,11 +46,12 @@ query selectUserBySubstring($usernameSubstring: String!){
 `;
 
 const selectPeopleByTeamId = `
-query selectPeopleByTeamId($teamId: String!){
+query selectPeopleByTeamId($teamId: String!, $uid: String){
   selectPeopleByTeamId(selectionInput: {
     teamInput: {
       id: $teamId
     }
+    uid: $uid
   }) {
     id
     name: username

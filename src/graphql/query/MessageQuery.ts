@@ -1,9 +1,10 @@
 const getCommentByReceiverQuery = `
-  query getCommitByReceiver($receiver: String!){
+  query getCommitByReceiver($receiver: String!, $uid: String){
     getCommitByReceiver(selectionInput: {
       commitInput: {
         receiver:$receiver
       }
+      uid: $uid
     }){
       info: commitType{
         id
@@ -27,11 +28,12 @@ const getCommentByReceiverQuery = `
 `;
 
 const getCommentByCardId = `
-  query selectCommentsByCardId($cardId: String!){
+  query selectCommentsByCardId($cardId: String!, $uid: String){
     selectCommentsByCardId(selectionInput: {
       commitInput: {
         cardId:$cardId
       }
+      uid: $uid
     }){
       id
       description

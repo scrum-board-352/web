@@ -1,11 +1,12 @@
 const createTeamMutation = `
-mutation createTeam($creator:String, $name:String, $description: String){
+mutation createTeam($creator:String, $name:String, $description: String, $uid: String){
   createTeam(selectionInput: {
     teamInput: {
       creator: $creator
       teamname: $name
       description: $description
     }
+    uid: $uid
   }){
     id
     name: teamname
@@ -15,7 +16,7 @@ mutation createTeam($creator:String, $name:String, $description: String){
 }
 `;
 const updateTeam = `
-mutation updateTeam($id:String, $creator:String, $name:String, $description:String){
+mutation updateTeam($id:String, $creator:String, $name:String, $description:String, $uid: String){
     updateTeam(selectionInput: {
     teamInput: {
       id: $id
@@ -23,6 +24,7 @@ mutation updateTeam($id:String, $creator:String, $name:String, $description:Stri
       teamname: $name
       description: $description
     }
+    uid: $uid
   }){
     id
     name: teamname

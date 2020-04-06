@@ -1,5 +1,5 @@
 const createComment = `
-mutation createCommit($description: String, $announcer: String, $receiver: String, $cardId: String){
+mutation createCommit($description: String, $announcer: String, $receiver: String, $cardId: String, $uid: String){
   createCommit(selectionInput: {
     commitInput: {
       description:$description
@@ -7,6 +7,7 @@ mutation createCommit($description: String, $announcer: String, $receiver: Strin
       receiver:$receiver
       cardId:$cardId
     }
+    uid: $uid
   }){
     id
     description
@@ -24,13 +25,14 @@ mutation createCommit($description: String, $announcer: String, $receiver: Strin
 `;
 
 const updateComment = `
-mutation updateCommit($description: String, $read: Boolean, $id: String){
+mutation updateCommit($description: String, $read: Boolean, $id: String, $uid: String){
   updateCommit(selectionInput: {
     commitInput: {
       description: $description
       read: $read
       id: $id
     }
+    uid: $uid
   }){
     id
     description
@@ -48,11 +50,12 @@ mutation updateCommit($description: String, $read: Boolean, $id: String){
 `;
 
 const removeComment = `
-mutation removeCommit($commitId: String){
+mutation removeCommit($commitId: String, $uid: String){
   removeCommit(selectionInput: {
     commitInput: {
       id: $commitId
     }
+    uid: $uid
   }) {
     success: susses
     message

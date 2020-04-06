@@ -6,7 +6,8 @@ mutation createCard($title: String,
   $processor: String, 
   $founder: String, 
   $status: String, 
-  $boardId: String) {
+  $boardId: String,
+  $uid: String) {
   createCard(selectionInput: {
     cardInput: {
       title: $title
@@ -18,6 +19,7 @@ mutation createCard($title: String,
       status: $status
       boardId: $boardId
     }
+    uid: $uid
   }){
     id
     createTime
@@ -39,7 +41,8 @@ mutation updateCard($id: String,
   $storyPoints: Int, 
   $priority: String, 
   $processor: String, 
-  $status: String) {
+  $status: String,
+  $uid: String) {
   updateCard(selectionInput: {
     cardInput: {
       id: $id
@@ -50,6 +53,7 @@ mutation updateCard($id: String,
       processor: $processor
       status: $status
     }
+    uid: $uid
   }){
     id
     createTime
@@ -65,11 +69,12 @@ mutation updateCard($id: String,
 `;
 
 const removeCard = `
-mutation removeCard($cardId: String){
+mutation removeCard($cardId: String, $uid: String){
   removeCard(selectionInput: {
     cardInput: {
       id: $cardId
     }
+    uid: $uid
   }) {
     success: susses
     message

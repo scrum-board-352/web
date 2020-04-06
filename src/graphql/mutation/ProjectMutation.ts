@@ -1,5 +1,5 @@
 const createProject = `
-mutation createProjec($creator: String, $name: String, $teamId: String, $col: String, $row: String, $iteration: Int){
+mutation createProjec($creator: String, $name: String, $teamId: String, $col: String, $row: String, $iteration: Int, $uid: String){
   createProject(selectionInput: {
     projectInput: {
       creator: $creator
@@ -10,6 +10,7 @@ mutation createProjec($creator: String, $name: String, $teamId: String, $col: St
       iteration: $iteration
       
     }
+    uid: $uid
   }){
     id
     name: projectName
@@ -24,7 +25,7 @@ mutation createProjec($creator: String, $name: String, $teamId: String, $col: St
 `;
 
 const updateProject = `
-mutation updateProject($id: String, $name: String, $teamId: String, $col: String, $row: String, $iteration: Int){
+mutation updateProject($id: String, $name: String, $teamId: String, $col: String, $row: String, $iteration: Int, $uid: String){
   updateProject(selectionInput: {
     projectInput: {
       id: $id
@@ -34,6 +35,7 @@ mutation updateProject($id: String, $name: String, $teamId: String, $col: String
       rowTitle: $row
       iteration: $iteration
     }
+    uid: $uid
   }){
     id
     name: projectName
@@ -48,11 +50,12 @@ mutation updateProject($id: String, $name: String, $teamId: String, $col: String
 `;
 
 const removeProject = `
-mutation removeProject($projectId: String){
+mutation removeProject($projectId: String, $uid: String){
   removeProject(selectionInput: {
     projectInput: {
       id: $projectId
     }
+    uid: $uid
   }) {
     success: susses
     message

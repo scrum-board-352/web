@@ -1,11 +1,12 @@
 const registerMutation = `
-mutation register($username: String!, $password: String!, $email: String!) {
+mutation register($username: String!, $password: String!, $email: String!, $uid: String) {
     register(selectionInput:{
       userInput: {
         username: $username
         password: $password
         email: $email
       }
+      uid: $uid
     }){
       success: susses
   	  message
@@ -14,7 +15,7 @@ mutation register($username: String!, $password: String!, $email: String!) {
 `;
 
 const updateMutation = `
-mutation updateUser($username: String!, $password: String, $power: String, $icon: String) {
+mutation updateUser($username: String!, $password: String, $power: String, $icon: String, $uid: String) {
   updateUser(selectionInput: {
     userInput: {
       username: $username
@@ -22,6 +23,7 @@ mutation updateUser($username: String!, $password: String, $power: String, $icon
       power: $power
       icon: $icon
     }
+    uid: $uid
   }){
       id
       name: username

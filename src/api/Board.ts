@@ -1,5 +1,5 @@
-import BoardMutation from "graphql/mutation/BoardMutation";
-import BoardQuery from "graphql/query/BoardQuery";
+import BoardMutation from "api/mutation/BoardMutation";
+import BoardQuery from "api/query/BoardQuery";
 import { default as Board, default as BoardModel } from "models/Board";
 import ResultOutput from "models/ResultOutput";
 import client from "./client";

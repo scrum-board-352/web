@@ -1,14 +1,14 @@
-import { selectBoardsByProjectId } from "graphql/Board";
-import { selectCardsByBoardId, updateCard } from "graphql/Card";
-import { getCommentByReceiver, selectCommentsByCardId, updateComment } from "graphql/Message";
-import { selectProjectByCreator, selectProjectById, updateProject } from "graphql/Project";
+import { selectBoardsByProjectId } from "api/Board";
+import { selectCardsByBoardId, updateCard } from "api/Card";
+import { getCommentByReceiver, selectCommentsByCardId, updateComment } from "api/Message";
+import { selectProjectByCreator, selectProjectById, updateProject } from "api/Project";
 import {
   createTeam,
   selectTeamByUser,
   sendEmailToInviteReceiverJoinTeam,
   updateTeam,
-} from "graphql/Team";
-import { login, logout, register, selectUserBySubstring, update } from "graphql/User";
+} from "api/Team";
+import { login, logout, register, selectUserBySubstring, update } from "api/User";
 import BoardModel from "models/Board";
 import CardModel from "models/Card";
 import EmailModel from "models/Email";

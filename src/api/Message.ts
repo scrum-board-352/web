@@ -1,5 +1,5 @@
-import CommentMutation from "graphql/mutation/CommentMutation";
-import MessageQuery from "graphql/query/MessageQuery";
+import CommentMutation from "api/mutation/CommentMutation";
+import MessageQuery from "api/query/MessageQuery";
 import Message from "models/Message";
 import ResultOutput from "models/ResultOutput";
 import client from "./client";

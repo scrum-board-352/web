@@ -1,23 +1,24 @@
+import { createTeam, selectTeamByUser } from "api/Team";
+import { selectPeopleByTeamId, selectUserBySubstring } from "api/User";
 import Empty from "components/Empty";
 import Loading from "components/Loading";
+import LoadingButton from "components/LoadingButton";
 import ModalForm, { Template } from "components/ModalForm";
 import PeopleCard from "components/PeopleCard";
 import Searchbar from "components/Searchbar";
-import { createTeam, selectTeamByUser } from "graphql/Team";
-import { selectPeopleByTeamId, selectUserBySubstring } from "graphql/User";
 import useLoading from "hooks/useLoading";
 import TeamModel from "models/Team";
 import UserModel from "models/User";
 import React, { useEffect, useState } from "react";
-import { Button, Container, Row, Table } from "react-bootstrap";
+import { Button, ButtonGroup, Container, Row, Table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useStore } from "rlax";
 import { deduplication } from "utils/array";
-import "./style.css";
+import style from "./style.module.css";
 
-type FormValues = Pick<TeamModel.CreateInfo, "name" | "description">;
+type TeamFormValues = Pick<TeamModel.CreateInfo, "name" | "description">;
 
-const createTeamFormTemplate: Array<Template<FormValues>> = [
+const createTeamFormTemplate: Array<Template<TeamFormValues>> = [
   {
     label: "Team Name",
     name: "name",
@@ -85,7 +86,7 @@ export default function Team() {
   const [createTeamLoading, createTeamLoadingOps] = useLoading();
   const user: UserModel.PrivateInfo = useStore("user");
 
-  async function handleCreateTeamSubmit(values: FormValues) {
+  async function handleCreateTeamSubmit(values: TeamFormValues) {
     const team: TeamModel.CreateInfo = { ...values, creator: user.name };
     const newTeam = await createTeamLoadingOps(createTeam, team);
     setShowCreateTeam(false);
@@ -98,9 +99,11 @@ export default function Team() {
     history.push(`/user/${username}`);
   }
 
+  function handleUpdateTeam(team: TeamModel.Info) {}
+
   return (
     <>
-      <ModalForm<FormValues>
+      <ModalForm<TeamFormValues>
         title="Create Team"
         templates={createTeamFormTemplate}
         show={showCreateTeam}
@@ -181,6 +184,19 @@ export default function Team() {
                         </td>
                         <td>{team.creator}</td>
                         <td>{team.description}</td>
+                        <td className={style.table_setting}>
+                          <ButtonGroup size="sm">
+                            <Button variant="outline-info" onClick={() => handleUpdateTeam(team)}>
+                              update
+                            </Button>
+                            <LoadingButton
+                              loading={false}
+                              loadingText="deleting"
+                              variant="outline-danger"
+                              text="delete"
+                            />
+                          </ButtonGroup>
+                        </td>
                       </tr>
                     ))}
                   </tbody>

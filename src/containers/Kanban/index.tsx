@@ -1,3 +1,6 @@
+import { createBoard, removeBoard, selectBoardsByProjectId } from "api/Board";
+import { selectCardsByBoardId } from "api/Card";
+import { selectProjectById } from "api/Project";
 import Empty from "components/Empty";
 import Loading from "components/Loading";
 import LoadingButton from "components/LoadingButton";
@@ -6,9 +9,6 @@ import Searchbar from "components/Searchbar";
 import Select, { Option } from "components/Select";
 import SettingButton from "components/SettingButton";
 import { MenuItem } from "components/SettingButton/Menu";
-import { createBoard, removeBoard, selectBoardsByProjectId } from "graphql/Board";
-import { selectCardsByBoardId } from "graphql/Card";
-import { selectProjectById } from "graphql/Project";
 import useLoading from "hooks/useLoading";
 import useQuery from "hooks/useQuery";
 import BoardModel from "models/Board";

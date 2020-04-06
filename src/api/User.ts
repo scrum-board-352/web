@@ -1,5 +1,5 @@
-import UserMutation from "graphql/mutation/UserMutation";
-import UserQuery from "graphql/query/UserQuery";
+import UserMutation from "api/mutation/UserMutation";
+import UserQuery from "api/query/UserQuery";
 import ResultOutput from "models/ResultOutput";
 import UserModel from "models/User";
 import client from "./client";

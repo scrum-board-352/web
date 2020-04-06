@@ -1,7 +1,7 @@
+import { createComment, selectCommentsByCardId } from "api/Message";
 import Comment from "components/Comment";
 import Empty from "components/Empty";
 import Loading from "components/Loading";
-import { createComment, selectCommentsByCardId } from "graphql/Message";
 import useLoading from "hooks/useLoading";
 import CardModel from "models/Card";
 import MessageModel from "models/Message";

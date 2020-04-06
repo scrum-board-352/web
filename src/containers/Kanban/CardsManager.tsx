@@ -1,4 +1,4 @@
-import { createCard as createCardApi, updateCard } from "graphql/Card";
+import { createCard as createCardApi, updateCard } from "api/Card";
 import CardModel from "models/Card";
 import React, { useState } from "react";
 

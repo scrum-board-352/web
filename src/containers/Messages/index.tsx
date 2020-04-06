@@ -1,7 +1,7 @@
+import { getCommentByReceiver, updateComment } from "api/Message";
 import Checkbox from "components/Checkbox";
 import Loading from "components/Loading";
 import LoadingButton from "components/LoadingButton";
-import { getCommentByReceiver, updateComment } from "graphql/Message";
 import useLoading from "hooks/useLoading";
 import MessageModel from "models/Message";
 import UserModel from "models/User";

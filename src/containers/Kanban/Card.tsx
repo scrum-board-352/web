@@ -1,5 +1,6 @@
 import Avatar from "components/Avatar";
 import SettingButton from "components/SettingButton";
+import { MenuItem } from "components/SettingButton/Menu";
 import CardModel from "models/Card";
 import React, { useState } from "react";
 import className from "utils/class-name";
@@ -25,6 +26,13 @@ export default function Card(props: Props) {
 
   const movingClass = moving ? style.moving : "";
 
+  const cardSettingMenu: Array<MenuItem> = [
+    {
+      label: "Update Card",
+      onClick() {},
+    },
+  ];
+
   return (
     <div
       data-card-id={props.card.id}
@@ -35,7 +43,7 @@ export default function Card(props: Props) {
       onClick={props.onClick}>
       <div className={style.header}>
         <p className={style.title}>{props.card.title}</p>
-        <SettingButton type="dot-h" size="1rem" />
+        <SettingButton type="dot-h" size="1rem" menuItems={cardSettingMenu} />
       </div>
       <p className={style.description}>{props.card.description ?? "None"}</p>
       <div className={style.footer}>

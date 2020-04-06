@@ -1,8 +1,8 @@
+import { selectTeamByUser, sendEmailToInviteReceiverJoinTeam } from "api/Team";
+import { selectUserBySubstring } from "api/User";
 import Loading from "components/Loading";
 import { message } from "components/MessageBox";
 import ModalForm, { Template } from "components/ModalForm";
-import { selectTeamByUser, sendEmailToInviteReceiverJoinTeam } from "graphql/Team";
-import { selectUserBySubstring } from "graphql/User";
 import useLoading from "hooks/useLoading";
 import ProjectModel from "models/Project";
 import TeamModel from "models/Team";

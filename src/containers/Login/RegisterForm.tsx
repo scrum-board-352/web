@@ -1,5 +1,5 @@
+import { register } from "api/User";
 import { message } from "components/MessageBox";
-import { register } from "graphql/User";
 import useFormData from "hooks/useFormData";
 import useLoading from "hooks/useLoading";
 import UserModel from "models/User";

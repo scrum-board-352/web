@@ -1,5 +1,5 @@
-import CardMutation from "graphql/mutation/CardMutation";
-import CardQuery from "graphql/query/CardQuery";
+import CardMutation from "api/mutation/CardMutation";
+import CardQuery from "api/query/CardQuery";
 import { default as Card } from "models/Card";
 import ResultOutput from "models/ResultOutput";
 import client from "./client";

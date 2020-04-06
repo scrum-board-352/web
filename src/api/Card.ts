@@ -2,7 +2,7 @@ import CardMutation from "api/mutation/CardMutation";
 import CardQuery from "api/query/CardQuery";
 import { default as Card } from "models/Card";
 import ResultOutput from "models/ResultOutput";
-import client from "./client";
+import client from "./base/client";
 
 export async function createCard(createInfo: Card.CreateInfo): Promise<Card.Info> {
   const data = await client.request(CardMutation.createCard, createInfo);

@@ -2,7 +2,7 @@ import UserMutation from "api/mutation/UserMutation";
 import UserQuery from "api/query/UserQuery";
 import ResultOutput from "models/ResultOutput";
 import UserModel from "models/User";
-import client from "./client";
+import client from "./base/client";
 
 export async function login(loginInfo: UserModel.LoginInfo): Promise<UserModel.PrivateInfo> {
   const data = await client.request(UserQuery.loginQuery, loginInfo);

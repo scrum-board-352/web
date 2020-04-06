@@ -2,7 +2,7 @@ import ProjectMutation from "api/mutation/ProjectMutation";
 import ProjectQuery from "api/query/ProjectQuery";
 import ProjectModel from "models/Project";
 import ResultOutput from "models/ResultOutput";
-import client from "./client";
+import client from "./base/client";
 
 export async function selectProjectByCreator(creator: {
   creator: string;

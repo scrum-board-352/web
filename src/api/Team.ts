@@ -1,7 +1,7 @@
 import EmailModel from "models/Email";
 import ResultOutput from "models/ResultOutput";
 import TeamModel from "models/Team";
-import client from "./client";
+import client from "./base/client";
 import TeamMutation from "./mutation/TeamMutation";
 import TeamQuery from "./query/TeamQuery";
 

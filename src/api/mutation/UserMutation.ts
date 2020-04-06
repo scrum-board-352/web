@@ -1,12 +1,11 @@
 const registerMutation = `
-mutation register($username: String!, $password: String!, $email: String!, $uid: String) {
+mutation register($username: String!, $password: String!, $email: String!) {
     register(selectionInput:{
       userInput: {
         username: $username
         password: $password
         email: $email
       }
-      uid: $uid
     }){
       success: susses
   	  message

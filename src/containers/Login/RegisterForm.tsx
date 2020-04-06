@@ -1,3 +1,4 @@
+import auth from "api/base/auth";
 import { register } from "api/User";
 import { message } from "components/MessageBox";
 import useFormData from "hooks/useFormData";
@@ -40,7 +41,7 @@ export default function RegisterForm(props?: Props) {
       return;
     }
 
-    const res = await loadingOps(register, registerForm);
+    const res = await loadingOps(auth, null, register, registerForm);
     if (res.success) {
       message({
         type: "success",

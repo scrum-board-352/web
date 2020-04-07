@@ -4,11 +4,11 @@ import { getCommentByReceiver, selectCommentsByCardId, updateComment } from "api
 import { selectProjectByCreator, selectProjectById, updateProject } from "api/Project";
 import {
   createTeam,
-  selectTeamByUser,
+  selectTeamByUsername,
   sendEmailToInviteReceiverJoinTeam,
   updateTeam,
 } from "api/Team";
-import { login, logout, register, selectUserBySubstring, update } from "api/User";
+import { login, logout, register, selectUserBySubstring, updateUser } from "api/User";
 import BoardModel from "models/Board";
 import CardModel from "models/Card";
 import EmailModel from "models/Email";
@@ -49,7 +49,7 @@ describe("user api tests", () => {
       username: process.env.REACT_APP_UPDATE_USERNAME ?? "",
       password: process.env.REACT_APP_UPDATE_PASSWORD ?? "",
     };
-    const result: UserModel.PrivateInfo = await update(updateInfo);
+    const result: UserModel.PrivateInfo = await updateUser(updateInfo);
     expect(result.name).toEqual(process.env.REACT_APP_UPDATE_USERNAME);
   });
 
@@ -146,7 +146,7 @@ describe("team api tests", () => {
     const username = {
       username: process.env.REACT_APP_TEAM_CREATOR ?? "",
     };
-    const result: Array<TeamModel.Info> = await selectTeamByUser(username);
+    const result: Array<TeamModel.Info> = await selectTeamByUsername(username);
     expect(result.length).toEqual(2);
   });
 });

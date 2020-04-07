@@ -1,3 +1,4 @@
+import { getApiMappingName } from "./api-name-mapping";
 import { post } from "./fetch";
 
 type ApiCallFunc = (...args: any[]) => any;
@@ -14,35 +15,41 @@ if (!apiUrl) {
 
 const authUrl = apiUrl + "/checkAuth";
 
-let uid: string = "";
+let uidCache: string = "";
+
+function setUid(uid: string) {
+  uidCache = uid;
+  window.localStorage.setItem("uid", uid);
+}
 
 export function getUid() {
-  if (!uid) {
-    const localUid = window.localStorage.getItem("uid");
-    if (localUid) {
-      uid = localUid;
+  if (!uidCache) {
+    const uid = window.localStorage.getItem("uid");
+    if (uid) {
+      uidCache = uid;
     }
   }
-  return uid;
+  return uidCache;
 }
 
 export default async function auth<T extends ApiCallFunc>(
   authParams: AuthParams | null,
   apiCall: T,
   ...apiParams: Parameters<T>
-) {
+): Promise<ReturnType<T>> {
   // register oparetion through RESTful api.
   const res = await post(authUrl, {
     ...authParams,
-    functionName: apiCall.name,
+    functionName: getApiMappingName(apiCall),
   });
   if (!res.success) {
-    throw new Error(res.message);
+    console.error(res.message);
+    // window.location.replace("/login");
+    return null as ReturnType<T>;
   }
   // set global uid.
   if (res.uid) {
-    uid = res.uid;
-    window.localStorage.setItem("uid", uid);
+    setUid(res.uid);
   }
   // call graphql api.
   return await apiCall(...apiParams);

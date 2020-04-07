@@ -1,3 +1,4 @@
+import auth from "api/base/auth";
 import { createComment, selectCommentsByCardId } from "api/Message";
 import Comment from "components/Comment";
 import Empty from "components/Empty";
@@ -20,6 +21,7 @@ import Priority from "./Priority";
 type Props = {
   show: boolean;
   onHide?: () => void;
+  projectId: string;
   card: CardModel.Info;
 };
 
@@ -35,10 +37,12 @@ export default function CardDetail(props: Props) {
     }
     loadingOps(async () => {
       // fetch card comments.
-      const comments = await selectCommentsByCardId({ cardId });
+      const comments = await auth({ projectId: props.projectId }, selectCommentsByCardId, {
+        cardId,
+      });
       setComments(comments);
     });
-  }, [props.card.id]);
+  }, [props.card.id, props.projectId]);
 
   const commentInputRef = useRef<HTMLInputElement>(null);
   const [commentLoading, commentLoadingOps] = useLoading();
@@ -52,11 +56,16 @@ export default function CardDetail(props: Props) {
     if (!content) {
       return;
     }
-    const newComment = await commentLoadingOps(createComment, {
-      announcer: currentUser.name,
-      description: content,
-      cardId: props.card.id,
-    });
+    const newComment = await commentLoadingOps(
+      auth,
+      { projectId: props.projectId },
+      createComment,
+      {
+        announcer: currentUser.name,
+        description: content,
+        cardId: props.card.id,
+      }
+    );
     commentInput.value = "";
     setComments([...comments, newComment]);
   }

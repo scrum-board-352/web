@@ -1,3 +1,4 @@
+import auth from "api/base/auth";
 import { createBoard, removeBoard, selectBoardsByProjectId } from "api/Board";
 import { selectCardsByBoardId } from "api/Card";
 import { selectProjectById } from "api/Project";
@@ -58,12 +59,12 @@ export default function Kanban() {
         if (!projectId) {
           throw ErrorType.NotFound;
         }
-        project = await selectProjectById({ projectId });
+        project = await auth({ projectId }, selectProjectById, { projectId });
         if (!project.id) {
           throw ErrorType.NotFound;
         }
         // get all boards.
-        const boards = await selectBoardsByProjectId({ projectId });
+        const boards = await auth({ projectId }, selectBoardsByProjectId, { projectId });
         if (boards.length === 0) {
           throw ErrorType.NoBoard;
         }
@@ -80,7 +81,7 @@ export default function Kanban() {
           throw ErrorType.NotFound;
         }
         // fetch cards.
-        cards = await selectCardsByBoardId({ boardId });
+        cards = await auth({ projectId }, selectCardsByBoardId, { boardId });
       } catch (err) {
         switch (err) {
           case ErrorType.NotFound:
@@ -157,7 +158,7 @@ export default function Kanban() {
   async function handleCreateBoard() {
     let newBoard: BoardModel.Info | null = null;
     try {
-      newBoard = await createBoardLoadingOps(createBoard, {
+      newBoard = await createBoardLoadingOps(auth, { projectId }, createBoard, {
         projectId: projectId as string,
       });
     } catch (err) {
@@ -186,7 +187,7 @@ export default function Kanban() {
     if (!boardId) {
       return;
     }
-    const res = await removeBoard({ boardId });
+    const res = await auth({ projectId }, removeBoard, { boardId });
     const messageOption: Message = {
       title: "",
       type: "error",
@@ -300,7 +301,10 @@ export default function Kanban() {
           ) : (
             <ScrollBox className="scrollbar_thumb_green">
               <div className={style.card_col_container}>
-                <CardsManager cards={filteredCards} boardId={boardId ?? ""}>
+                <CardsManager
+                  cards={filteredCards}
+                  projectId={projectId ?? ""}
+                  boardId={boardId ?? ""}>
                   {project.col.map((col) => (
                     <CardCol key={col} colName={col} onClickCard={showCardDetail} />
                   ))}
@@ -311,6 +315,7 @@ export default function Kanban() {
           <CardDetail
             show={showCardDetailFlag}
             onHide={() => setShowCardDetailFlag(false)}
+            projectId={projectId ?? ""}
             card={cardDetail}
           />
         </Fragment>

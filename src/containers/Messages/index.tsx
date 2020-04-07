@@ -1,3 +1,4 @@
+import auth from "api/base/auth";
 import { getCommentByReceiver, updateComment } from "api/Message";
 import Checkbox from "components/Checkbox";
 import Loading from "components/Loading";
@@ -21,7 +22,9 @@ export default function Messages() {
   useEffect(() => {
     // fetch messages.
     loadingOps(async () => {
-      const comments = await loadingOps(getCommentByReceiver, { receiver: currentUser.name });
+      const comments = await loadingOps(auth, null, getCommentByReceiver, {
+        receiver: currentUser.name,
+      });
       setComments(comments);
     });
   }, []);
@@ -54,11 +57,12 @@ export default function Messages() {
   }
 
   async function readMessage(id: string) {
-    const msg = comments.map((c) => c.info).find((msg) => msg.id === id);
-    if (!msg || msg.isRead) {
+    const comment = comments.find((c) => c.info.id === id);
+    if (!comment || comment.info.isRead) {
       return;
     }
-    return await updateComment({
+    const projectId = comment.posInfo.projectId;
+    return await auth({ projectId }, updateComment, {
       id,
       read: true,
     });

@@ -1,8 +1,10 @@
+import auth from "api/base/auth";
 import { createCard as createCardApi, updateCard } from "api/Card";
 import CardModel from "models/Card";
 import React, { useState } from "react";
 
 let update: () => void;
+let projectId: string;
 let boardId: string;
 let cards: CardModel.Info[] = [];
 let currentCardId = "";
@@ -26,7 +28,7 @@ function endDrag() {
   const movedCard = cards.find((card) => card.id === currentCardId);
   if (movedCard && targetColName) {
     movedCard.status = targetColName;
-    updateCard(movedCard);
+    auth({ projectId }, updateCard, movedCard);
   }
   dragging = false;
   originColName = "";
@@ -83,7 +85,7 @@ export function getCardById(id: string) {
 }
 
 export async function createCard(card: CardModel.CreateInfo) {
-  const createdCard = await createCardApi(card);
+  const createdCard = await auth({ projectId }, createCardApi, card);
   cards.push(createdCard);
   update();
 }
@@ -91,6 +93,7 @@ export async function createCard(card: CardModel.CreateInfo) {
 export const CardsContext = React.createContext(initCardsManager);
 
 type Props = {
+  projectId: string;
   boardId: string;
   cards: CardModel.Info[];
   children: React.ReactNode;
@@ -103,5 +106,6 @@ export function CardsManager(props: Props) {
   };
   cards = props.cards;
   boardId = props.boardId;
+  projectId = props.projectId;
   return <CardsContext.Provider value={cardsManager}>{props.children}</CardsContext.Provider>;
 }

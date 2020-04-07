@@ -1,5 +1,6 @@
+import auth from "api/base/auth";
 import { createProject, selectProjectByCreator } from "api/Project";
-import { selectTeamByUser } from "api/Team";
+import { selectTeamByUsername } from "api/Team";
 import Empty from "components/Empty";
 import Loading from "components/Loading";
 import { message } from "components/MessageBox";
@@ -42,7 +43,7 @@ export default function ProjectBrowser() {
   useEffect(() => {
     // fetch project data.
     loadingOps(async () => {
-      const projectData = await selectProjectByCreator({ creator: currentUser.name });
+      const projectData = await auth(null, selectProjectByCreator, { creator: currentUser.name });
       if (projectData.length === 0) {
         setNoProject(true);
       } else if (projectData.length > 0) {
@@ -69,7 +70,7 @@ export default function ProjectBrowser() {
   useEffect(() => {
     // teams by user.
     (async () => {
-      const teams = await selectTeamByUser({ username: currentUser.name });
+      const teams = await auth(null, selectTeamByUsername, { username: currentUser.name });
       setTeams(teams);
     })();
   }, []);
@@ -82,7 +83,7 @@ export default function ProjectBrowser() {
       creator: currentUser.name,
       col: formatCol(values.col),
     };
-    const newProject = await createProjectLoadingOps(createProject, project);
+    const newProject = await createProjectLoadingOps(auth, null, createProject, project);
     if (newProject.id) {
       message({
         title: "Create Project Succeed!",

@@ -1,4 +1,5 @@
-import { selectTeamByUser, sendEmailToInviteReceiverJoinTeam } from "api/Team";
+import auth from "api/base/auth";
+import { selectTeamByUsername, sendEmailToInviteReceiverJoinTeam } from "api/Team";
 import { selectUserBySubstring } from "api/User";
 import Loading from "components/Loading";
 import { message } from "components/MessageBox";
@@ -40,7 +41,7 @@ export default function User() {
   useEffect(() => {
     loadingOps(async () => {
       // TODO: fetch projects, teams info.
-      const users = await selectUserBySubstring({
+      const users = await auth(null, selectUserBySubstring, {
         usernameSubstring: username as string,
       });
       const user = users.find((u) => u.name === username);
@@ -69,11 +70,16 @@ export default function User() {
       setShowSelectTeamForm(false);
       return;
     }
-    const res = await inviteLoadingOps(sendEmailToInviteReceiverJoinTeam, {
-      receiver: userInfo.name,
-      receiverMail: userInfo.email,
-      teamId: values.teamId,
-    });
+    const res = await inviteLoadingOps(
+      auth,
+      { teamId: values.teamId },
+      sendEmailToInviteReceiverJoinTeam,
+      {
+        receiver: userInfo.name,
+        receiverMail: userInfo.email,
+        teamId: values.teamId,
+      }
+    );
     if (res.success) {
       message({
         title: "Email Sent Succeed!",
@@ -94,7 +100,7 @@ export default function User() {
 
   useEffect(() => {
     (async () => {
-      const myTeams = await selectTeamByUser({ username: currentUser.name });
+      const myTeams = await auth(null, selectTeamByUsername, { username: currentUser.name });
       setMyTeams(myTeams);
     })();
   }, []);

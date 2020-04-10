@@ -43,9 +43,8 @@ export default async function auth<T extends ApiCallFunc>(
     functionName: getApiMappingName(apiCall),
   });
   if (!res.success) {
-    console.error(res.message);
     // window.location.replace("/login");
-    return null as ReturnType<T>;
+    throw new Error(res.message);
   }
   // set global uid.
   if (res.uid) {

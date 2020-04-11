@@ -12,8 +12,8 @@ function Home() {
     console.log("click");
     message({
       type: t,
-      title: "Success!",
-      content: "lorem ahsduhs iohioashdh a ioshdio hains hna okjnhjio sa n ijaoisn doihioah oihn o",
+      title: `${t.slice(0, 1).toUpperCase() + t.slice(1)}!`,
+      content: "This is a message.",
     });
   }
 

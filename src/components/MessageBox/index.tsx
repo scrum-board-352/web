@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
-import { Alert } from "react-bootstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import Message from "./Message";
 import "./style.css";
 
 export interface Message {
@@ -43,10 +43,12 @@ export default function MessageBox() {
       <TransitionGroup component={Fragment}>
         {msgList.map((msg) => (
           <CSSTransition key={msg.id} in={true} timeout={300} classNames="messagebox">
-            <Alert variant={type(msg.type)} show={true} dismissible onClose={() => close(msg)}>
-              <Alert.Heading>{msg.title}</Alert.Heading>
-              <p className="mb-0">{msg.content}</p>
-            </Alert>
+            <Message
+              type={msg.type}
+              title={msg.title}
+              content={msg.content}
+              onClose={() => close(msg)}
+            />
           </CSSTransition>
         ))}
       </TransitionGroup>

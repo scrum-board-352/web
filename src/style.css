@@ -20,8 +20,8 @@ html {
 }
 
 body {
-  font-family: Charlie Text, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-    Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Charlie Text, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu,
+    Droid Sans, Helvetica Neue, sans-serif;
   font-style: normal;
   font-size: 14px;
   line-height: 1;
@@ -61,8 +61,7 @@ select {
 }
 
 .cardshadow:hover {
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 8px 16px -4px,
-    rgba(9, 30, 66, 0.31) 0px 0px 1px;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 8px 16px -4px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
 }
 
 .dashboard_page_container {
@@ -95,4 +94,12 @@ select {
 
 .scrollbar_thumb_green .scroll-box-track {
   background-color: transparent;
+}
+
+.table_setting button {
+  font-size: 12px !important;
+}
+
+.table_setting {
+  text-align: right;
 }

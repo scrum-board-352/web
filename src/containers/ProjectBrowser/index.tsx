@@ -1,20 +1,23 @@
 import auth from "api/base/auth";
-import { createProject, selectProjectByCreator } from "api/Project";
+import { createProject, removeProject, selectProjectByCreator } from "api/Project";
 import { selectTeamByUsername } from "api/Team";
 import Empty from "components/Empty";
 import Loading from "components/Loading";
+import LoadingButton from "components/LoadingButton";
 import { message } from "components/MessageBox";
 import ModalForm, { Template } from "components/ModalForm";
 import Searchbar from "components/Searchbar";
 import useFilter from "hooks/useFilter";
-import useLoading from "hooks/useLoading";
+import useLoading, { useLoadingGroup } from "hooks/useLoading";
 import ProjectModel from "models/Project";
+import ResultOutput from "models/ResultOutput";
 import TeamModel from "models/Team";
 import UserModel from "models/User";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Row, Table } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
 import { useStore } from "rlax";
+import { removeItem } from "utils/array";
 import { day } from "utils/date";
 import joinUrl from "utils/join-url";
 import "./style.css";
@@ -126,6 +129,33 @@ export default function ProjectBrowser() {
     },
   ];
 
+  const [deleteProjectLoading, deleteProjectLoadingOps] = useLoadingGroup();
+
+  async function handleDeleteProject(project: ProjectModel.Info) {
+    const projectId = project.id;
+    const res: ResultOutput = await deleteProjectLoadingOps(
+      project.id,
+      auth,
+      { projectId },
+      removeProject,
+      { projectId }
+    );
+    if (res.success) {
+      message({
+        type: "success",
+        title: "Delete Succeed!",
+        content: res.message,
+      });
+      setProjectData(removeItem(projectData, project));
+    } else {
+      message({
+        type: "error",
+        title: "Delete Failed!",
+        content: res.message,
+      });
+    }
+  }
+
   return loading ? (
     <Loading />
   ) : (
@@ -191,6 +221,16 @@ export default function ProjectBrowser() {
                         <td>{day(project.createTime)}</td>
                         <td>{project.iteration}</td>
                         <td>{project.creator}</td>
+                        <td className="table_setting">
+                          <LoadingButton
+                            variant="outline-danger"
+                            size="sm"
+                            text="delete"
+                            loadingText="deleting..."
+                            loading={deleteProjectLoading(project.id)}
+                            onClick={() => handleDeleteProject(project)}
+                          />
+                        </td>
                       </tr>
                     ))}
                   </tbody>

@@ -15,7 +15,6 @@ import { Button, ButtonGroup, Container, Row, Table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useStore } from "rlax";
 import { deduplication } from "utils/array";
-import style from "./style.module.css";
 
 type TeamFormValues = Pick<TeamModel.CreateInfo, "name" | "description">;
 
@@ -185,7 +184,7 @@ export default function Team() {
                         </td>
                         <td>{team.creator}</td>
                         <td>{team.description}</td>
-                        <td className={style.table_setting}>
+                        <td className="table_setting">
                           <ButtonGroup size="sm">
                             <Button variant="outline-info" onClick={() => handleUpdateTeam(team)}>
                               update

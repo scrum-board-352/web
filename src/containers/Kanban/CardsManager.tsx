@@ -1,9 +1,13 @@
 import auth from "api/base/auth";
-import { createCard as createCardApi, updateCard } from "api/Card";
+import {
+  createCard as createCardApi,
+  removeCard as deleteCardApi,
+  updateCard as updateCardApi,
+} from "api/Card";
 import CardModel from "models/Card";
 import React, { useState } from "react";
 
-let update: () => void;
+let updateView: () => void;
 let projectId: string;
 let boardId: string;
 let cards: CardModel.Info[] = [];
@@ -21,21 +25,21 @@ function startDrag(cardId: string, colName: string) {
   dragging = true;
   currentCardId = cardId;
   originColName = colName;
-  update();
+  updateView();
 }
 
 function endDrag() {
   const movedCard = cards.find((card) => card.id === currentCardId);
   if (movedCard && targetColName) {
     movedCard.status = targetColName;
-    auth({ projectId }, updateCard, movedCard);
+    updateCard(movedCard);
   }
   dragging = false;
   originColName = "";
   currentCardId = "";
   selectedColName = "";
   targetColName = "";
-  update();
+  updateView();
 }
 
 function getCurrentBoardId() {
@@ -56,7 +60,7 @@ function getSelectedColName() {
 
 function setSelectedColName(colName: string) {
   selectedColName = colName;
-  update();
+  updateView();
 }
 
 function getCardsByColName(colName: string) {
@@ -67,6 +71,39 @@ function getCurrentCardId() {
   return currentCardId;
 }
 
+async function updateCard(newCard: CardModel.UpdateInfo) {
+  const updatedCard = await auth({ projectId }, updateCardApi, newCard);
+  const oldCardIndex = cards.findIndex((c) => c.id === updatedCard.id);
+  if (oldCardIndex >= 0) {
+    cards[oldCardIndex] = updatedCard;
+    updateView();
+    return true;
+  }
+  return false;
+}
+
+async function deleteCard(card: CardModel.Info) {
+  const res = await auth({ projectId }, deleteCardApi, { cardId: card.id });
+  if (res.success) {
+    const cardIndex = cards.findIndex((c) => c.id === card.id);
+    if (cardIndex >= 0) {
+      cards.splice(cardIndex, 1);
+      updateView();
+    }
+  }
+  return res;
+}
+
+function getCardById(id: string) {
+  return cards.find((card) => card.id === id);
+}
+
+async function createCard(card: CardModel.CreateInfo) {
+  const createdCard = await auth({ projectId }, createCardApi, card);
+  cards.push(createdCard);
+  updateView();
+}
+
 const initCardsManager = {
   isDragging,
   getCurrentBoardId,
@@ -74,21 +111,15 @@ const initCardsManager = {
   getCardsByColName,
   getCurrentCardId,
   getSelectedColName,
+  getCardById,
   setSelectedColName,
   setTargetColName,
   startDrag,
   endDrag,
+  createCard,
+  updateCard,
+  deleteCard,
 };
-
-export function getCardById(id: string) {
-  return cards.find((card) => card.id === id);
-}
-
-export async function createCard(card: CardModel.CreateInfo) {
-  const createdCard = await auth({ projectId }, createCardApi, card);
-  cards.push(createdCard);
-  update();
-}
 
 export const CardsContext = React.createContext(initCardsManager);
 
@@ -101,7 +132,7 @@ type Props = {
 
 export function CardsManager(props: Props) {
   const [cardsManager, setCardsManager] = useState(initCardsManager);
-  update = () => {
+  updateView = () => {
     setCardsManager({ ...cardsManager });
   };
   cards = props.cards;

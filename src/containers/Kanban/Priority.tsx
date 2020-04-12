@@ -7,6 +7,25 @@ type Props = {
   priority: CardModel.Info["priority"];
 };
 
+export const priorityOptionTemplate = [
+  {
+    label: "High",
+    value: "high",
+  },
+  {
+    label: "Medium",
+    value: "medium",
+  },
+  {
+    label: "Low",
+    value: "low",
+  },
+  {
+    label: "Lowest",
+    value: "lowest",
+  },
+];
+
 export default function Priority(props: Props) {
   let arrow: JSX.Element;
   let colorClass: string;

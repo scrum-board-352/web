@@ -26,8 +26,10 @@ export async function updateComment(updateInfo: Message.UpdateInfo): Promise<Mes
 }
 
 setApiMappingName(removeComment, "removeCommit");
-export async function removeComment(commitId: { commitId: string }): Promise<ResultOutput> {
-  const data = await client.request(CommentMutation.removeComment, commitId);
+export async function removeComment(commentId: { commentId: string }): Promise<ResultOutput> {
+  const data = await client.request(CommentMutation.removeComment, {
+    commitId: commentId.commentId,
+  });
   return data.removeCommit;
 }
 

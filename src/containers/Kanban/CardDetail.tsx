@@ -1,21 +1,25 @@
 import auth from "api/base/auth";
-import { createComment, selectCommentsByCardId } from "api/Message";
+import { createComment, removeComment, selectCommentsByCardId, updateComment } from "api/Message";
 import Comment from "components/Comment";
 import Empty from "components/Empty";
 import Loading from "components/Loading";
+import { message } from "components/MessageBox";
+import { MenuItem } from "components/SettingButton/Menu";
 import useLoading from "hooks/useLoading";
 import CardModel from "models/Card";
 import MessageModel from "models/Message";
 import UserModel from "models/User";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useContext, useEffect, useRef, useState } from "react";
 import { Badge, Modal, Spinner } from "react-bootstrap";
 import { FiMessageSquare } from "react-icons/fi";
 import ScrollBox from "react-responsive-scrollbox";
 import { useStore } from "rlax";
+import { replaceItem } from "utils/array";
 import avatar from "utils/avatar";
 import className from "utils/class-name";
 import { dateDistance } from "utils/date";
 import style from "./card-detail.module.css";
+import KanbanFromContext from "./KanbanFromContext";
 import Priority from "./Priority";
 
 type Props = {
@@ -24,6 +28,8 @@ type Props = {
   projectId: string;
   card: CardModel.Info;
 };
+
+type UpdateCommentFormValues = Pick<MessageModel.UpdateInfo, "description">;
 
 export default function CardDetail(props: Props) {
   const [comments, setComments] = useState<Array<MessageModel.Info>>([]);
@@ -70,6 +76,76 @@ export default function CardDetail(props: Props) {
     setComments([...comments, newComment]);
   }
 
+  const getOpenModalForm = useContext(KanbanFromContext);
+  const openModalForm = getOpenModalForm<UpdateCommentFormValues>();
+
+  function menuItems(comment: MessageModel.Info): Array<MenuItem> {
+    function showUpdateCommentForm() {
+      openModalForm({
+        title: "Update Comment",
+        templates: [
+          {
+            name: "description",
+            label: "Description",
+            type: "textarea",
+            defaultValue: comment.description,
+          },
+        ],
+        async onSubmit(values) {
+          const updatedComment = await auth({ projectId: props.projectId }, updateComment, {
+            id: comment.id,
+            ...values,
+          });
+          if (updatedComment && updatedComment.id) {
+            message({
+              title: "Update Succeed!",
+              type: "success",
+            });
+            setComments(replaceItem(comments, (c) => c.id, updatedComment));
+          } else {
+            message({
+              title: "Update Failed!",
+              type: "error",
+            });
+          }
+        },
+      });
+    }
+
+    async function deleteThisComment() {
+      message({
+        type: "info",
+        title: "Deleting...",
+      });
+      const res = await auth({ projectId: props.projectId }, removeComment, {
+        commentId: comment.id,
+      });
+      if (res.success) {
+        message({
+          type: "success",
+          title: "Delete Succeed!",
+        });
+        setComments(comments.filter((c) => c.id !== comment.id));
+      } else {
+        message({
+          type: "error",
+          title: "Delete Failed!",
+        });
+      }
+    }
+
+    return [
+      {
+        label: "Edit",
+        onClick: showUpdateCommentForm,
+      },
+      {
+        label: "Delete",
+        onClick: deleteThisComment,
+      },
+    ];
+  }
+
   return (
     <Modal show={props.show} onHide={props.onHide} dialogClassName={style.dialog} centered>
       <Modal.Header closeButton>
@@ -92,6 +168,7 @@ export default function CardDetail(props: Props) {
                         name={comment.announcer.name}
                         commentTime={dateDistance(comment.updateTime)}
                         content={comment.description}
+                        menuItems={menuItems(comment)}
                       />
                     ))}
                   </ScrollBox>

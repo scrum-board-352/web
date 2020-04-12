@@ -1,4 +1,5 @@
 import SettingButton from "components/SettingButton";
+import { MenuItem } from "components/SettingButton/Menu";
 import React from "react";
 import avatar from "utils/avatar";
 import style from "./style.module.css";
@@ -8,6 +9,7 @@ type Props = {
   name: string;
   commentTime: string;
   content: string;
+  menuItems?: Array<MenuItem>;
 };
 
 export default function Comment(props: Props) {
@@ -21,7 +23,7 @@ export default function Comment(props: Props) {
           <span className={style.username}>{props.name}</span>
           <span className={style.dot}>·</span>
           <span className={style.time}>{props.commentTime}</span>
-          <SettingButton type="dot-v" size="1.2rem" />
+          <SettingButton type="dot-v" size="1.2rem" menuItems={props.menuItems} />
         </div>
         <p className={style.content}>{props.content}</p>
       </div>

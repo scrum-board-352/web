@@ -1,5 +1,5 @@
 import useFormData from "hooks/useFormData";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Button, Form, Modal, Spinner } from "react-bootstrap";
 
 type Option = {
@@ -7,14 +7,15 @@ type Option = {
   value: string;
 };
 
-export interface Template<T extends Object> {
+export interface Template<T extends object> {
   name: keyof T;
   label: string;
   type: "text" | "number" | "textarea" | "select";
   options?: Array<Option>;
+  defaultValue?: string;
 }
 
-type Props<T> = {
+export type Props<T extends object> = {
   title: string;
   templates: Template<T>[];
   show: boolean;
@@ -23,7 +24,7 @@ type Props<T> = {
   onSubmit: (values: T) => void;
 };
 
-function asType(type: Template<any>["type"]) {
+function asType(type: Template<object>["type"]) {
   switch (type) {
     case "text":
     case "number":
@@ -61,6 +62,12 @@ function generateOptions(options?: Array<Option>) {
 export default function ModalForm<T extends object>(props: Props<T>) {
   const [values, handleInputChange, clear] = useFormData<T>();
 
+  useEffect(() => {
+    if (!props.show) {
+      clear();
+    }
+  }, [props.show]);
+
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     props.onSubmit(values);
@@ -87,7 +94,7 @@ export default function ModalForm<T extends object>(props: Props<T>) {
                   disabled={props.loading}
                   type={t.type}
                   name={t.name}
-                  value={String(values[t.name] ?? "")}
+                  value={String(values[t.name] ?? t.defaultValue ?? "")}
                   onChange={handleInputChange}
                   as={asType(t.type)}>
                   {t.type === "select" ? generateOptions(t.options) : null}

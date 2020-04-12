@@ -6,21 +6,24 @@ import Empty from "components/Empty";
 import Loading from "components/Loading";
 import LoadingButton from "components/LoadingButton";
 import { message, Message } from "components/MessageBox";
+import ModalForm from "components/ModalForm";
 import Searchbar from "components/Searchbar";
 import Select, { Option } from "components/Select";
 import SettingButton from "components/SettingButton";
 import { MenuItem } from "components/SettingButton/Menu";
 import useLoading from "hooks/useLoading";
+import useModalForm from "hooks/useModalForm";
 import useQuery from "hooks/useQuery";
 import BoardModel from "models/Board";
 import CardModel from "models/Card";
 import ProjectModel from "models/Project";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import ScrollBox from "react-responsive-scrollbox";
 import { useHistory, useParams } from "react-router-dom";
 import CardCol from "./CardCol";
 import CardDetail from "./CardDetail";
-import { CardsManager, getCardById } from "./CardsManager";
+import { CardsContext, CardsManager } from "./CardsManager";
+import KanbanFormContext from "./KanbanFromContext";
 import style from "./style.module.css";
 
 export default function Kanban() {
@@ -134,8 +137,10 @@ export default function Kanban() {
     }
   }, [cards, cardId]);
 
+  const cardsManager = useContext(CardsContext);
+
   function showCardDetail(cardId: string) {
-    const cardDetail = getCardById(cardId);
+    const cardDetail = cardsManager.getCardById(cardId);
     if (!cardDetail) {
       message({
         type: "error",
@@ -156,6 +161,10 @@ export default function Kanban() {
   const [createBoardLoading, createBoardLoadingOps] = useLoading();
 
   async function handleCreateBoard() {
+    message({
+      title: "Creating...",
+      type: "info",
+    });
     let newBoard: BoardModel.Info | null = null;
     try {
       newBoard = await createBoardLoadingOps(auth, { projectId }, createBoard, {
@@ -187,6 +196,10 @@ export default function Kanban() {
     if (!boardId) {
       return;
     }
+    message({
+      title: "Deleting...",
+      type: "info",
+    });
     const res = await auth({ projectId }, removeBoard, { boardId });
     const messageOption: Message = {
       title: "",
@@ -256,70 +269,77 @@ export default function Kanban() {
     },
   ];
 
+  const [modalFormProps, openModalForm] = useModalForm();
+
   return (
-    <div className={style.container}>
-      {loading ? (
-        <Loading />
-      ) : (
-        <Fragment>
-          <div className={style.topbar}>
-            <h1>{project.name}</h1>
-            {noBoard ? null : (
-              <>
-                <Select
-                  options={projectIterationOptions}
-                  defaultValue={boardId ?? ""}
-                  onChange={(id) => history.push(id)}
-                />
-                <Searchbar
-                  className={style.topbar_search}
-                  placeholder="Search card"
-                  type="round"
-                  color="#ddd"
-                  size="1.5rem"
-                  onSearch={handleSearchCard}
-                />
-                <SettingButton
-                  size="1.5rem"
-                  color="#ddd"
-                  hoverColor="var(--blue)"
-                  menuItems={projectSettingMenu}
-                />
-              </>
-            )}
-          </div>
-          {noBoard ? (
-            <Empty message="No board" size="10rem">
-              <LoadingButton
-                loading={createBoardLoading}
-                text="Create Board"
-                loadingText="Creating..."
-                size="sm"
-                onClick={handleCreateBoardClick}
-              />
-            </Empty>
+    <>
+      <ModalForm {...modalFormProps} />
+      <KanbanFormContext.Provider value={() => openModalForm}>
+        <div className={style.container}>
+          {loading ? (
+            <Loading />
           ) : (
-            <ScrollBox className="scrollbar_thumb_green">
-              <div className={style.card_col_container}>
-                <CardsManager
-                  cards={filteredCards}
-                  projectId={projectId ?? ""}
-                  boardId={boardId ?? ""}>
-                  {project.col.map((col) => (
-                    <CardCol key={col} colName={col} onClickCard={showCardDetail} />
-                  ))}
-                </CardsManager>
+            <Fragment>
+              <div className={style.topbar}>
+                <h1>{project.name}</h1>
+                {noBoard ? null : (
+                  <>
+                    <Select
+                      options={projectIterationOptions}
+                      defaultValue={boardId ?? ""}
+                      onChange={(id) => history.push(id)}
+                    />
+                    <Searchbar
+                      className={style.topbar_search}
+                      placeholder="Search card"
+                      type="round"
+                      color="#ddd"
+                      size="1.5rem"
+                      onSearch={handleSearchCard}
+                    />
+                    <SettingButton
+                      size="1.5rem"
+                      color="#ddd"
+                      hoverColor="var(--blue)"
+                      menuItems={projectSettingMenu}
+                    />
+                  </>
+                )}
               </div>
-            </ScrollBox>
+              {noBoard ? (
+                <Empty message="No board" size="10rem">
+                  <LoadingButton
+                    loading={createBoardLoading}
+                    text="Create Board"
+                    loadingText="Creating..."
+                    size="sm"
+                    onClick={handleCreateBoardClick}
+                  />
+                </Empty>
+              ) : (
+                <ScrollBox className="scrollbar_thumb_green">
+                  <div className={style.card_col_container}>
+                    <CardsManager
+                      cards={filteredCards}
+                      projectId={projectId ?? ""}
+                      boardId={boardId ?? ""}>
+                      {project.col.map((col) => (
+                        <CardCol key={col} colName={col} onClickCard={showCardDetail} />
+                      ))}
+                    </CardsManager>
+                  </div>
+                </ScrollBox>
+              )}
+              <CardDetail
+                show={showCardDetailFlag}
+                onHide={() => setShowCardDetailFlag(false)}
+                projectId={projectId ?? ""}
+                card={cardDetail}
+              />
+            </Fragment>
           )}
-          <CardDetail
-            show={showCardDetailFlag}
-            onHide={() => setShowCardDetailFlag(false)}
-            projectId={projectId ?? ""}
-            card={cardDetail}
-          />
-        </Fragment>
-      )}
-    </div>
+        </div>
+      </KanbanFormContext.Provider>
+    </>
   );
 }

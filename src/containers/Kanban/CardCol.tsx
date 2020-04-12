@@ -1,15 +1,16 @@
-import ModalForm, { Template } from "components/ModalForm";
-import useLoading from "hooks/useLoading";
+import { Template } from "components/ModalForm";
 import CardModel from "models/Card";
 import UserModel from "models/User";
-import React, { Fragment, useContext, useState } from "react";
+import React, { useContext } from "react";
 import { IoMdAdd } from "react-icons/io";
 import ScrollBox from "react-responsive-scrollbox";
 import { useStore } from "rlax";
 import className from "utils/class-name";
 import Card from "./Card";
 import style from "./card-col.module.css";
-import { CardsContext, createCard } from "./CardsManager";
+import { CardsContext } from "./CardsManager";
+import KanbanFormContext from "./KanbanFromContext";
+import { priorityOptionTemplate } from "./Priority";
 
 type Props = {
   colName: string;
@@ -43,24 +44,7 @@ const createCardFormTemplate: Template<CardModel.CreateInfo>[] = [
     label: "Priority",
     name: "priority",
     type: "select",
-    options: [
-      {
-        label: "High",
-        value: "high",
-      },
-      {
-        label: "Medium",
-        value: "medium",
-      },
-      {
-        label: "Low",
-        value: "low",
-      },
-      {
-        label: "Lowest",
-        value: "lowest",
-      },
-    ],
+    options: priorityOptionTemplate,
   },
   {
     label: "Processor",
@@ -114,8 +98,6 @@ export default function CardCol(props: Props) {
 
   const dropClass = selected ? style.selected : droppable ? style.droppable : "";
 
-  const [showCreateCard, setShowCreateCard] = useState(false);
-  const [createCardLoading, createCardLoadingOps] = useLoading();
   const currentUser: UserModel.PrivateInfo = useStore("user");
   const boardId = cardsManager.getCurrentBoardId();
 
@@ -123,40 +105,40 @@ export default function CardCol(props: Props) {
     values.status = props.colName;
     values.founder = currentUser.name;
     values.boardId = boardId;
-    await createCardLoadingOps(createCard, values);
-    setShowCreateCard(false);
+    await cardsManager.createCard(values);
+  }
+
+  const getOpenModalForm = useContext(KanbanFormContext);
+  const openModalForm = getOpenModalForm<CardModel.CreateInfo>();
+
+  function showCreateCardForm() {
+    openModalForm({
+      title: "Create New Card",
+      templates: createCardFormTemplate,
+      onSubmit: handleSubmitCreateCard,
+    });
   }
 
   return (
-    <Fragment>
-      <ModalForm<CardModel.CreateInfo>
-        title="Create New Card"
-        templates={createCardFormTemplate}
-        show={showCreateCard}
-        onClose={() => setShowCreateCard(false)}
-        onSubmit={handleSubmitCreateCard}
-        loading={createCardLoading}
-      />
-      <div
-        className={style.card_col}
-        data-col-name={props.colName}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}>
-        <p className={style.title}>{props.colName}</p>
-        <button className={style.add_card_btn} onClick={() => setShowCreateCard(true)}>
-          <IoMdAdd />
-          <span>New Card</span>
-        </button>
-        <ScrollBox className={className(style.cards_container, dropClass, "scrollbar_thumb_green")}>
-          {cards.map((card) => (
-            <Card key={card.id} card={card} onClick={() => props.onClickCard?.(card.id)} />
-          ))}
-        </ScrollBox>
-      </div>
-    </Fragment>
+    <div
+      className={style.card_col}
+      data-col-name={props.colName}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}>
+      <p className={style.title}>{props.colName}</p>
+      <button className={style.add_card_btn} onClick={showCreateCardForm}>
+        <IoMdAdd />
+        <span>New Card</span>
+      </button>
+      <ScrollBox className={className(style.cards_container, dropClass, "scrollbar_thumb_green")}>
+        {cards.map((card) => (
+          <Card key={card.id} card={card} onClick={() => props.onClickCard?.(card.id)} />
+        ))}
+      </ScrollBox>
+    </div>
   );
 }

@@ -6,6 +6,7 @@ import "./style.css";
 export interface Message {
   type: "success" | "error" | "info";
   title: string;
+  timeout?: number;
   content?: string;
   timerId?: number;
   id?: number;
@@ -32,7 +33,7 @@ export function message(msg: Message) {
   msg.id = Math.random();
   setMsgList([...msgList, msg]);
   // auto-close after delay.
-  msg.timerId = setTimeout(close, AUTO_CLOSE_TIMEOUT, msg);
+  msg.timerId = setTimeout(close, msg.timeout ?? AUTO_CLOSE_TIMEOUT, msg);
 }
 
 export default function MessageBox() {

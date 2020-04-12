@@ -2,6 +2,7 @@ import React from "react";
 import { IoIosClose, IoMdInformation } from "react-icons/io";
 import { MdCheck, MdClose } from "react-icons/md";
 import className from "utils/class-name";
+import { cutString } from "utils/string";
 import style from "./message.module.css";
 
 type Props = {
@@ -48,7 +49,7 @@ export default function Message(props: Props) {
             <IoIosClose size="100%" />
           </button>
         </div>
-        {props.content ? <p className={style.content}>{props.content}</p> : null}
+        {props.content ? <p className={style.content}>{cutString(props.content, 50)}</p> : null}
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ import UserModel from "models/User";
 import React from "react";
 import { IconContext } from "react-icons";
 import { AiOutlineMessage, AiOutlineProject, AiOutlineUsergroupAdd } from "react-icons/ai";
-import { Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
+import { Link, Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
 import { useStore } from "rlax";
 import joinUrl from "utils/join-url";
 import "./style.css";
@@ -28,12 +28,14 @@ export default function Dashboard() {
     <div className="d-flex">
       <Sidebar>
         <Sidebar.Title>
-          <Avatar
-            name={user.name}
-            avatar={user.avatar}
-            size="50px"
-            className="dashboard_sidebar_avatar"
-          />
+          <Link to={`/user/${user.name}`} style={{ textDecoration: "none" }}>
+            <Avatar
+              name={user.name}
+              avatar={user.avatar}
+              size="50px"
+              className="dashboard_sidebar_avatar"
+            />
+          </Link>
         </Sidebar.Title>
         <IconContext.Provider value={{ size: "20px" }}>
           <Sidebar.Items color="var(--dark)" activeColor="yellowgreen">

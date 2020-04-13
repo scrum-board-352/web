@@ -10,7 +10,7 @@ import Searchbar from "components/Searchbar";
 import useLoading from "hooks/useLoading";
 import TeamModel from "models/Team";
 import UserModel from "models/User";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, ButtonGroup, Container, Row, Table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useStore } from "rlax";
@@ -49,9 +49,13 @@ export default function Team() {
   }, []);
 
   const [peopleLoading, peopleLoadingOps] = useLoading();
+  const peopleFetchedRef = useRef(false);
 
   useEffect(() => {
     // fetch people.
+    if (peopleFetchedRef.current || teams.length === 0) {
+      return;
+    }
     peopleLoadingOps(async () => {
       const recentTeams = teams.length < 5 ? teams : teams.slice(0, 5);
       const recentTeamsId = recentTeams.map((team) => team.id);
@@ -59,6 +63,7 @@ export default function Team() {
         recentTeamsId.map((teamId) => auth({ teamId }, selectPeopleByTeamId, { teamId }))
       );
       setPeople(deduplication(recentPeople.flat(), (team) => team.id));
+      peopleFetchedRef.current = true;
     });
   }, [teams]);
 

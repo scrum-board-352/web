@@ -39,7 +39,7 @@ function formatCol(col?: string) {
 export default function ProjectBrowser() {
   const { url } = useRouteMatch();
   const [projectData, setProjectData] = useState<ProjectModel.Info[]>([]);
-  const [loading, loadingOps] = useLoading();
+  const [loading, loadingOps] = useLoading(true);
   const [noProject, setNoProject] = useState(false);
   const currentUser: UserModel.PrivateInfo = useStore("user");
 

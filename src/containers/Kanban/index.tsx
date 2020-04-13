@@ -54,7 +54,7 @@ export default function Kanban() {
   const [projectData, setProjectData] = useState<ProjectData>(initProjectData);
   const { project, noBoard, boardIds, cards } = projectData;
   const [filteredCards, setFilteredCards] = useState<Array<CardModel.Info>>([]);
-  const [loading, loadingOps] = useLoading();
+  const [loading, loadingOps] = useLoading(true);
 
   useEffect(() => {
     loadingOps(async () => {

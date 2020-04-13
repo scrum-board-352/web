@@ -16,7 +16,7 @@ import "./style.css";
 
 export default function Messages() {
   const [comments, setComments] = useState<Array<MessageModel.InfoOutput>>([]);
-  const [loading, loadingOps] = useLoading();
+  const [loading, loadingOps] = useLoading(true);
   const currentUser: UserModel.PrivateInfo = useStore("user");
 
   useEffect(() => {

@@ -35,7 +35,7 @@ export default function User() {
   });
   const [projects, setProjects] = useState<ProjectModel.Info[]>([]);
   const [teams, setTeams] = useState<TeamModel.Info[]>([]);
-  const [loading, loadingOps] = useLoading();
+  const [loading, loadingOps] = useLoading(true);
   const currentUser: UserModel.PrivateInfo = useStore("user");
 
   useEffect(() => {

@@ -3,8 +3,8 @@ import { PromiseType } from "utils/type";
 
 type OpFunc = (...args: any[]) => any;
 
-export default function useLoading(): [boolean, typeof loadingOps] {
-  const [loading, setLoading] = useState(false);
+export default function useLoading(initLoading?: boolean): [boolean, typeof loadingOps] {
+  const [loading, setLoading] = useState(initLoading ?? false);
   const loadingOps = useCallback(
     async <T extends OpFunc>(f: T, ...args: Parameters<T>): Promise<PromiseType<ReturnType<T>>> => {
       setLoading(true);

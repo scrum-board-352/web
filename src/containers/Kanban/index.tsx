@@ -26,10 +26,15 @@ import { CardsContext, CardsManager } from "./CardsManager";
 import KanbanFormContext from "./KanbanFromContext";
 import style from "./style.module.css";
 
-export default function Kanban() {
-  const { projectId, boardId } = useParams();
-  const history = useHistory();
-  const initProject: ProjectModel.Info = {
+type ProjectData = {
+  project: ProjectModel.Info;
+  noBoard: boolean;
+  boardIds: string[];
+  cards: CardModel.Info[];
+};
+
+const initProjectData: ProjectData = {
+  project: {
     id: "",
     name: "",
     iteration: 0,
@@ -37,12 +42,18 @@ export default function Kanban() {
     creator: "",
     col: [],
     row: [],
-  };
-  const [project, setProject] = useState<ProjectModel.Info>(initProject);
-  const [boardIds, setBoardIds] = useState<Array<BoardModel.Info["id"]>>([]);
-  const [cards, setCards] = useState<Array<CardModel.Info>>([]);
+  },
+  noBoard: false,
+  boardIds: [],
+  cards: [],
+};
+
+export default function Kanban() {
+  const { projectId, boardId } = useParams();
+  const history = useHistory();
+  const [projectData, setProjectData] = useState<ProjectData>(initProjectData);
+  const { project, noBoard, boardIds, cards } = projectData;
   const [filteredCards, setFilteredCards] = useState<Array<CardModel.Info>>([]);
-  const [noBoard, setNoBoard] = useState(false);
   const [loading, loadingOps] = useLoading();
 
   useEffect(() => {
@@ -52,22 +63,26 @@ export default function Kanban() {
         NoBoard = "no board",
       }
 
-      let project: ProjectModel.Info = initProject;
+      let project: ProjectModel.Info = initProjectData.project;
+      let boards: Array<BoardModel.Info> = [];
       let boardIds: Array<BoardModel.Info["id"]> = [];
       let cards: Array<CardModel.Info> = [];
       let noBoard = false;
 
       try {
-        // fetch and check project.
         if (!projectId) {
           throw ErrorType.NotFound;
         }
-        project = await auth({ projectId }, selectProjectById, { projectId });
+        const res: any = await Promise.all([
+          auth({ projectId }, selectProjectById, { projectId }),
+          auth({ projectId }, selectBoardsByProjectId, { projectId }),
+          boardId ? auth({ projectId }, selectCardsByBoardId, { boardId }) : Promise.resolve([]),
+        ]);
+        project = res[0];
         if (!project.id) {
           throw ErrorType.NotFound;
         }
-        // get all boards.
-        const boards = await auth({ projectId }, selectBoardsByProjectId, { projectId });
+        boards = res[1];
         if (boards.length === 0) {
           throw ErrorType.NoBoard;
         }
@@ -83,8 +98,7 @@ export default function Kanban() {
         if (!board) {
           throw ErrorType.NotFound;
         }
-        // fetch cards.
-        cards = await auth({ projectId }, selectCardsByBoardId, { boardId });
+        cards = res[2];
       } catch (err) {
         switch (err) {
           case ErrorType.NotFound:
@@ -103,10 +117,12 @@ export default function Kanban() {
             });
         }
       }
-      setProject(project);
-      setBoardIds(boardIds);
-      setCards(cards);
-      setNoBoard(noBoard);
+      setProjectData({
+        project,
+        noBoard,
+        boardIds,
+        cards,
+      });
     });
   }, [loadingOps, projectId, boardId]);
 
@@ -221,7 +237,7 @@ export default function Kanban() {
     const newBoard = await handleCreateBoard();
     if (newBoard && newBoard.id) {
       history.replace(`${projectId}/${newBoard.id}`);
-      setNoBoard(false);
+      setProjectData({ ...projectData, noBoard: false });
     }
   }
 

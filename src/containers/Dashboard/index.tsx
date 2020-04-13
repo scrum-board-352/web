@@ -1,4 +1,3 @@
-import Avatar from "components/Avatar";
 import Sidebar from "components/Sidebar";
 import Kanban from "containers/Kanban";
 import Messages from "containers/Messages";
@@ -8,10 +7,11 @@ import UserModel from "models/User";
 import React from "react";
 import { IconContext } from "react-icons";
 import { AiOutlineMessage, AiOutlineProject, AiOutlineUsergroupAdd } from "react-icons/ai";
-import { Link, Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
+import { Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
 import { useStore } from "rlax";
 import joinUrl from "utils/join-url";
 import "./style.css";
+import UserInfo from "./UserInfo";
 
 enum Path {
   Projects = "projects",
@@ -28,14 +28,7 @@ export default function Dashboard() {
     <div className="d-flex">
       <Sidebar>
         <Sidebar.Title>
-          <Link to={`/user/${user.name}`} style={{ textDecoration: "none" }}>
-            <Avatar
-              name={user.name}
-              avatar={user.avatar}
-              size="50px"
-              className="dashboard_sidebar_avatar"
-            />
-          </Link>
+          <UserInfo user={user} />
         </Sidebar.Title>
         <IconContext.Provider value={{ size: "20px" }}>
           <Sidebar.Items color="var(--dark)" activeColor="yellowgreen">

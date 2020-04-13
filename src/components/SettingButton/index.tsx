@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { IoMdMore, IoMdSettings } from "react-icons/io";
-import { MdMoreHoriz } from "react-icons/md";
+import { MdKeyboardArrowDown, MdMoreHoriz } from "react-icons/md";
 import { stopPropagation } from "utils/event";
 import Menu, { MenuItem } from "./Menu";
 import style from "./style.module.css";
@@ -9,7 +9,7 @@ type Props = {
   size?: string;
   color?: string;
   hoverColor?: string;
-  type?: "dot-v" | "dot-h" | "gear";
+  type?: "dot-v" | "dot-h" | "gear" | "down-arrow";
   menuItems?: Array<MenuItem>;
 };
 
@@ -21,6 +21,8 @@ function icon(type: Props["type"]) {
       return <MdMoreHoriz size="100%" />;
     case "gear":
       return <IoMdSettings size="100%" />;
+    case "down-arrow":
+      return <MdKeyboardArrowDown size="100%" />;
     default:
       return <></>;
   }
@@ -46,7 +48,7 @@ export default function SettingButton(props: Props) {
   }
 
   return (
-    <div className="position-relative" onClick={stopPropagation}>
+    <span className="position-relative" onClick={stopPropagation}>
       <button
         ref={btnRef}
         onMouseEnter={() => {
@@ -71,6 +73,6 @@ export default function SettingButton(props: Props) {
         {icon(type)}
       </button>
       {showMenu ? <Menu items={props.menuItems} /> : null}
-    </div>
+    </span>
   );
 }

@@ -1,13 +1,12 @@
 import { useCallback, useState } from "react";
-
-type AwaitReturnType<T> = T extends (...args: any[]) => Promise<infer V> ? V : T;
+import { PromiseType } from "utils/type";
 
 type OpFunc = (...args: any[]) => any;
 
 export default function useLoading(): [boolean, typeof loadingOps] {
   const [loading, setLoading] = useState(false);
   const loadingOps = useCallback(
-    async <T extends OpFunc>(f: T, ...args: Parameters<T>): Promise<AwaitReturnType<T>> => {
+    async <T extends OpFunc>(f: T, ...args: Parameters<T>): Promise<PromiseType<ReturnType<T>>> => {
       setLoading(true);
       try {
         return await f(...args);
@@ -40,7 +39,7 @@ export function useLoadingGroup(): [typeof loading, typeof loadingOps] {
       id: string,
       f: T,
       ...args: Parameters<T>
-    ): Promise<AwaitReturnType<T>> => {
+    ): Promise<PromiseType<ReturnType<T>>> => {
       setLoadingMap({ ...loadingMap, [id]: true });
       try {
         return await f(...args);

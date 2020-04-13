@@ -1,3 +1,4 @@
+import { PromiseType } from "utils/type";
 import { getApiMappingName } from "./api-name-mapping";
 import { post } from "./fetch";
 
@@ -36,7 +37,7 @@ export default async function auth<T extends ApiCallFunc>(
   authParams: AuthParams | null,
   apiCall: T,
   ...apiParams: Parameters<T>
-): Promise<ReturnType<T>> {
+): Promise<PromiseType<ReturnType<T>>> {
   // register oparetion through RESTful api.
   const res = await post(authUrl, {
     ...authParams,

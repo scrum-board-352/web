@@ -1,8 +1,7 @@
 import Comment from "components/Comment";
 import { message, Message } from "components/MessageBox";
 import ModalForm, { Template } from "components/ModalForm";
-import SettingButton from "components/SettingButton";
-import { MenuItem } from "components/SettingButton/Menu";
+import SettingButton, { MenuItem } from "components/SettingButton";
 import React, { Fragment, useState } from "react";
 import { Button } from "react-bootstrap";
 import testTextPlaceholder from "utils/testTextPlaceholder";

@@ -1,5 +1,4 @@
-import SettingButton from "components/SettingButton";
-import { MenuItem } from "components/SettingButton/Menu";
+import SettingButton, { MenuItem } from "components/SettingButton";
 import React from "react";
 import avatar from "utils/avatar";
 import style from "./style.module.css";

@@ -7,3 +7,46 @@
   justify-content: center;
   transition: color 400ms ease-in-out;
 }
+
+.menu {
+  position: absolute;
+  z-index: 1100;
+  min-width: 6rem;
+  border-radius: 5px;
+  background-color: white;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition-duration: 150ms;
+  transition-property: opacity, box-shadow;
+}
+
+.show {
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 8px 16px -4px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
+}
+
+.item {
+  display: block;
+  width: 100%;
+  padding: 0.1rem;
+  text-align: left;
+  color: var(--gray);
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: nowrap;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid #eee;
+  margin: 0;
+}
+
+.menu > .item:last-child {
+  border-bottom: 0;
+}
+
+.item:hover {
+  background-color: #f9f9f9;
+}

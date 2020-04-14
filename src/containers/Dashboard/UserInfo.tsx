@@ -1,8 +1,7 @@
 import auth from "api/base/auth";
 import { logout } from "api/User";
 import { message } from "components/MessageBox";
-import SettingButton from "components/SettingButton";
-import { MenuItem } from "components/SettingButton/Menu";
+import SettingButton, { MenuItem } from "components/SettingButton";
 import UserModel from "models/User";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
@@ -61,10 +60,9 @@ export default function UserInfo(props: Props) {
       <Link to={userPageUrl}>
         <img className={style.avatar} src={avatar(props.user.avatar)} alt="" />
       </Link>
-      <div className={style.name}>
-        <span>{props.user.name}</span>
-        <SettingButton type="down-arrow" size="1rem" menuItems={menu} />
-      </div>
+      <p className={style.name}>
+        {props.user.name} <SettingButton type="down-arrow" size="1rem" menuItems={menu} />
+      </p>
       <p className={style.email}>{props.user.email}</p>
     </div>
   );

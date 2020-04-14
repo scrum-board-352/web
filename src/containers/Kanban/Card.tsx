@@ -1,8 +1,7 @@
 import Avatar from "components/Avatar";
 import { message } from "components/MessageBox";
 import { Template } from "components/ModalForm";
-import SettingButton from "components/SettingButton";
-import { MenuItem } from "components/SettingButton/Menu";
+import SettingButton, { MenuItem } from "components/SettingButton";
 import CardModel from "models/Card";
 import React, { useContext, useState } from "react";
 import className from "utils/class-name";

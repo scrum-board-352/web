@@ -74,7 +74,9 @@ function updateMenuAndShow(pageX: number, pageY: number, menuItems?: Array<MenuI
 
 function hideMenu(cb: any) {
   menu.classList.remove(style.show);
-  menu.addEventListener("transitionend", cb, { once: true });
+  if (typeof cb === "function") {
+    menu.addEventListener("transitionend", cb, { once: true });
+  }
   removeHideMenuEventHandler();
 }
 

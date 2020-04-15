@@ -1,0 +1,10 @@
+---
+applications:
+  - name: frontend_server
+    buildpack: sdk-for-nodejs
+    memory: 512M
+    instances: 1
+    command: npm start
+    path: server
+    env:
+      STATIC: "./build"

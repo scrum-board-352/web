@@ -13,7 +13,7 @@ if [ -n "$USERNAME" ] && [ -n "$PASSWORD" ]; then
 
   ./cf api https://api.run.pivotal.io
   ./cf login -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORGANIZATION -s $CF_SPACE
-  ./cf push
+  ./cf push -b https://github.com/cloudfoundry/nodejs-buildpack
 else
   echo "Skip deploy because USERNAME or PASSWORD are empty"
   exit 1

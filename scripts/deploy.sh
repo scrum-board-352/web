@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-if [ -n "$USERNAME" && -n "$PASSWORD" ]; then
+if [ -n "$USERNAME" ] && [ -n "$PASSWORD" ]; then
   echo "Installing cf CLI"
   curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
   chmod +x ./cf

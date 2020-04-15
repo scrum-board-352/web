@@ -12,7 +12,7 @@ if [ -n "$USERNAME" ] && [ -n "$PASSWORD" ]; then
   CF_SPACE="development"
 
   ./cf api https://api.run.pivotal.io
-  ./cf login --u $CF_USERNAME --p $CF_PASSWORD --o $CF_ORGANIZATION --s $CF_SPACE
+  ./cf login -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORGANIZATION -s $CF_SPACE
   ./cf push
 else
   echo "Skip deploy because USERNAME or PASSWORD are empty"

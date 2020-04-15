@@ -10,13 +10,17 @@
   flex-wrap: nowrap;
   align-items: center;
   width: 100%;
-  padding: 1.5rem 1rem 0.5rem 1.5rem;
+  padding: 1.5rem 1rem 1rem 1.5rem;
 }
 
 .topbar h1 {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 0;
+}
+
+.topbar > select {
+  align-self: flex-end;
 }
 
 .topbar > * {

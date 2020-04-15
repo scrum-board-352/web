@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: frontend_server
+  - name: scrumboard
     memory: 512M
     instances: 1
     command: npm start

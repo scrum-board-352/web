@@ -1,8 +1,10 @@
 #!/usr/bin/env sh
 
 function install_cf {
+  echo "Installing cf CLI"
   curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
   chmod +x ./cf
+  echo "Done install cf CLI"
 }
 
 if [ -n "$USERNAME" && -n "$PASSWORD" ]; then

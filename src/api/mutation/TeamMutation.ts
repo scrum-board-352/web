@@ -35,10 +35,10 @@ mutation updateTeam($id:String, $creator:String, $name:String, $description:Stri
 `;
 
 const removeTeam = `
-mutation removeTeam($id: String, $uid: String){
+mutation removeTeam($teamId: String, $uid: String){
   removeTeam(selectionInput: {
     teamInput: {
-      id: $id
+      id: $teamId
     }
     uid: $uid
   }) {

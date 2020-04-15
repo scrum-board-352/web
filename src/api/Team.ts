@@ -29,7 +29,7 @@ export async function updateTeam(teamInfo: TeamModel.Info): Promise<TeamModel.In
 setApiMappingName(removeTeam, "removeTeam");
 export async function removeTeam(teamId: { teamId: string }): Promise<ResultOutput> {
   const date = await client.request(TeamMutation.removeTeam, teamId);
-  return date.updateTeam;
+  return date.removeTeam;
 }
 
 setApiMappingName(selectTeamByUsername, "selectTeamByUsername");

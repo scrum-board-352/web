@@ -34,4 +34,18 @@ mutation updateTeam($id:String, $creator:String, $name:String, $description:Stri
 }
 `;
 
-export default { createTeamMutation, updateTeam };
+const removeTeam = `
+mutation removeTeam($id: String, $uid: String){
+  removeTeam(selectionInput: {
+    teamInput: {
+      id: $id
+    }
+    uid: $uid
+  }) {
+    success: susses
+    message
+  }
+}
+`;
+
+export default { createTeamMutation, updateTeam, removeTeam };

@@ -190,7 +190,7 @@ export default function ProjectBrowser() {
               <div className="projectbrowser_searchbar_container">
                 <Searchbar
                   size="1.5rem"
-                  placeholder="Search Project"
+                  placeholder="Search Project..."
                   color="var(--gray)"
                   activeColor="var(--blue)"
                   onSearch={searchProject}

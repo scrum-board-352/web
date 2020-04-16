@@ -1,6 +1,7 @@
 import auth from "api/base/auth";
 import { getCommentByReceiver, updateComment } from "api/Message";
 import Checkbox from "components/Checkbox";
+import Empty from "components/Empty";
 import Loading from "components/Loading";
 import LoadingButton from "components/LoadingButton";
 import useLoading from "hooks/useLoading";
@@ -18,14 +19,23 @@ export default function Messages() {
   const [comments, setComments] = useState<Array<MessageModel.InfoOutput>>([]);
   const [loading, loadingOps] = useLoading(true);
   const currentUser: UserModel.PrivateInfo = useStore("user");
+  const [noMessage, setNoMessage] = useState(false);
 
   useEffect(() => {
     // fetch messages.
     loadingOps(async () => {
-      const comments = await loadingOps(auth, null, getCommentByReceiver, {
-        receiver: currentUser.name,
-      });
+      const comments: Array<MessageModel.InfoOutput> = await loadingOps(
+        auth,
+        null,
+        getCommentByReceiver,
+        { receiver: currentUser.name }
+      );
       setComments(comments);
+      if (comments.length) {
+        setNoMessage(false);
+      } else {
+        setNoMessage(true);
+      }
     });
   }, []);
 
@@ -86,36 +96,44 @@ export default function Messages() {
     );
   }
 
-  return loading ? (
-    <Loading />
-  ) : (
+  if (loading) {
+    return <Loading />;
+  }
+
+  return (
     <Container fluid className="dashboard_page_container">
       <Row className="align-item-center">
         <h1>Messages</h1>
       </Row>
-      <Row>
-        <div className="messages_message_container">
-          <div className="messages_message_control">
-            <Checkbox size="1rem" onChange={handleSelectAllClick} />
-            <span>Select All</span>
-            <LoadingButton
-              text="Mark As Read"
-              loadingText="Marking..."
-              loading={markAsReadLoading}
-              size="sm"
-              onClick={handleMarkAsReadClick}
-            />
-          </div>
-          {comments.map((msg) => (
-            <Message
-              key={msg.info.id}
-              message={msg.info}
-              onClick={() => gotoKanban(msg)}
-              checked={selectAll}
-              onCheckStateChange={handleCheckStateChange}
-            />
-          ))}
-        </div>
+      <Row className="flex-grow-1">
+        {noMessage ? (
+          <Empty message="No Message" />
+        ) : (
+          <>
+            <div className="messages_message_container">
+              <div className="messages_message_control">
+                <Checkbox size="1rem" onChange={handleSelectAllClick} />
+                <span>Select All</span>
+                <LoadingButton
+                  text="Mark As Read"
+                  loadingText="Marking..."
+                  loading={markAsReadLoading}
+                  size="sm"
+                  onClick={handleMarkAsReadClick}
+                />
+              </div>
+              {comments.map((msg) => (
+                <Message
+                  key={msg.info.id}
+                  message={msg.info}
+                  onClick={() => gotoKanban(msg)}
+                  checked={selectAll}
+                  onCheckStateChange={handleCheckStateChange}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </Row>
     </Container>
   );

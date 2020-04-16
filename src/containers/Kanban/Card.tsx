@@ -5,6 +5,7 @@ import SettingButton, { MenuItem } from "components/SettingButton";
 import CardModel from "models/Card";
 import React, { useContext, useState } from "react";
 import className from "utils/class-name";
+import { cutString } from "utils/string";
 import style from "./card.module.css";
 import { CardsContext } from "./CardsManager";
 import KanbanFormContext from "./KanbanFromContext";
@@ -19,6 +20,10 @@ type UpdateCardFormValues = Pick<
   CardModel.UpdateInfo,
   "title" | "description" | "priority" | "processor" | "storyPoints"
 >;
+
+function colorClass(priority: CardModel.Info["priority"]) {
+  return priority ? style[priority] : "";
+}
 
 export default function Card(props: Props) {
   const [moving, setMoving] = useState(false);
@@ -128,16 +133,16 @@ export default function Card(props: Props) {
   return (
     <div
       data-card-id={props.card.id}
-      className={className(style.card, movingClass)}
+      className={className(style.card, movingClass, colorClass(props.card.priority))}
       draggable="true"
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       onClick={props.onClick}>
       <div className={style.header}>
-        <p className={style.title}>{props.card.title}</p>
+        <p className={style.title}>{cutString(props.card.title, 10)}</p>
         <SettingButton type="dot-h" size="1rem" menuItems={cardSettingMenu} />
       </div>
-      <p className={style.description}>{props.card.description ?? "None"}</p>
+      <p className={style.description}>{cutString(props.card.description ?? "None", 30)}</p>
       <div className={style.footer}>
         <Avatar size="1rem" name={props.card.processor ?? "None"} gap="0.5rem" />
         <Priority priority={props.card.priority} />

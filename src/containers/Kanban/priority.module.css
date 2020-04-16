@@ -8,18 +8,6 @@
   text-transform: capitalize;
 }
 
-.high {
-  color: rgb(207, 0, 0);
-}
-
-.medium {
-  color: rgb(235, 124, 36);
-}
-
-.low {
-  color: rgb(42, 135, 52);
-}
-
-.lowest {
-  color: rgb(84, 165, 86);
+.arrow {
+  color: var(--color);
 }

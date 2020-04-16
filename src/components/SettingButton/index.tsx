@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { IoMdMore, IoMdSettings } from "react-icons/io";
-import { MdKeyboardArrowDown, MdMoreHoriz } from "react-icons/md";
+import { MdEdit, MdKeyboardArrowDown, MdMoreHoriz } from "react-icons/md";
 import { MenuItem as _MenuItems, showMenuClickHandler } from "./dom";
 import style from "./style.module.css";
 
@@ -10,7 +10,7 @@ type Props = {
   size?: string;
   color?: string;
   hoverColor?: string;
-  type?: "dot-v" | "dot-h" | "gear" | "down-arrow";
+  type?: "dot-v" | "dot-h" | "gear" | "down-arrow" | "edit";
   menuItems?: Array<MenuItem>;
 };
 
@@ -24,6 +24,8 @@ function icon(type: Props["type"]) {
       return <IoMdSettings size="100%" />;
     case "down-arrow":
       return <MdKeyboardArrowDown size="100%" />;
+    case "edit":
+      return <MdEdit size="100%" />;
     default:
       return <></>;
   }

@@ -36,6 +36,8 @@ export default function Team() {
   const [teams, setTeams] = useState<TeamModel.Info[]>([]);
   const [filteredPeople, setFilteredPeople] = useState<UserModel.PublicInfo[]>([]);
   const [noPeopleMatched, setNoPeopleMatched] = useState(false);
+  const [noPeople, setNoPeople] = useState(false);
+  const [noTeam, setNoTeam] = useState(false);
   const currentUser: UserModel.PrivateInfo = useStore("user");
 
   const [teamsLoading, teamsLoadingOps] = useLoading();
@@ -48,12 +50,20 @@ export default function Team() {
     });
   }, []);
 
+  useEffect(() => {
+    setNoTeam(teams.length === 0);
+  }, [teams]);
+
   const [peopleLoading, peopleLoadingOps] = useLoading();
   const peopleFetchedRef = useRef(false);
 
   useEffect(() => {
     // fetch people.
-    if (peopleFetchedRef.current || teams.length === 0) {
+    if (peopleFetchedRef.current) {
+      return;
+    }
+    if (teams.length === 0) {
+      setNoPeople(true);
       return;
     }
     peopleLoadingOps(async () => {
@@ -62,7 +72,9 @@ export default function Team() {
       const recentPeople = await Promise.all(
         recentTeamsId.map((teamId) => auth({ teamId }, selectPeopleByTeamId, { teamId }))
       );
-      setPeople(deduplication(recentPeople.flat(), (team) => team.id));
+      const people = deduplication(recentPeople.flat(), (user) => user.id);
+      setPeople(people);
+      setNoPeople(people.length === 0);
       peopleFetchedRef.current = true;
     });
   }, [teams]);
@@ -71,11 +83,15 @@ export default function Team() {
     setFilteredPeople(people);
   }, [people]);
 
+  const [searchPeople, setSearchPeople] = useState(false);
+
   async function handleSearchPeople(name: string) {
     if (!name) {
       setFilteredPeople(people);
+      setSearchPeople(false);
       return;
     }
+    setSearchPeople(true);
     const filteredPeople = await peopleLoadingOps(auth, null, selectUserBySubstring, {
       usernameSubstring: name,
     });
@@ -105,6 +121,32 @@ export default function Team() {
   }
 
   function handleUpdateTeam(team: TeamModel.Info) {}
+
+  function buildPeopleCards() {
+    if (peopleLoading || teamsLoading) {
+      return <Loading />;
+    }
+
+    if (searchPeople) {
+      if (noPeopleMatched) {
+        return <Empty size="8rem" message="No People Matched" />;
+      }
+    } else {
+      if (noPeople) {
+        return <Empty size="8rem" message="No People" />;
+      }
+    }
+
+    return filteredPeople.map((p) => (
+      <PeopleCard
+        key={p.id}
+        className="mb-3 mr-3"
+        size="60px"
+        user={p}
+        onClick={() => gotoUserPage(p.name)}
+      />
+    ));
+  }
 
   return (
     <>
@@ -141,23 +183,7 @@ export default function Team() {
             <Row>
               <h2>People</h2>
             </Row>
-            <Row>
-              {peopleLoading ? (
-                <Loading />
-              ) : noPeopleMatched ? (
-                <Empty size="8rem" message="No people matched" />
-              ) : (
-                filteredPeople.map((p) => (
-                  <PeopleCard
-                    key={p.id}
-                    className="mb-3 mr-3"
-                    size="60px"
-                    user={p}
-                    onClick={() => gotoUserPage(p.name)}
-                  />
-                ))
-              )}
-            </Row>
+            <Row className="mt-3">{buildPeopleCards()}</Row>
           </Container>
         </Row>
         <Row>
@@ -168,8 +194,8 @@ export default function Team() {
             <Row>
               {teamsLoading ? (
                 <Loading />
-              ) : teams.length === 0 ? (
-                <Empty size="8rem" message="No team" />
+              ) : noTeam ? (
+                <Empty size="8rem" message="No Team" />
               ) : (
                 <Table hover borderless={true}>
                   <thead>

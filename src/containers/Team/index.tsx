@@ -1,17 +1,20 @@
 import auth from "api/base/auth";
-import { createTeam, selectTeamByUsername } from "api/Team";
+import { createTeam, removeTeam, selectTeamByUsername } from "api/Team";
 import { selectPeopleByTeamId, selectUserBySubstring } from "api/User";
 import Empty from "components/Empty";
 import Loading from "components/Loading";
-import LoadingButton from "components/LoadingButton";
+import { message } from "components/MessageBox";
 import ModalForm, { Template } from "components/ModalForm";
 import PeopleCard from "components/PeopleCard";
 import Searchbar from "components/Searchbar";
+import SettingButton from "components/SettingButton";
+import { MenuItem } from "components/SettingButton/dom";
 import useLoading from "hooks/useLoading";
+import ResultOutput from "models/ResultOutput";
 import TeamModel from "models/Team";
 import UserModel from "models/User";
-import React, { useEffect, useRef, useState } from "react";
-import { Button, ButtonGroup, Container, Row, Table } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Row, Table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useStore } from "rlax";
 import { deduplication } from "utils/array";
@@ -55,13 +58,9 @@ export default function Team() {
   }, [teams]);
 
   const [peopleLoading, peopleLoadingOps] = useLoading();
-  const peopleFetchedRef = useRef(false);
 
   useEffect(() => {
     // fetch people.
-    if (peopleFetchedRef.current) {
-      return;
-    }
     if (teams.length === 0) {
       setNoPeople(true);
       return;
@@ -75,7 +74,6 @@ export default function Team() {
       const people = deduplication(recentPeople.flat(), (user) => user.id);
       setPeople(people);
       setNoPeople(people.length === 0);
-      peopleFetchedRef.current = true;
     });
   }, [teams]);
 
@@ -120,7 +118,28 @@ export default function Team() {
     history.push(`/user/${username}`);
   }
 
-  function handleUpdateTeam(team: TeamModel.Info) {}
+  async function handleUpdateTeamClick(team: TeamModel.Info) {}
+
+  async function handleDeleteTeamClick(team: TeamModel.Info) {
+    message({
+      title: "Deleting...",
+      type: "info",
+    });
+    const teamId = team.id;
+    const res: ResultOutput = await auth({ teamId }, removeTeam, { teamId });
+    if (res.success) {
+      message({
+        title: "Delete Team Succeed!",
+        type: "success",
+      });
+      setTeams(teams.filter((t) => t.id !== team.id));
+    } else {
+      message({
+        title: "Delete Team Failed!",
+        type: "error",
+      });
+    }
+  }
 
   function buildPeopleCards() {
     if (peopleLoading || teamsLoading) {
@@ -146,6 +165,19 @@ export default function Team() {
         onClick={() => gotoUserPage(p.name)}
       />
     ));
+  }
+
+  function buildMenuItems(team: TeamModel.Info): Array<MenuItem> {
+    return [
+      {
+        label: "Edit",
+        onClick: () => handleUpdateTeamClick(team),
+      },
+      {
+        label: "Delete",
+        onClick: () => handleDeleteTeamClick(team),
+      },
+    ];
   }
 
   return (
@@ -204,6 +236,7 @@ export default function Team() {
                       <th>Team Name</th>
                       <th>Creator</th>
                       <th>Description</th>
+                      <th>Edit</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -216,17 +249,7 @@ export default function Team() {
                         <td>{team.creator}</td>
                         <td>{team.description}</td>
                         <td className="table_setting">
-                          <ButtonGroup size="sm">
-                            <Button variant="outline-info" onClick={() => handleUpdateTeam(team)}>
-                              update
-                            </Button>
-                            <LoadingButton
-                              loading={false}
-                              loadingText="deleting"
-                              variant="outline-danger"
-                              text="delete"
-                            />
-                          </ButtonGroup>
+                          <SettingButton size="1rem" type="edit" menuItems={buildMenuItems(team)} />
                         </td>
                       </tr>
                     ))}

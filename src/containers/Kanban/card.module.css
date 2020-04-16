@@ -19,7 +19,7 @@
 }
 
 .card {
-  min-height: 5rem;
+  min-height: 8rem;
   display: flex;
   flex-direction: column;
   border-radius: 6px;

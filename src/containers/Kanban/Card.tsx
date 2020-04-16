@@ -139,10 +139,10 @@ export default function Card(props: Props) {
       onDragEnd={handleDragEnd}
       onClick={props.onClick}>
       <div className={style.header}>
-        <p className={style.title}>{cutString(props.card.title, 10)}</p>
+        <p className={style.title}>{cutString(props.card.title, 20)}</p>
         <SettingButton type="dot-h" size="1rem" menuItems={cardSettingMenu} />
       </div>
-      <p className={style.description}>{cutString(props.card.description ?? "None", 30)}</p>
+      <p className={style.description}>{cutString(props.card.description ?? "None", 50)}</p>
       <div className={style.footer}>
         <Avatar size="1rem" name={props.card.processor ?? "None"} gap="0.5rem" />
         <Priority priority={props.card.priority} />

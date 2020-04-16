@@ -306,7 +306,7 @@ export default function Kanban() {
                     />
                     <Searchbar
                       className={style.topbar_search}
-                      placeholder="Search card"
+                      placeholder="Search Card..."
                       type="round"
                       color="#ddd"
                       size="1.5rem"

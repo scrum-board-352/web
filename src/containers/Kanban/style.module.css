@@ -21,6 +21,7 @@
 
 .topbar > select {
   align-self: flex-end;
+  color: #aaa;
 }
 
 .topbar > * {

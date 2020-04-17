@@ -22,7 +22,9 @@ export default function Comment(props: Props) {
           <span className={style.username}>{props.name}</span>
           <span className={style.dot}>·</span>
           <span className={style.time}>{props.commentTime}</span>
-          <SettingButton type="dot-v" size="1.2rem" menuItems={props.menuItems} />
+          {props.menuItems ? (
+            <SettingButton type="dot-v" size="1.2rem" menuItems={props.menuItems} />
+          ) : null}
         </div>
         <p className={style.content}>{props.content}</p>
       </div>

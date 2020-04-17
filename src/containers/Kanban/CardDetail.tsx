@@ -79,7 +79,11 @@ export default function CardDetail(props: Props) {
   const getOpenModalForm = useContext(KanbanFormContext);
   const openModalForm = getOpenModalForm<UpdateCommentFormValues>();
 
-  function menuItems(comment: MessageModel.Info): Array<MenuItem> {
+  function menuItems(comment: MessageModel.Info): Array<MenuItem> | undefined {
+    if (comment.announcer.id !== currentUser.id) {
+      return;
+    }
+
     function showUpdateCommentForm() {
       openModalForm({
         title: "Update Comment",
@@ -92,10 +96,17 @@ export default function CardDetail(props: Props) {
           },
         ],
         async onSubmit(values) {
-          const updatedComment = await auth({ projectId: props.projectId }, updateComment, {
-            id: comment.id,
-            ...values,
-          });
+          const updatedComment = await auth(
+            {
+              username: comment.announcer.name,
+              projectId: props.projectId,
+            },
+            updateComment,
+            {
+              id: comment.id,
+              ...values,
+            }
+          );
           if (updatedComment && updatedComment.id) {
             message({
               title: "Update Succeed!",
@@ -117,9 +128,16 @@ export default function CardDetail(props: Props) {
         type: "info",
         title: "Deleting...",
       });
-      const res = await auth({ projectId: props.projectId }, removeComment, {
-        commentId: comment.id,
-      });
+      const res = await auth(
+        {
+          username: comment.announcer.name,
+          projectId: props.projectId,
+        },
+        removeComment,
+        {
+          commentId: comment.id,
+        }
+      );
       if (res.success) {
         message({
           type: "success",

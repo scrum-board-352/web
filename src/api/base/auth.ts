@@ -5,6 +5,7 @@ import { post } from "./fetch";
 type ApiCallFunc = (...args: any[]) => any;
 
 interface AuthParams {
+  username?: string;
   projectId?: string;
   teamId?: string;
 }

@@ -8,11 +8,8 @@
 
 - TypeScript
 - GraphQL
-- ReactJS (with hooks)
+- React (with hooks)
 - React-Bootstrap
-- react-router-dom
-- react-transition-group
-- react-icons
 - Animate.css
 - Prettier (Code formatter)
 - Husky (Git hooks manager)

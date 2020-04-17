@@ -9,7 +9,7 @@ import { cutString } from "utils/string";
 import style from "./card.module.css";
 import { CardsContext } from "./CardsManager";
 import KanbanFormContext from "./KanbanFormContext";
-import Priority, { priorityOptionTemplate } from "./Priority";
+import Priority, { priorityColorClass, priorityOptionTemplate } from "./Priority";
 
 type Props = {
   card: CardModel.Info;
@@ -20,10 +20,6 @@ type UpdateCardFormValues = Pick<
   CardModel.UpdateInfo,
   "title" | "description" | "priority" | "processor" | "storyPoints"
 >;
-
-function colorClass(priority: CardModel.Info["priority"]) {
-  return priority ? style[priority] : "";
-}
 
 export default function Card(props: Props) {
   const [moving, setMoving] = useState(false);
@@ -133,7 +129,7 @@ export default function Card(props: Props) {
   return (
     <div
       data-card-id={props.card.id}
-      className={className(style.card, movingClass, colorClass(props.card.priority))}
+      className={className(style.card, movingClass, priorityColorClass(props.card.priority))}
       draggable="true"
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}

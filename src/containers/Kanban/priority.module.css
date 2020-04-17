@@ -1,3 +1,23 @@
+.high {
+  --color: rgb(237, 91, 93);
+  --light-color: rgb(255, 134, 128);
+}
+
+.medium {
+  --color: rgb(180, 138, 114);
+  --light-color: rgb(250, 192, 126);
+}
+
+.low {
+  --color: rgb(97, 133, 186);
+  --light-color: rgb(127, 182, 238);
+}
+
+.lowest {
+  --color: rgb(127, 169, 134);
+  --light-color: rgb(107, 207, 132);
+}
+
 .priority {
   display: flex;
   align-items: center;

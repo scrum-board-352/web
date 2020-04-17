@@ -9,7 +9,7 @@ import className from "utils/class-name";
 import Card from "./Card";
 import style from "./card-col.module.css";
 import { CardsContext } from "./CardsManager";
-import KanbanFormContext from "./KanbanFromContext";
+import KanbanFormContext from "./KanbanFormContext";
 import { priorityOptionTemplate } from "./Priority";
 
 type Props = {

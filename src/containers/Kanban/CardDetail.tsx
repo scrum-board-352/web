@@ -19,7 +19,7 @@ import avatar from "utils/avatar";
 import className from "utils/class-name";
 import { dateDistance } from "utils/date";
 import style from "./card-detail.module.css";
-import KanbanFromContext from "./KanbanFromContext";
+import KanbanFormContext from "./KanbanFormContext";
 import Priority from "./Priority";
 
 type Props = {
@@ -76,7 +76,7 @@ export default function CardDetail(props: Props) {
     setComments([...comments, newComment]);
   }
 
-  const getOpenModalForm = useContext(KanbanFromContext);
+  const getOpenModalForm = useContext(KanbanFormContext);
   const openModalForm = getOpenModalForm<UpdateCommentFormValues>();
 
   function menuItems(comment: MessageModel.Info): Array<MenuItem> {

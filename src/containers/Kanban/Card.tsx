@@ -8,7 +8,7 @@ import className from "utils/class-name";
 import { cutString } from "utils/string";
 import style from "./card.module.css";
 import { CardsContext } from "./CardsManager";
-import KanbanFormContext from "./KanbanFromContext";
+import KanbanFormContext from "./KanbanFormContext";
 import Priority, { priorityOptionTemplate } from "./Priority";
 
 type Props = {

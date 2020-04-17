@@ -22,7 +22,7 @@ import { useHistory, useParams } from "react-router-dom";
 import CardCol from "./CardCol";
 import CardDetail from "./CardDetail";
 import { CardsContext, CardsManager } from "./CardsManager";
-import KanbanFormContext from "./KanbanFromContext";
+import KanbanFormContext from "./KanbanFormContext";
 import style from "./style.module.css";
 
 type ProjectData = {

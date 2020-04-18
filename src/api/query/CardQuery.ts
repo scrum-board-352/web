@@ -15,6 +15,7 @@ query selectCardsByBoardId($boardId: String!, $uid: String){
     processor
     founder
     status
+    number
   }
 }
 `;

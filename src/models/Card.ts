@@ -23,6 +23,7 @@ namespace CardModel {
   export interface Info extends CreateInfo {
     id: string;
     createTime: string;
+    number: number;
   }
 }
 

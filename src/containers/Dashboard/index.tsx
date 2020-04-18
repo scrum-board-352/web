@@ -39,7 +39,7 @@ export default function Dashboard() {
 
             <Sidebar.Item onClick={() => history.push(joinUrl(url, Path.Team))}>
               <AiOutlineUsergroupAdd />
-              <span className="ml-3 dashboard_sidebar_item">Team</span>
+              <span className="ml-3 dashboard_sidebar_item">Teams</span>
             </Sidebar.Item>
 
             <Sidebar.Item onClick={() => history.push(joinUrl(url, Path.Messages))}>

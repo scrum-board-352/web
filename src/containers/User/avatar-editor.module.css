@@ -1,0 +1,108 @@
+.avatar_editor {
+  width: 300px;
+}
+
+.editor {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.editor :global(.cropper-crop-box),
+.editor :global(.cropper-view-box) {
+  border-radius: 50%;
+}
+
+.editor :global(.cropper-view-box) {
+  box-shadow: 0 0 0 1px #39f;
+  outline: 0;
+}
+
+.editor > canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.editor_placeholder {
+  position: absolute;
+  height: calc(100% - 2rem);
+  width: calc(100% - 2rem);
+  margin: 1rem;
+  color: #ccc;
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.editor_placeholder > svg {
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+.editor_placeholder > span {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+
+.select_and_preview {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+.select_and_preview > .item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.select_and_preview > .item > span {
+  margin-bottom: 0;
+  margin-top: 0.5rem;
+  font-size: 15px;
+  font-weight: 500;
+  color: inherit;
+}
+
+.upload_image_btn {
+  border: 0;
+  border-radius: 50%;
+  width: 4.5rem;
+  height: 4.5rem;
+  color: var(--blue);
+  background-color: #007bff10;
+}
+
+.preview_container {
+  border-radius: 50%;
+  width: 4.5rem;
+  height: 4.5rem;
+  overflow: hidden;
+}
+
+.preview_container > img {
+  width: 100%;
+  height: 100%;
+}
+
+.control {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.control > button:first-child {
+  color: #999;
+  margin-right: 0.5rem;
+}
+
+.control > button {
+  font-weight: 600;
+}

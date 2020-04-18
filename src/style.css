@@ -102,3 +102,8 @@ select {
 .table_setting button {
   transform: translateY(3px);
 }
+
+.modal-content {
+  border: 0;
+  overflow: hidden;
+}

@@ -1,0 +1,139 @@
+import Cropper from "cropperjs";
+import "cropperjs/dist/cropper.min.css";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Modal } from "react-bootstrap";
+import { FiDownload, FiUpload } from "react-icons/fi";
+import avatar from "utils/avatar";
+import style from "./avatar-editor.module.css";
+
+type Props = {
+  show: boolean;
+  onHide: () => void;
+};
+
+const AVATAR_WIDTH = 300;
+const AVATAR_HEIGHT = 300;
+
+function getFixedSizeImage(canvas: HTMLCanvasElement): Promise<Blob | null> {
+  const tmpCanvas = document.createElement("canvas");
+  tmpCanvas.width = AVATAR_WIDTH;
+  tmpCanvas.height = AVATAR_HEIGHT;
+
+  const ctx = tmpCanvas.getContext("2d");
+  ctx?.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, AVATAR_WIDTH, AVATAR_HEIGHT);
+
+  return new Promise((resolve) => {
+    tmpCanvas.toBlob(resolve, "image/jpeg", 1);
+  });
+}
+
+export default function AvatarEditor(props: Props) {
+  const editorCanvasRef = useRef<HTMLCanvasElement>(null);
+  const previewRef = useRef<HTMLImageElement>(null);
+  const [selected, setSelected] = useState(false);
+
+  function clear() {
+    setSelected(false);
+  }
+
+  const cropperRef = useRef<Cropper>();
+
+  useEffect(() => {
+    if (selected) {
+      cropperRef.current = new Cropper(editorCanvasRef.current as HTMLCanvasElement, {
+        aspectRatio: 1,
+        dragMode: "move",
+        center: false,
+        autoCropArea: 1,
+        viewMode: 3,
+        cropBoxMovable: false,
+        cropBoxResizable: false,
+        toggleDragModeOnDblclick: false,
+        preview: previewRef.current as HTMLDivElement,
+      });
+    }
+  }, [selected]);
+
+  function updateCropper(imageFile: File) {
+    const url = window.URL.createObjectURL(imageFile);
+    cropperRef.current?.replace(url);
+  }
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function handleSelectFileClick() {
+    fileInputRef.current?.click();
+  }
+
+  function handleSelectFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const imageFile = e.target.files?.[0];
+    if (!imageFile) {
+      return;
+    }
+    if (!selected) {
+      setSelected(true);
+    }
+    setTimeout(() => {
+      updateCropper(imageFile);
+    }, 0);
+  }
+
+  async function handleUploadClick() {
+    const cropper = cropperRef.current;
+    if (!cropper) {
+      return;
+    }
+    const imageBlob = await getFixedSizeImage(cropper.getCroppedCanvas());
+    console.log(imageBlob);
+  }
+
+  return (
+    <Modal
+      show={props.show}
+      onHide={props.onHide}
+      onExited={clear}
+      centered
+      dialogClassName={style.avatar_editor}>
+      <div className={style.avatar_editor}>
+        <div className={style.editor}>
+          <canvas ref={editorCanvasRef}></canvas>
+          {selected ? null : (
+            <div className={style.editor_placeholder}>
+              <FiDownload />
+              <span>Please select image</span>
+            </div>
+          )}
+        </div>
+        <div className={style.select_and_preview}>
+          <div className={style.item}>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/x-png,image/gif,image/jpeg"
+              style={{ display: "none" }}
+              onChange={handleSelectFileChange}
+            />
+            <button className={style.upload_image_btn} onClick={handleSelectFileClick}>
+              <FiUpload size="40%" />
+            </button>
+            <span>Select</span>
+          </div>
+          <div className={style.item}>
+            <div ref={previewRef} className={style.preview_container}>
+              <img alt="" src={avatar()} />
+            </div>
+            <span>Preview</span>
+          </div>
+        </div>
+        <div className={style.control}>
+          <Button size="sm" variant="light" onClick={props.onHide}>
+            CANCEL
+          </Button>
+          <Button size="sm" variant="primary" onClick={handleUploadClick}>
+            UPLOAD
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+}

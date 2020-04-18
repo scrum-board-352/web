@@ -10,9 +10,12 @@ import TeamModel from "models/Team";
 import UserModel from "models/User";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
+import { FiEdit2 } from "react-icons/fi";
 import { useHistory, useParams } from "react-router-dom";
 import { useStore } from "rlax";
 import avatar from "utils/avatar";
+import className from "utils/class-name";
+import AvatarEditor from "./AvatarEditor";
 import Placeholder from "./Placeholder";
 import Projects from "./Projects";
 import projectSvg from "./projects.svg";
@@ -20,7 +23,7 @@ import style from "./style.module.css";
 import Teams from "./Teams";
 import teamSvg from "./teams.svg";
 
-type FormValues = {
+type InviteUserFormValues = {
   teamId: string;
 };
 
@@ -60,7 +63,7 @@ export default function User() {
   const [showSelectTeamForm, setShowSelectTeamForm] = useState(false);
   const [inviteLoading, inviteLoadingOps] = useLoading();
 
-  async function handleInviteSubmit(values: FormValues) {
+  async function handleInviteSubmit(values: InviteUserFormValues) {
     if (!values.teamId) {
       message({
         title: "Invalid Input!",
@@ -105,7 +108,7 @@ export default function User() {
     })();
   }, []);
 
-  const formTemplates: Array<Template<FormValues>> = [
+  const formTemplates: Array<Template<InviteUserFormValues>> = [
     {
       label: "Which team?",
       name: "teamId",
@@ -117,13 +120,15 @@ export default function User() {
     },
   ];
 
+  const [showEditAvatarModal, setShowEditAvatarModal] = useState(false);
+
   return (
     <div className="vh-100 vw-100">
       {loading ? (
         <Loading />
       ) : (
         <>
-          <ModalForm<FormValues>
+          <ModalForm<InviteUserFormValues>
             title="Invite User"
             templates={formTemplates}
             loading={inviteLoading}
@@ -131,13 +136,24 @@ export default function User() {
             onClose={() => setShowSelectTeamForm(false)}
             onSubmit={handleInviteSubmit}
           />
+          <AvatarEditor show={showEditAvatarModal} onHide={() => setShowEditAvatarModal(false)} />
           <div className={style.top_banner}></div>
           <Container>
             <Row>
               <Col md={3} className={style.user_info_side}>
                 <img src={avatar(userInfo.avatar)} alt="" className={style.avatar} />
+                <button
+                  className={className(style.avatar_edit_btn, "iconshadow")}
+                  onClick={() => setShowEditAvatarModal(true)}>
+                  <FiEdit2 size="45%" />
+                </button>
                 <span className={style.username}>{userInfo.name}</span>
-                {userInfo.id !== currentUser.id && (
+                <span className={style.email}>{userInfo.email}</span>
+                {userInfo.id === currentUser.id ? (
+                  <Button variant="link" size="sm" className="mt-3">
+                    编辑个人资料
+                  </Button>
+                ) : (
                   <Button
                     variant="link"
                     size="sm"
@@ -147,7 +163,7 @@ export default function User() {
                   </Button>
                 )}
               </Col>
-              <Col md={9}>
+              <Col md={8}>
                 <div className={style.content_container}>
                   <h2>Recent 5 new projects</h2>
                   <div className={style.content}>

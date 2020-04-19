@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { FiEdit2 } from "react-icons/fi";
 import { useHistory, useParams } from "react-router-dom";
-import { useStore } from "rlax";
+import { setStore, useStore } from "rlax";
 import avatar from "utils/avatar";
 import className from "utils/class-name";
 import AvatarEditor from "./AvatarEditor";
@@ -122,6 +122,11 @@ export default function User() {
 
   const [showEditAvatarModal, setShowEditAvatarModal] = useState(false);
 
+  function handleAvatarUpdated(updatedUser: UserModel.PrivateInfo) {
+    setUserInfo(updatedUser);
+    setStore("user", updatedUser);
+  }
+
   return (
     <div className="vh-100 vw-100">
       {loading ? (
@@ -139,7 +144,7 @@ export default function User() {
           <AvatarEditor
             show={showEditAvatarModal}
             onHide={() => setShowEditAvatarModal(false)}
-            onAvatarUpdate={setUserInfo}
+            onAvatarUpdate={handleAvatarUpdated}
           />
           <div className={style.top_banner}></div>
           <Container>

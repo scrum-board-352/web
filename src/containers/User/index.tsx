@@ -136,7 +136,11 @@ export default function User() {
             onClose={() => setShowSelectTeamForm(false)}
             onSubmit={handleInviteSubmit}
           />
-          <AvatarEditor show={showEditAvatarModal} onHide={() => setShowEditAvatarModal(false)} />
+          <AvatarEditor
+            show={showEditAvatarModal}
+            onHide={() => setShowEditAvatarModal(false)}
+            onAvatarUpdate={setUserInfo}
+          />
           <div className={style.top_banner}></div>
           <Container>
             <Row>

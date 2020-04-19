@@ -1,14 +1,24 @@
+import auth from "api/base/auth";
+import { avatarUrl } from "api/base/url";
+import { updateUser, uploadAvatar } from "api/User";
+import LoadingButton from "components/LoadingButton";
+import { message } from "components/MessageBox";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.min.css";
+import useLoading from "hooks/useLoading";
+import UserModel from "models/User";
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { FiDownload, FiUpload } from "react-icons/fi";
+import { useStore } from "rlax";
 import avatar from "utils/avatar";
+import joinUrl from "utils/join-url";
 import style from "./avatar-editor.module.css";
 
 type Props = {
   show: boolean;
   onHide: () => void;
+  onAvatarUpdate: (updatedUser: UserModel.PrivateInfo) => void;
 };
 
 const AVATAR_WIDTH = 300;
@@ -78,13 +88,49 @@ export default function AvatarEditor(props: Props) {
     }, 0);
   }
 
+  const [uploadAvatarLoading, uploadAvatarLoadingOps] = useLoading();
+
   async function handleUploadClick() {
     const cropper = cropperRef.current;
     if (!cropper) {
       return;
     }
     const imageBlob = await getFixedSizeImage(cropper.getCroppedCanvas());
-    console.log(imageBlob);
+    if (!imageBlob) {
+      return;
+    }
+    const updatedUser = await uploadAvatarLoadingOps(handleUploadAvatar, imageBlob);
+    if (updatedUser) {
+      message({
+        title: "Upload Succeed!",
+        type: "success",
+      });
+      props.onHide();
+      props.onAvatarUpdate(updatedUser);
+    } else {
+      message({
+        title: "Upload Failed!",
+        type: "error",
+      });
+    }
+  }
+
+  const currentUser: UserModel.PrivateInfo = useStore("user");
+
+  async function handleUploadAvatar(imageBlob: Blob) {
+    const res = await uploadAvatar(imageBlob);
+    if (!res.success) {
+      return null;
+    }
+    const url = joinUrl(avatarUrl, res.message);
+    const updatedUser = await auth(null, updateUser, {
+      username: currentUser.name,
+      avatar: url,
+    });
+    if (updatedUser && updatedUser.avatar === url) {
+      return updatedUser;
+    }
+    return null;
   }
 
   return (
@@ -129,9 +175,14 @@ export default function AvatarEditor(props: Props) {
           <Button size="sm" variant="light" onClick={props.onHide}>
             CANCEL
           </Button>
-          <Button size="sm" variant="primary" onClick={handleUploadClick}>
-            UPLOAD
-          </Button>
+          <LoadingButton
+            loading={uploadAvatarLoading}
+            size="sm"
+            variant="primary"
+            text="UPLOAD"
+            loadingText="UPLOADING..."
+            onClick={handleUploadClick}
+          />
         </div>
       </div>
     </Modal>

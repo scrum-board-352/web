@@ -10,12 +10,7 @@ interface AuthParams {
   teamId?: string;
 }
 
-const apiUrl = process.env.REACT_APP_REST_API_URL;
-if (!apiUrl) {
-  throw new Error("'REACT_APP_REST_API_URL' not set!");
-}
-
-const authUrl = apiUrl + "/checkAuth";
+const authUrl = "checkAuth";
 
 let uidCache: string = "";
 

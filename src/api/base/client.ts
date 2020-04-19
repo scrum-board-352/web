@@ -1,12 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 import { Variables } from "graphql-request/dist/src/types";
 import { getUid } from "./auth";
-
-const endpoint = process.env.REACT_APP_API_URL;
-
-if (endpoint === undefined) {
-  throw new Error("REACT_APP_API_URL is not set");
-}
+import { graphqlUrl } from "./url";
 
 class Client extends GraphQLClient {
   constructor(endpoint: string) {
@@ -22,4 +17,4 @@ class Client extends GraphQLClient {
   }
 }
 
-export default new Client(endpoint);
+export default new Client(graphqlUrl);

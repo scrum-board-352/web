@@ -4,6 +4,7 @@ import ResultOutput from "models/ResultOutput";
 import UserModel from "models/User";
 import { setApiMappingName } from "./base/api-name-mapping";
 import client from "./base/client";
+import { post } from "./base/fetch";
 
 setApiMappingName(login, "login");
 export async function login(loginInfo: UserModel.LoginInfo): Promise<UserModel.PrivateInfo> {
@@ -27,6 +28,11 @@ setApiMappingName(updateUser, "updateUser");
 export async function updateUser(updateInfo: UserModel.UpdateInfo): Promise<UserModel.PrivateInfo> {
   const data = await client.request(UserMutation.updateMutation, updateInfo);
   return data.updateUser;
+}
+
+export async function uploadAvatar(avatar: Blob) {
+  const res: ResultOutput = await post("uploadImage", { icon: avatar }, "multipart");
+  return res;
 }
 
 setApiMappingName(selectUserBySubstring, "selectUserBySubstring");

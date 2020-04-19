@@ -36,6 +36,30 @@ export function message(msg: Message) {
   msg.timerId = setTimeout(close, msg.timeout ?? AUTO_CLOSE_TIMEOUT, msg);
 }
 
+message.success = (title: string, content?: string) => {
+  message({
+    type: "success",
+    title,
+    content,
+  });
+};
+
+message.info = (title: string, content?: string) => {
+  message({
+    type: "info",
+    title,
+    content,
+  });
+};
+
+message.error = (title: string, content?: string) => {
+  message({
+    type: "error",
+    title,
+    content,
+  });
+};
+
 export default function MessageBox() {
   [msgList, setMsgList] = useState<Message[]>([]);
 

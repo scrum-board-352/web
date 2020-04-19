@@ -14,13 +14,13 @@ mutation register($username: String!, $password: String!, $email: String!) {
 `;
 
 const updateMutation = `
-mutation updateUser($username: String!, $password: String, $power: String, $icon: String, $uid: String) {
+mutation updateUser($username: String!, $password: String, $power: String, $avatar: String, $uid: String) {
   updateUser(selectionInput: {
     userInput: {
       username: $username
       password: $password
       power: $power
-      icon: $icon
+      icon: $avatar
     }
     uid: $uid
   }){

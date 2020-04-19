@@ -78,7 +78,7 @@ mutation removeCard($cardId: String, $uid: String){
     }
     uid: $uid
   }) {
-    success: susses
+    success
     message
   }
 }

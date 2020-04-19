@@ -8,7 +8,7 @@ query sendEmailToInviteReceiverJoinTeam($receiverMail: String!, $receiver: Strin
     }
     uid: $uid
 }){
-    success: susses
+    success
     message
   }
 }

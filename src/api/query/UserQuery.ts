@@ -23,7 +23,7 @@ const logoutQuery = `
       }
       uid: $uid
     }) {
-      success: susses
+      success
   	  message
   	}
   }

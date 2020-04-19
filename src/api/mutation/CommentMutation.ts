@@ -57,7 +57,7 @@ mutation removeCommit($commitId: String, $uid: String){
     }
     uid: $uid
   }) {
-    success: susses
+    success
     message
   }
 }

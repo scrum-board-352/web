@@ -21,7 +21,7 @@ mutation removeBoard($boardId: String, $uid: String) {
     }
     uid: $uid
   }) {
-    success: susses
+    success
     message
   }
 }

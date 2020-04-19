@@ -42,7 +42,7 @@ mutation removeTeam($teamId: String, $uid: String){
     }
     uid: $uid
   }) {
-    success: susses
+    success
     message
   }
 }

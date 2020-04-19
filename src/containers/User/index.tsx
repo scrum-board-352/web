@@ -151,7 +151,7 @@ export default function User() {
                 <span className={style.email}>{userInfo.email}</span>
                 {userInfo.id === currentUser.id ? (
                   <Button variant="link" size="sm" className="mt-3">
-                    编辑个人资料
+                    Edit
                   </Button>
                 ) : (
                   <Button
@@ -159,7 +159,7 @@ export default function User() {
                     size="sm"
                     className="mt-3"
                     onClick={() => setShowSelectTeamForm(true)}>
-                    邀请用户加入团队
+                    Invite
                   </Button>
                 )}
               </Col>

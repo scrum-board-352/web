@@ -30,6 +30,7 @@ mutation createCard($title: String,
     processor
     founder
     status
+    number
   }
 }
 `;
@@ -64,6 +65,7 @@ mutation updateCard($id: String,
     processor
     founder
     status
+    number
   }
 }
 `;

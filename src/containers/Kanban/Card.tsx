@@ -137,7 +137,7 @@ export default function Card(props: Props) {
       <div className={style.header}>
         <p className={style.title_container}>
           <span className={style.title}>{cutString(props.card.title, 20)}</span>
-          <span className={style.number}># {props.card.number}</span>
+          <span className={style.number}>No. {props.card.number}</span>
         </p>
         <SettingButton type="dot-h" size="1rem" menuItems={cardSettingMenu} />
       </div>

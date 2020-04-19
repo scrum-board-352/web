@@ -17,6 +17,19 @@
   margin-bottom: 1rem;
 }
 
+.cards_count {
+  display: inline-block;
+  background-color: #007bff17;
+  color: var(--blue);
+  border-radius: 50%;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.2rem;
+  text-align: center;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
 .add_card_btn {
   border: 1px solid #ddd;
   background-color: transparent;

@@ -129,7 +129,9 @@ export default function CardCol(props: Props) {
       onDragLeave={handleDragLeave}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}>
-      <p className={style.title}>{props.colName}</p>
+      <p className={style.title}>
+        {props.colName} <span className={style.cards_count}>{cards.length}</span>
+      </p>
       <button className={style.add_card_btn} onClick={showCreateCardForm}>
         <IoMdAdd />
         <span>New Card</span>

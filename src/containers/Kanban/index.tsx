@@ -136,6 +136,7 @@ export default function Kanban() {
   const [showCardDetailFlag, setShowCardDetailFlag] = useState(false);
   const [cardDetail, setCardDetail] = useState<CardModel.Info>({
     id: "",
+    number: 0,
     boardId: "",
     createTime: "",
     title: "",

@@ -1,10 +1,8 @@
-import Comment from "components/Comment";
 import { message, Message } from "components/MessageBox";
 import ModalForm, { Template } from "components/ModalForm";
 import SettingButton, { MenuItem } from "components/SettingButton";
 import React, { Fragment, useState } from "react";
 import { Button } from "react-bootstrap";
-import testTextPlaceholder from "utils/testTextPlaceholder";
 
 function Home() {
   function showMsg(t: Message["type"]) {
@@ -86,7 +84,6 @@ function Home() {
         onClose={() => setShow(false)}
         onSubmit={handleSubmit}
       />
-      <Comment name="Mokuo" commentTime="2020-03-25 13:00" content={testTextPlaceholder} />
       <SettingButton type="gear" menuItems={menuItems} size="1rem" />
     </Fragment>
   );

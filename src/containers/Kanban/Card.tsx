@@ -135,7 +135,10 @@ export default function Card(props: Props) {
       onDragEnd={handleDragEnd}
       onClick={props.onClick}>
       <div className={style.header}>
-        <p className={style.title}>{cutString(props.card.title, 20)}</p>
+        <p className={style.title_container}>
+          <span className={style.title}>{cutString(props.card.title, 20)}</span>
+          <span className={style.number}># {props.card.number}</span>
+        </p>
         <SettingButton type="dot-h" size="1rem" menuItems={cardSettingMenu} />
       </div>
       <p className={style.description}>{cutString(props.card.description ?? "None", 50)}</p>

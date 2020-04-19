@@ -1,5 +1,5 @@
 .card {
-  min-height: 8.5rem;
+  min-height: 9rem;
   display: flex;
   flex-direction: column;
   border-radius: 6px;
@@ -29,8 +29,20 @@
   opacity: 0.5;
 }
 
-.title {
+.title_container {
+  margin-bottom: 0.5rem;
   font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.number {
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 0.5rem;
+}
+
+.title {
   font-weight: 600;
 }
 

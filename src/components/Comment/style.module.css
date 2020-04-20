@@ -22,6 +22,7 @@
 .content_container {
   width: 100%;
   margin-left: 0.5rem;
+  white-space: pre-wrap;
 }
 
 .info {

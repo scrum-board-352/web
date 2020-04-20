@@ -227,7 +227,7 @@ export default function CardDetail(props: Props) {
               </div>
               <div className={style.info_field}>
                 <p>Description</p>
-                <p>{props.card.description}</p>
+                <p className={style.description}>{props.card.description}</p>
               </div>
               <div className={style.info_field}>
                 <p>Status</p>

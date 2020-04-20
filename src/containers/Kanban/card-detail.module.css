@@ -54,11 +54,7 @@
   height: 2rem;
   border-radius: 50%;
   border: 0;
-  background: linear-gradient(
-    to right top,
-    var(--blue-green),
-    var(--yellow-green)
-  );
+  background: linear-gradient(to right top, var(--blue-green), var(--yellow-green));
   font-weight: 700;
   color: white;
   transition: all 300ms;
@@ -94,6 +90,10 @@
   color: var(--gray);
   line-height: 1.5;
   margin-bottom: 0;
+}
+
+.description {
+  white-space: pre-wrap;
 }
 
 .card_create_time {

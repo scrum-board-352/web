@@ -21,6 +21,10 @@ type UpdateCardFormValues = Pick<
   "title" | "description" | "priority" | "processor" | "storyPoints"
 >;
 
+type SelectBoardFormValues = {
+  boardId: string;
+};
+
 export default function Card(props: Props) {
   const [moving, setMoving] = useState(false);
 
@@ -37,7 +41,7 @@ export default function Card(props: Props) {
 
   const cardsManager = useContext(CardsContext);
   const getOpenModalForm = useContext(KanbanFormContext);
-  const openModalForm = getOpenModalForm<UpdateCardFormValues>();
+  const openUpdateCardForm = getOpenModalForm<UpdateCardFormValues>();
   const updateCardFormTemplate: Array<Template<UpdateCardFormValues>> = [
     {
       name: "title",
@@ -73,7 +77,7 @@ export default function Card(props: Props) {
   ];
 
   function showUpdateCardForm() {
-    openModalForm({
+    openUpdateCardForm({
       title: "Update Card",
       templates: updateCardFormTemplate,
       onSubmit: async (values) => {
@@ -94,6 +98,49 @@ export default function Card(props: Props) {
         }
       },
     });
+  }
+
+  const openSelectBoardForm = getOpenModalForm<SelectBoardFormValues>();
+  const boardIds = cardsManager.getBoardIds();
+  const currentBoardId = cardsManager.getBoardId();
+
+  function showMoveCardForm() {
+    openSelectBoardForm({
+      title: "Select Board",
+      templates: [
+        {
+          label: "Which board to move to?",
+          name: "boardId",
+          type: "select",
+          options: boardIds
+            .map((id, i) => ({
+              label: `iteration${i + 1}`,
+              value: id,
+            }))
+            .filter((o) => o.value !== currentBoardId),
+        },
+      ],
+      async onSubmit(value) {
+        const boardId = value.boardId;
+        if (!boardId) {
+          return;
+        }
+        await moveThisCardToBoard(boardId);
+      },
+    });
+  }
+
+  async function moveThisCardToBoard(boardId: string) {
+    message.info("Moving...");
+    const res = await await cardsManager.updateCard({
+      id: props.card.id,
+      boardId,
+    });
+    if (res) {
+      message.success("Move Succeed!");
+    } else {
+      message.error("Move Failed!");
+    }
   }
 
   async function deleteThisCard() {
@@ -119,6 +166,10 @@ export default function Card(props: Props) {
     {
       label: "Edit",
       onClick: showUpdateCardForm,
+    },
+    {
+      label: "Move to",
+      onClick: showMoveCardForm,
     },
     {
       label: "Delete",

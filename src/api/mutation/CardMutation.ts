@@ -43,6 +43,7 @@ mutation updateCard($id: String,
   $priority: String, 
   $processor: String, 
   $status: String,
+  $boardId: String,
   $uid: String) {
   updateCard(selectionInput: {
     cardInput: {
@@ -53,6 +54,7 @@ mutation updateCard($id: String,
       priority: $priority
       processor: $processor
       status: $status
+      boardId: $boardId
     }
     uid: $uid
   }){

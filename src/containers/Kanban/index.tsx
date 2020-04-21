@@ -137,7 +137,6 @@ export default function Kanban() {
   const [cardDetail, setCardDetail] = useState<CardModel.Info>({
     id: "",
     number: 0,
-    boardId: "",
     createTime: "",
     title: "",
     status: "",
@@ -338,7 +337,8 @@ export default function Kanban() {
                     <CardsManager
                       cards={filteredCards}
                       projectId={projectId ?? ""}
-                      boardId={boardId ?? ""}>
+                      boardId={boardId ?? ""}
+                      boardIds={boardIds}>
                       {project.col.map((col) => (
                         <CardCol key={col} colName={col} onClickCard={showCardDetail} />
                       ))}

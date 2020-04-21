@@ -14,16 +14,24 @@ namespace CardModel {
     id: string;
     title?: string;
     status?: string;
+    boardId?: string;
     description?: string;
     storyPoints?: number;
     priority?: "high" | "medium" | "low" | "lowest";
     processor?: string;
   }
 
-  export interface Info extends CreateInfo {
+  export interface Info {
     id: string;
     createTime: string;
     number: number;
+    title: string;
+    status: string;
+    founder: string;
+    description?: string;
+    storyPoints?: number;
+    priority?: "high" | "medium" | "low" | "lowest";
+    processor?: string;
   }
 }
 

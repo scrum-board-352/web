@@ -10,6 +10,7 @@ import React, { useState } from "react";
 let updateView: () => void;
 let projectId: string;
 let boardId: string;
+let boardIds: Array<string> = [];
 let cards: CardModel.Info[] = [];
 let currentCardId = "";
 let dragging = false;
@@ -75,7 +76,12 @@ async function updateCard(newCard: CardModel.UpdateInfo) {
   const updatedCard = await auth({ projectId }, updateCardApi, newCard);
   const oldCardIndex = cards.findIndex((c) => c.id === updatedCard.id);
   if (oldCardIndex >= 0) {
-    cards[oldCardIndex] = updatedCard;
+    if (newCard.boardId !== boardId) {
+      // Moved card to different board, remove it from view.
+      cards.splice(oldCardIndex, 1);
+    } else {
+      cards[oldCardIndex] = updatedCard;
+    }
     updateView();
     return true;
   }
@@ -98,6 +104,14 @@ function getCardById(id: string) {
   return cards.find((card) => card.id === id);
 }
 
+function getBoardId() {
+  return boardId;
+}
+
+function getBoardIds() {
+  return boardIds;
+}
+
 async function createCard(card: CardModel.CreateInfo) {
   const createdCard = await auth({ projectId }, createCardApi, card);
   cards.push(createdCard);
@@ -112,6 +126,8 @@ const initCardsManager = {
   getCurrentCardId,
   getSelectedColName,
   getCardById,
+  getBoardId,
+  getBoardIds,
   setSelectedColName,
   setTargetColName,
   startDrag,
@@ -126,6 +142,7 @@ export const CardsContext = React.createContext(initCardsManager);
 type Props = {
   projectId: string;
   boardId: string;
+  boardIds: Array<string>;
   cards: CardModel.Info[];
   children: React.ReactNode;
 };
@@ -137,6 +154,7 @@ export function CardsManager(props: Props) {
   };
   cards = props.cards;
   boardId = props.boardId;
+  boardIds = props.boardIds;
   projectId = props.projectId;
   return <CardsContext.Provider value={cardsManager}>{props.children}</CardsContext.Provider>;
 }

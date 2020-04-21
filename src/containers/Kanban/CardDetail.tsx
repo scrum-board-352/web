@@ -2,6 +2,7 @@ import auth from "api/base/auth";
 import { createComment, removeComment, selectCommentsByCardId, updateComment } from "api/Message";
 import Comment from "components/Comment";
 import Empty from "components/Empty";
+import Img from "components/Img";
 import Loading from "components/Loading";
 import { message } from "components/MessageBox";
 import { MenuItem } from "components/SettingButton";
@@ -194,7 +195,7 @@ export default function CardDetail(props: Props) {
                   <Empty message="No Comment" size="10rem" />
                 )}
                 <div className={style.comment_input}>
-                  <img src={avatar(currentUser.avatar)} alt="" />
+                  <Img className={style.comment_input_avatar} src={avatar(currentUser.avatar)} />
                   <input
                     ref={commentInputRef}
                     type="text"

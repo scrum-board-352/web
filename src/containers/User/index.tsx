@@ -1,6 +1,7 @@
 import auth from "api/base/auth";
 import { selectTeamByUsername, sendEmailToInviteReceiverJoinTeam } from "api/Team";
 import { selectUserBySubstring } from "api/User";
+import Img from "components/Img";
 import Loading from "components/Loading";
 import { message } from "components/MessageBox";
 import ModalForm, { Template } from "components/ModalForm";
@@ -150,7 +151,7 @@ export default function User() {
           <Container>
             <Row>
               <Col md={3} className={style.user_info_side}>
-                <img src={avatar(userInfo.avatar)} alt="" className={style.avatar} />
+                <Img src={avatar(userInfo.avatar)} className={style.avatar} />
                 <button
                   className={className(style.avatar_edit_btn, "iconshadow")}
                   onClick={() => setShowEditAvatarModal(true)}>

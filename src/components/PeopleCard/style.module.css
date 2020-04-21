@@ -7,11 +7,11 @@
   box-shadow: 0 1px 5px rgb(220, 229, 231);
 }
 
-.card div {
-  margin: 1.4rem auto 0 auto;
+.card > *:first-child {
+  margin-top: 1.5rem;
 }
 
-.card span {
+.card > span {
   text-align: center;
   max-width: 5rem;
   overflow-wrap: anywhere;

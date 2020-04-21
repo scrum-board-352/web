@@ -1,5 +1,6 @@
 import auth from "api/base/auth";
 import { logout } from "api/User";
+import Img from "components/Img";
 import { message } from "components/MessageBox";
 import SettingButton, { MenuItem } from "components/SettingButton";
 import UserModel from "models/User";
@@ -58,7 +59,7 @@ export default function UserInfo(props: Props) {
   return (
     <div className={style.user_info}>
       <Link to={userPageUrl}>
-        <img className={style.avatar} src={avatar(props.user.avatar)} alt="" />
+        <Img className={style.avatar} src={avatar(props.user.avatar)} />
       </Link>
       <p className={style.name}>
         {props.user.name} <SettingButton type="down-arrow" size="1rem" menuItems={menu} />

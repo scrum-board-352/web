@@ -1,3 +1,4 @@
+import Img from "components/Img";
 import React from "react";
 import avatar from "utils/avatar";
 
@@ -25,9 +26,8 @@ export default function Avatar(props: Props) {
 
   return (
     <div className={`${containerClassName} ${props.className ?? ""}`}>
-      <img
+      <Img
         src={avatar(props.avatar)}
-        alt=""
         style={{ borderRadius: "50%", width: props.size, height: props.size }}
       />
       <span style={nameStyle}>{props.name}</span>

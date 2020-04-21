@@ -1,0 +1,20 @@
+.container {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    -45deg,
+    var(--light) 25%,
+    #eee 0,
+    #eee 50%,
+    var(--light) 0,
+    var(--light) 75%,
+    #eee 0
+  );
+  background-size: 30px 30px;
+}
+
+.container > img {
+  width: 100%;
+}

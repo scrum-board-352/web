@@ -1,3 +1,4 @@
+import Img from "components/Img";
 import SettingButton, { MenuItem } from "components/SettingButton";
 import React from "react";
 import avatar from "utils/avatar";
@@ -15,7 +16,7 @@ export default function Comment(props: Props) {
   return (
     <div className={style.comment}>
       <div className="avatar_container">
-        <img src={avatar(props.avatar)} alt="" className={style.avatar} />
+        <Img src={avatar(props.avatar)} className={style.avatar} />
       </div>
       <div className={style.content_container}>
         <div className={style.info}>

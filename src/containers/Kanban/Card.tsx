@@ -132,7 +132,7 @@ export default function Card(props: Props) {
 
   async function moveThisCardToBoard(boardId: string) {
     message.info("Moving...");
-    const res = await await cardsManager.updateCard({
+    const res = await cardsManager.updateCard({
       id: props.card.id,
       boardId,
     });

@@ -12,13 +12,6 @@ export interface Message {
   id?: number;
 }
 
-function type(t: Message["type"]) {
-  if (t === "error") {
-    return "danger";
-  }
-  return t;
-}
-
 const AUTO_CLOSE_TIMEOUT = 4000;
 
 let msgList: Message[];

@@ -42,6 +42,10 @@ export default function User() {
   const [loading, loadingOps] = useLoading(true);
   const currentUser: UserModel.PrivateInfo = useStore("user");
 
+  function isSelf() {
+    return userInfo.id === currentUser.id;
+  }
+
   useEffect(() => {
     loadingOps(async () => {
       // TODO: fetch projects, teams info.
@@ -152,14 +156,16 @@ export default function User() {
             <Row>
               <Col md={3} className={style.user_info_side}>
                 <Img src={avatar(userInfo.avatar)} className={style.avatar} />
-                <button
-                  className={className(style.avatar_edit_btn, "iconshadow")}
-                  onClick={() => setShowEditAvatarModal(true)}>
-                  <FiEdit2 size="45%" />
-                </button>
+                {isSelf() ? (
+                  <button
+                    className={className(style.avatar_edit_btn, "iconshadow")}
+                    onClick={() => setShowEditAvatarModal(true)}>
+                    <FiEdit2 size="45%" />
+                  </button>
+                ) : null}
                 <span className={style.username}>{userInfo.name}</span>
                 <span className={style.email}>{userInfo.email}</span>
-                {userInfo.id === currentUser.id ? (
+                {isSelf() ? (
                   <Button variant="link" size="sm" className="mt-3">
                     Edit
                   </Button>

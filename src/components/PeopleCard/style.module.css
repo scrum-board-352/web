@@ -11,7 +11,8 @@
   margin-top: 1.5rem;
 }
 
-.card > span {
+.card span {
+  font-weight: 500;
   text-align: center;
   max-width: 5rem;
   overflow-wrap: anywhere;

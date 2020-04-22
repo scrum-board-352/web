@@ -43,8 +43,17 @@ button::-moz-focus-inner {
 }
 
 input,
+textarea,
 select {
   outline: none;
+}
+
+.noscrollbar {
+  scrollbar-width: none;
+}
+
+.noscrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 .iconshadow {

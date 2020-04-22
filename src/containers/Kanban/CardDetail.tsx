@@ -10,7 +10,7 @@ import useLoading from "hooks/useLoading";
 import CardModel from "models/Card";
 import MessageModel from "models/Message";
 import UserModel from "models/User";
-import React, { Fragment, useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Badge, Modal, Spinner } from "react-bootstrap";
 import { FiMessageSquare } from "react-icons/fi";
 import ScrollBox from "react-responsive-scrollbox";
@@ -34,7 +34,7 @@ type UpdateCommentFormValues = Pick<MessageModel.UpdateInfo, "description">;
 
 export default function CardDetail(props: Props) {
   const [comments, setComments] = useState<Array<MessageModel.Info>>([]);
-  const [loading, loadingOps] = useLoading();
+  const [commentsLoading, commentsLoadingOps] = useLoading(true);
   const currentUser: UserModel.PrivateInfo = useStore("user");
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function CardDetail(props: Props) {
     if (!cardId) {
       return;
     }
-    loadingOps(async () => {
+    commentsLoadingOps(async () => {
       // fetch card comments.
       const comments = await auth({ projectId: props.projectId }, selectCommentsByCardId, {
         cardId,
@@ -51,8 +51,8 @@ export default function CardDetail(props: Props) {
     });
   }, [props.card.id, props.projectId]);
 
-  const commentInputRef = useRef<HTMLInputElement>(null);
-  const [commentLoading, commentLoadingOps] = useLoading();
+  const commentInputRef = useRef<HTMLTextAreaElement>(null);
+  const [createCommentLoading, createCommentLoadingOps] = useLoading();
 
   async function handleCreateCommentClick() {
     const commentInput = commentInputRef.current;
@@ -63,7 +63,7 @@ export default function CardDetail(props: Props) {
     if (!content) {
       return;
     }
-    const newComment = await commentLoadingOps(
+    const newComment = await createCommentLoadingOps(
       auth,
       { projectId: props.projectId },
       createComment,
@@ -173,51 +173,41 @@ export default function CardDetail(props: Props) {
       <Modal.Body>
         <div className={style.body}>
           <div className={style.comment_area}>
-            {loading ? (
+            <p className={style.title}>Comments</p>
+            {commentsLoading ? (
               <Loading />
-            ) : (
-              <Fragment>
-                <p className={style.title}>Comments</p>
-                {comments.length ? (
-                  <ScrollBox className={className(style.scroll_area, "scrollbar_thumb_green")}>
-                    {comments.map((comment) => (
-                      <Comment
-                        key={comment.id}
-                        avatar={comment.announcer.avatar}
-                        name={comment.announcer.name}
-                        commentTime={dateDistance(comment.updateTime)}
-                        content={comment.description}
-                        menuItems={menuItems(comment)}
-                      />
-                    ))}
-                  </ScrollBox>
-                ) : (
-                  <Empty message="No Comment" size="10rem" />
-                )}
-                <div className={style.comment_input}>
-                  <Img className={style.comment_input_avatar} src={avatar(currentUser.avatar)} />
-                  <input
-                    ref={commentInputRef}
-                    type="text"
-                    placeholder="Comment here..."
-                    disabled={commentLoading}
+            ) : comments.length ? (
+              <ScrollBox className={className(style.scroll_area, "scrollbar_thumb_green")}>
+                {comments.map((comment) => (
+                  <Comment
+                    key={comment.id}
+                    avatar={comment.announcer.avatar}
+                    name={comment.announcer.name}
+                    commentTime={dateDistance(comment.updateTime)}
+                    content={comment.description}
+                    menuItems={menuItems(comment)}
                   />
-                  <button onClick={handleCreateCommentClick} disabled={commentLoading}>
-                    {commentLoading ? (
-                      <Spinner
-                        as="span"
-                        animation="grow"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <FiMessageSquare />
-                    )}
-                  </button>
-                </div>
-              </Fragment>
+                ))}
+              </ScrollBox>
+            ) : (
+              <Empty message="No Comment" size="10rem" />
             )}
+            <div className={style.comment_input}>
+              <Img className={style.comment_input_avatar} src={avatar(currentUser.avatar)} />
+              <textarea
+                className="noscrollbar"
+                ref={commentInputRef}
+                placeholder="Comment here..."
+                disabled={createCommentLoading}
+              />
+              <button onClick={handleCreateCommentClick} disabled={createCommentLoading}>
+                {createCommentLoading ? (
+                  <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+                ) : (
+                  <FiMessageSquare />
+                )}
+              </button>
+            </div>
           </div>
           <div className={style.card_info}>
             <p className={style.title}>Detail</p>

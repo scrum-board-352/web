@@ -38,15 +38,17 @@
   border-radius: 50%;
 }
 
-.comment_input > input {
+.comment_input > textarea {
   height: 2rem;
-  padding: 0 1rem;
+  padding: 0.5rem 1rem;
   margin: 0 1rem;
   border-radius: 50rem;
   border: 0;
   background-color: #eee;
   flex-grow: 1;
   color: inherit;
+  line-height: 1.25;
+  resize: none;
 }
 
 .comment_input > button {

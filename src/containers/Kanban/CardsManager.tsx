@@ -10,6 +10,7 @@ import React, { useState } from "react";
 let updateView: () => void;
 let projectId: string;
 let boardId: string;
+let colNames: Array<string> = [];
 let boardIds: Array<string> = [];
 let cards: CardModel.Info[] = [];
 let currentCardId = "";
@@ -104,6 +105,10 @@ function getCardById(id: string) {
   return cards.find((card) => card.id === id);
 }
 
+function getColNames() {
+  return colNames;
+}
+
 function getBoardId() {
   return boardId;
 }
@@ -126,6 +131,7 @@ const initCardsManager = {
   getCurrentCardId,
   getSelectedColName,
   getCardById,
+  getColNames,
   getBoardId,
   getBoardIds,
   setSelectedColName,
@@ -142,6 +148,7 @@ export const CardsContext = React.createContext(initCardsManager);
 type Props = {
   projectId: string;
   boardId: string;
+  colNames: Array<string>;
   boardIds: Array<string>;
   cards: CardModel.Info[];
   children: React.ReactNode;
@@ -152,6 +159,7 @@ export function CardsManager(props: Props) {
   updateView = () => {
     setCardsManager({ ...cardsManager });
   };
+  colNames = props.colNames;
   cards = props.cards;
   boardId = props.boardId;
   boardIds = props.boardIds;

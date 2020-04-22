@@ -23,6 +23,7 @@ type UpdateCardFormValues = Pick<
 
 type SelectBoardFormValues = {
   boardId: string;
+  status: string;
 };
 
 export default function Card(props: Props) {
@@ -102,6 +103,7 @@ export default function Card(props: Props) {
 
   const openSelectBoardForm = getOpenModalForm<SelectBoardFormValues>();
   const boardIds = cardsManager.getBoardIds();
+  const colNames = cardsManager.getColNames();
   const currentBoardId = cardsManager.getBoardId();
 
   function showMoveCardForm() {
@@ -119,22 +121,34 @@ export default function Card(props: Props) {
             }))
             .filter((o) => o.value !== currentBoardId),
         },
+        {
+          label: "Which column?",
+          name: "status",
+          type: "select",
+          options: colNames.map((col) => ({
+            label: col,
+            value: col,
+          })),
+          defaultValue: props.card.status,
+        },
       ],
       async onSubmit(value) {
         const boardId = value.boardId;
-        if (!boardId) {
+        const status = value.status;
+        if (!boardId || !status) {
           return;
         }
-        await moveThisCardToBoard(boardId);
+        await moveThisCardToBoard(boardId, status);
       },
     });
   }
 
-  async function moveThisCardToBoard(boardId: string) {
+  async function moveThisCardToBoard(boardId: string, colName: string) {
     message.info("Moving...");
     const res = await cardsManager.updateCard({
       id: props.card.id,
       boardId,
+      status: colName,
     });
     if (res) {
       message.success("Move Succeed!");

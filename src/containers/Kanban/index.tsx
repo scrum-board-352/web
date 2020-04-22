@@ -335,6 +335,7 @@ export default function Kanban() {
                 <ScrollBox className="scrollbar_thumb_green">
                   <div className={style.card_col_container}>
                     <CardsManager
+                      colNames={project.col}
                       cards={filteredCards}
                       projectId={projectId ?? ""}
                       boardId={boardId ?? ""}

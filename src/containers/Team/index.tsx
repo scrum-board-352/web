@@ -25,11 +25,13 @@ const createTeamFormTemplate: Array<Template<TeamFormValues>> = [
     label: "Team Name",
     name: "name",
     type: "text",
+    required: true,
   },
   {
     label: "Description",
     name: "description",
     type: "textarea",
+    required: true,
   },
 ];
 
@@ -120,23 +122,14 @@ export default function Team() {
   async function handleUpdateTeamClick(team: TeamModel.Info) {}
 
   async function handleDeleteTeamClick(team: TeamModel.Info) {
-    message({
-      title: "Deleting...",
-      type: "info",
-    });
+    message.info("Deleting...");
     const teamId = team.id;
     const res: ResultOutput = await auth({ teamId }, removeTeam, { teamId });
     if (res.success) {
-      message({
-        title: "Delete Team Succeed!",
-        type: "success",
-      });
+      message.success("Delete Team Succeed!");
       setTeams(teams.filter((t) => t.id !== team.id));
     } else {
-      message({
-        title: "Delete Team Failed!",
-        type: "error",
-      });
+      message.error("Delete Team Failed!");
     }
   }
 

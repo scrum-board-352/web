@@ -49,6 +49,7 @@ export default function Card(props: Props) {
       label: "Title",
       type: "text",
       defaultValue: props.card.title,
+      required: true,
     },
     {
       name: "description",
@@ -60,13 +61,15 @@ export default function Card(props: Props) {
       name: "storyPoints",
       label: "Story Points",
       type: "number",
-      defaultValue: props.card.storyPoints?.toString(),
+      defaultValue: props.card.storyPoints,
+      required: true,
     },
     {
       name: "priority",
       label: "Priority",
       type: "select",
       options: priorityOptionTemplate,
+      required: true,
       defaultValue: props.card.priority,
     },
     {
@@ -74,6 +77,7 @@ export default function Card(props: Props) {
       label: "Processor",
       type: "text",
       defaultValue: props.card.processor,
+      filter: (processor: string) => processor.trim(),
     },
   ];
 
@@ -87,15 +91,9 @@ export default function Card(props: Props) {
           ...values,
         });
         if (ok) {
-          message({
-            title: "Update Succeed!",
-            type: "success",
-          });
+          message.success("Update Succeed!");
         } else {
-          message({
-            title: "Update Failed!",
-            type: "error",
-          });
+          message.error("Update Failed!");
         }
       },
     });
@@ -160,21 +158,12 @@ export default function Card(props: Props) {
   }
 
   async function deleteThisCard() {
-    message({
-      title: "Deleting...",
-      type: "info",
-    });
+    message.info("Deleting...");
     const res = await cardsManager.deleteCard(props.card);
     if (res.success) {
-      message({
-        title: "Delete Succeed!",
-        type: "success",
-      });
+      message.success("Delete Succeed!");
     } else {
-      message({
-        title: "Delete Failed!",
-        type: "error",
-      });
+      message.error("Delete Failed!");
     }
   }
 

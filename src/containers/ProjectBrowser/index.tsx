@@ -84,21 +84,14 @@ export default function ProjectBrowser() {
     const project: ProjectModel.CreateInfo = {
       ...values,
       creator: currentUser.name,
-      col: formatCol(values.col),
     };
     const newProject = await createProjectLoadingOps(auth, null, createProject, project);
     if (newProject.id) {
-      message({
-        title: "Create Project Succeed!",
-        type: "success",
-      });
+      message.success("Create Project Succeed!");
       setProjectData([...projectData, newProject]);
       setNoProject(false);
     } else {
-      message({
-        title: "Create Project Failed!",
-        type: "success",
-      });
+      message.error("Create Project Failed!");
     }
   }
 
@@ -107,11 +100,13 @@ export default function ProjectBrowser() {
       label: "Project Name",
       name: "name",
       type: "text",
+      required: true,
     },
     {
       label: "Iteration",
       name: "iteration",
       type: "number",
+      min: 1,
     },
     {
       label: "Team",
@@ -126,6 +121,7 @@ export default function ProjectBrowser() {
       label: "Columns",
       name: "col",
       type: "text",
+      filter: formatCol,
     },
   ];
 
@@ -141,18 +137,10 @@ export default function ProjectBrowser() {
       { projectId }
     );
     if (res.success) {
-      message({
-        type: "success",
-        title: "Delete Succeed!",
-        content: res.message,
-      });
+      message.success("Delete Succeed!", res.message);
       setProjectData(removeItem(projectData, project));
     } else {
-      message({
-        type: "error",
-        title: "Delete Failed!",
-        content: res.message,
-      });
+      message.error("Delete Failed!", res.message);
     }
   }
 

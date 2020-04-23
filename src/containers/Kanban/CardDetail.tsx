@@ -109,26 +109,17 @@ export default function CardDetail(props: Props) {
             }
           );
           if (updatedComment && updatedComment.id) {
-            message({
-              title: "Update Succeed!",
-              type: "success",
-            });
+            message.success("Update Succeed!");
             setComments(replaceItem(comments, (c) => c.id, updatedComment));
           } else {
-            message({
-              title: "Update Failed!",
-              type: "error",
-            });
+            message.error("Update Failed!");
           }
         },
       });
     }
 
     async function deleteThisComment() {
-      message({
-        type: "info",
-        title: "Deleting...",
-      });
+      message.info("Deleting...");
       const res = await auth(
         {
           username: comment.announcer.name,
@@ -140,16 +131,10 @@ export default function CardDetail(props: Props) {
         }
       );
       if (res.success) {
-        message({
-          type: "success",
-          title: "Delete Succeed!",
-        });
+        message.success("Delete Succeed!");
         setComments(comments.filter((c) => c.id !== comment.id));
       } else {
-        message({
-          type: "error",
-          title: "Delete Failed!",
-        });
+        message.error("Delete Failed!");
       }
     }
 

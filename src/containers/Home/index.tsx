@@ -40,7 +40,7 @@ function Home() {
       required: true,
       min: 1,
       max: 4,
-      validator(value) {
+      validator(value: number) {
         if (!value) {
           return false;
         }
@@ -64,7 +64,7 @@ function Home() {
           value: "1",
         },
       ],
-      validator(value) {
+      validator(value: string) {
         return value !== undefined;
       },
     },

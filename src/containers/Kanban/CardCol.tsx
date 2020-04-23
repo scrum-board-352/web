@@ -41,6 +41,7 @@ const createCardFormTemplate: Template<CardModel.CreateInfo>[] = [
     name: "storyPoints",
     type: "number",
     required: true,
+    min: 1,
   },
   {
     label: "Priority",
@@ -53,9 +54,7 @@ const createCardFormTemplate: Template<CardModel.CreateInfo>[] = [
     label: "Processor",
     name: "processor",
     type: "text",
-    filter(processor: string) {
-      return processor.trim();
-    },
+    filter: (processor: string) => processor.trim(),
   },
 ];
 

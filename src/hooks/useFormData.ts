@@ -3,13 +3,13 @@ import { hasOwnKey } from "utils/object";
 
 type FormElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
-type Filter = <T>(value: T) => T;
+export type Filter = (value: any) => any;
 
 export type Filters<T extends object> = {
   [name in Partial<keyof T>]: Filter;
 };
 
-type Validator = (value: string | number | undefined) => boolean;
+export type Validator = (value: any) => boolean;
 
 export type Validators<T extends object> = {
   [name in Partial<keyof T>]: Validator;
@@ -46,10 +46,13 @@ function useFormData<T extends object>(
     }
     const type = elem.type;
     const name = elem.name;
+    const rawValue = elem.value;
     // set default value in data.
-    const value = type === "number" ? Number(elem.value) : elem.value;
-    if (value && !hasOwnKey(rawData, name)) {
-      setRawData({ ...rawData, [name]: value });
+    if (rawValue !== "") {
+      const value = type === "number" ? Number(rawValue) : rawValue;
+      if (!hasOwnKey(rawData, name)) {
+        setRawData({ ...rawData, [name]: value });
+      }
     }
   }
 
@@ -63,11 +66,14 @@ function useFormData<T extends object>(
       setValid({ ...valid, [key]: true });
     }
     const valStr = e.target.value;
-    const val = type === "number" ? Number(valStr) : valStr;
-    setRawData({
-      ...rawData,
-      [key]: val,
-    });
+    const data = { ...rawData };
+    if (valStr !== "") {
+      const val = type === "number" ? Number(valStr) : valStr;
+      Reflect.set(data, key, val);
+    } else {
+      Reflect.deleteProperty(data, key);
+    }
+    setRawData(data);
   }
 
   function clear() {
@@ -90,6 +96,9 @@ function useFormData<T extends object>(
     let hasFalse = false;
     const valid = {} as ValidState<T>;
     for (const [name, validator] of Object.entries<Validator>(validators)) {
+      if (!hasOwnKey(data, name)) {
+        continue;
+      }
       if (!validator(Reflect.get(data, name))) {
         hasFalse = true;
         Reflect.set(valid, name, false);
@@ -107,6 +116,9 @@ function useFormData<T extends object>(
       return;
     }
     for (const [name, filter] of Object.entries<Filter>(filters)) {
+      if (!hasOwnKey(data, name)) {
+        continue;
+      }
       Reflect.set(data, name, filter(Reflect.get(data, name)));
     }
   }

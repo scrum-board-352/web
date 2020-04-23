@@ -1,4 +1,4 @@
-import useFormData, { Filters, Validators } from "hooks/useFormData";
+import useFormData, { Filter, Filters, Validator, Validators } from "hooks/useFormData";
 import React, { Fragment, useEffect } from "react";
 import { Button, Form, Modal, Spinner } from "react-bootstrap";
 
@@ -17,8 +17,8 @@ export interface Template<T extends object> {
   options?: Array<Option>;
   required?: boolean;
   defaultValue?: string | number;
-  validator?: (value: string | number | undefined) => boolean;
-  filter?: ((value: string) => string) | ((value: number) => number);
+  validator?: Validator;
+  filter?: Filter;
 }
 
 export type Props<T extends object> = {

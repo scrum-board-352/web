@@ -114,6 +114,7 @@ export default function Card(props: Props) {
           label: "Which board to move to?",
           name: "boardId",
           type: "select",
+          required: true,
           options: boardIds
             .map((id, i) => ({
               label: `iteration${i + 1}`,
@@ -125,6 +126,7 @@ export default function Card(props: Props) {
           label: "Which column?",
           name: "status",
           type: "select",
+          required: true,
           options: colNames.map((col) => ({
             label: col,
             value: col,

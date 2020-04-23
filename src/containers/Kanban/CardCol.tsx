@@ -29,6 +29,7 @@ const createCardFormTemplate: Template<CardModel.CreateInfo>[] = [
     label: "Title",
     name: "title",
     type: "text",
+    required: true,
   },
   {
     label: "Description",
@@ -39,17 +40,22 @@ const createCardFormTemplate: Template<CardModel.CreateInfo>[] = [
     label: "Story Points",
     name: "storyPoints",
     type: "number",
+    required: true,
   },
   {
     label: "Priority",
     name: "priority",
     type: "select",
     options: priorityOptionTemplate,
+    required: true,
   },
   {
     label: "Processor",
     name: "processor",
     type: "text",
+    filter(processor: string) {
+      return processor.trim();
+    },
   },
 ];
 

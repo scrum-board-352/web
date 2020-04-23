@@ -40,7 +40,7 @@ function Home() {
       required: true,
       min: 1,
       max: 4,
-      validator(value: number) {
+      validator(value) {
         if (!value) {
           return false;
         }

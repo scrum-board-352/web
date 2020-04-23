@@ -1,6 +1,7 @@
-import useFormData, { Filter, Filters, Validator, Validators } from "hooks/useFormData";
+import useFormData, { Filter, Filters, FormValus, Validator, Validators } from "hooks/useFormData";
 import React, { Fragment, useEffect } from "react";
 import { Button, Form, Modal, Spinner } from "react-bootstrap";
+import { hasOwnKey } from "utils/object";
 
 type Option = {
   label: string;
@@ -16,7 +17,7 @@ export interface Template<T extends object> {
   step?: number;
   options?: Array<Option>;
   required?: boolean;
-  defaultValue?: string | number;
+  defaultValue?: string;
   validator?: Validator;
   filter?: Filter;
 }
@@ -68,10 +69,10 @@ function generateOptions(required?: boolean, options?: Array<Option>) {
 }
 
 function getDefaultValues<T extends object>(templates: Array<Template<T>>) {
-  const values: Partial<T> = {};
+  const values = {} as FormValus<T>;
   for (const t of templates) {
-    if (Object.prototype.hasOwnProperty.call(t, "defaultValue")) {
-      Reflect.set(values, t.name, t.defaultValue);
+    if (hasOwnKey(t, "defaultValue")) {
+      Reflect.set(values, t.name, t.defaultValue || "");
     }
   }
   return values;
@@ -112,8 +113,8 @@ export default function ModalForm<T extends object>(props: Props<T>) {
   );
 
   useEffect(() => {
-    if (!props.show) {
-      clear();
+    if (props.show) {
+      clear(getDefaultValues(props.templates));
     }
   }, [props.show]);
 
@@ -127,7 +128,7 @@ export default function ModalForm<T extends object>(props: Props<T>) {
 
   return (
     <Fragment>
-      <Modal show={props.show} onHide={props.onClose} onExited={clear} centered>
+      <Modal show={props.show} onHide={props.onClose} onExited={() => clear()} centered>
         <Modal.Header closeButton>
           <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>
@@ -145,7 +146,7 @@ export default function ModalForm<T extends object>(props: Props<T>) {
                   isInvalid={!isFieldValid(t.name)}
                   type={t.type}
                   name={t.name}
-                  value={String(rawValues[t.name] ?? t.defaultValue ?? "")}
+                  value={String(rawValues[t.name] ?? "")}
                   min={t.min ?? ""}
                   max={t.max ?? ""}
                   step={t.step ?? ""}

@@ -3,13 +3,17 @@ import { hasOwnKey } from "utils/object";
 
 type FormElement = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 
-export type Filter = (value: any) => any;
+export type FormValus<T extends object> = {
+  [name in Partial<keyof T>]: string;
+};
+
+export type Filter = (value: string) => any;
 
 export type Filters<T extends object> = {
   [name in Partial<keyof T>]: Filter;
 };
 
-export type Validator = (value: any) => boolean;
+export type Validator = (value: string) => boolean;
 
 export type Validators<T extends object> = {
   [name in Partial<keyof T>]: Validator;
@@ -20,10 +24,10 @@ type ValidState<T extends object> = {
 };
 
 type FormManager<T extends object> = {
-  rawData: Partial<T>;
+  rawData: FormValus<T>;
   setRef: (elem: FormElement | null) => void;
   handleInputChange: (e: React.ChangeEvent<FormElement>) => void;
-  clear: () => void;
+  clear: (newDefaultValues?: FormValus<T>) => void;
   isFieldValid: (name: keyof T) => boolean;
   getData: () => null | Partial<T>;
 };
@@ -32,24 +36,22 @@ const errMessage =
   "input element must have a 'name' property, which it's value should match the field name you want to set of the data object, and it must not be an empty string!";
 
 function useFormData<T extends object>(
-  defaultValues?: Partial<T>,
+  defaultValues?: FormValus<T>,
   validators?: Validators<T>,
   filters?: Filters<T>
 ): FormManager<T> {
-  const defaultData: Partial<T> = defaultValues ?? {};
-  const [rawData, setRawData] = useState<Partial<T>>(defaultData);
+  const defaultData = defaultValues ?? ({} as FormValus<T>);
+  const [rawData, setRawData] = useState<FormValus<T>>(defaultData);
   const [valid, setValid] = useState<ValidState<T>>();
 
   function setRef(elem: FormElement | null) {
     if (!elem) {
       return;
     }
-    const type = elem.type;
     const name = elem.name;
-    const rawValue = elem.value;
+    const value = elem.value;
     // set default value in data.
-    if (rawValue !== "") {
-      const value = type === "number" ? Number(rawValue) : rawValue;
+    if (value !== "") {
       if (!hasOwnKey(rawData, name)) {
         setRawData({ ...rawData, [name]: value });
       }
@@ -57,7 +59,6 @@ function useFormData<T extends object>(
   }
 
   function handleInputChange(e: React.ChangeEvent<FormElement>) {
-    const type = e.target.type;
     const key = e.target.name;
     if (!key) {
       throw new Error(errMessage);
@@ -65,19 +66,13 @@ function useFormData<T extends object>(
     if (valid && Reflect.get(valid, key) === false) {
       setValid({ ...valid, [key]: true });
     }
-    const valStr = e.target.value;
-    const data = { ...rawData };
-    if (valStr !== "") {
-      const val = type === "number" ? Number(valStr) : valStr;
-      Reflect.set(data, key, val);
-    } else {
-      Reflect.deleteProperty(data, key);
-    }
+    const val = e.target.value;
+    const data = { ...rawData, [key]: val };
     setRawData(data);
   }
 
-  function clear() {
-    setRawData({});
+  function clear(newDefaultValues?: FormValus<T>) {
+    setRawData(newDefaultValues ?? ({} as FormValus<T>));
   }
 
   function isFieldValid(name: keyof T) {
@@ -89,7 +84,7 @@ function useFormData<T extends object>(
     return true;
   }
 
-  function validateData(data: Partial<T>) {
+  function validateData(data: FormValus<T>) {
     if (!validators) {
       return true;
     }
@@ -111,16 +106,19 @@ function useFormData<T extends object>(
     return true;
   }
 
-  function filterData(data: Partial<T>) {
+  function filterData(data: FormValus<T>): Partial<T> {
+    const res: Partial<T> = {};
+    Object.assign(res, data);
     if (!filters || Object.keys(filters).length === 0) {
-      return;
+      return res;
     }
     for (const [name, filter] of Object.entries<Filter>(filters)) {
       if (!hasOwnKey(data, name)) {
         continue;
       }
-      Reflect.set(data, name, filter(Reflect.get(data, name)));
+      Reflect.set(res, name, filter(Reflect.get(data, name)));
     }
+    return res;
   }
 
   function getData(): null | Partial<T> {
@@ -128,8 +126,7 @@ function useFormData<T extends object>(
     if (!validateData(data)) {
       return null;
     }
-    filterData(data);
-    return data;
+    return filterData(data);
   }
 
   return { rawData, setRef, handleInputChange, clear, isFieldValid, getData };

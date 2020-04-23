@@ -107,6 +107,7 @@ export default function ProjectBrowser() {
       name: "iteration",
       type: "number",
       min: 1,
+      filter: Number,
     },
     {
       label: "Team",

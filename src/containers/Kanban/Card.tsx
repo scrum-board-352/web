@@ -61,8 +61,10 @@ export default function Card(props: Props) {
       name: "storyPoints",
       label: "Story Points",
       type: "number",
-      defaultValue: props.card.storyPoints,
+      defaultValue: props.card.storyPoints?.toString(),
+      min: 1,
       required: true,
+      filter: Number,
     },
     {
       name: "priority",
@@ -77,7 +79,7 @@ export default function Card(props: Props) {
       label: "Processor",
       type: "text",
       defaultValue: props.card.processor,
-      filter: (processor: string) => processor.trim(),
+      filter: (processor) => processor.trim(),
     },
   ];
 
@@ -199,7 +201,7 @@ export default function Card(props: Props) {
       </div>
       <p className={style.description}>{cutString(props.card.description ?? "None", 50)}</p>
       <div className={style.footer}>
-        <Avatar size="1rem" name={props.card.processor ?? "None"} gap="0.5rem" />
+        <Avatar size="1rem" name={props.card.processor || "None"} gap="0.5rem" />
         <Priority priority={props.card.priority} />
       </div>
     </div>

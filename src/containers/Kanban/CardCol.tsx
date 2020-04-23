@@ -42,6 +42,7 @@ const createCardFormTemplate: Template<CardModel.CreateInfo>[] = [
     type: "number",
     required: true,
     min: 1,
+    filter: Number,
   },
   {
     label: "Priority",
@@ -54,7 +55,7 @@ const createCardFormTemplate: Template<CardModel.CreateInfo>[] = [
     label: "Processor",
     name: "processor",
     type: "text",
-    filter: (processor: string) => processor.trim(),
+    filter: (processor) => processor.trim(),
   },
 ];
 

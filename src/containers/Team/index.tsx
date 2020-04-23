@@ -16,7 +16,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Container, Row, Table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useStore } from "rlax";
-import { deduplication } from "utils/array";
+import { addItem, deduplication } from "utils/array";
 
 type TeamFormValues = Pick<TeamModel.CreateInfo, "name" | "description">;
 
@@ -110,7 +110,7 @@ export default function Team() {
     const team: TeamModel.CreateInfo = { ...values, creator: user.name };
     const newTeam = await createTeamLoadingOps(auth, null, createTeam, team);
     setShowCreateTeam(false);
-    setTeams([...teams, newTeam]);
+    setTeams((teams) => addItem(teams, newTeam));
   }
 
   const history = useHistory();
@@ -127,7 +127,7 @@ export default function Team() {
     const res: ResultOutput = await auth({ teamId }, removeTeam, { teamId });
     if (res.success) {
       message.success("Delete Team Succeed!");
-      setTeams(teams.filter((t) => t.id !== team.id));
+      setTeams((teams) => teams.filter((t) => t.id !== team.id));
     } else {
       message.error("Delete Team Failed!");
     }

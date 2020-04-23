@@ -138,7 +138,7 @@ export default function ProjectBrowser() {
     );
     if (res.success) {
       message.success("Delete Succeed!", res.message);
-      setProjectData(removeItem(projectData, project));
+      setProjectData((projectData) => removeItem(projectData, project));
     } else {
       message.error("Delete Failed!", res.message);
     }

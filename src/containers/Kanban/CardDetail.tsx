@@ -15,7 +15,7 @@ import { Badge, Modal, Spinner } from "react-bootstrap";
 import { FiMessageSquare } from "react-icons/fi";
 import ScrollBox from "react-responsive-scrollbox";
 import { useStore } from "rlax";
-import { replaceItem } from "utils/array";
+import { addItem, replaceItem } from "utils/array";
 import avatar from "utils/avatar";
 import className from "utils/class-name";
 import { dateDistance } from "utils/date";
@@ -74,7 +74,7 @@ export default function CardDetail(props: Props) {
       }
     );
     commentInput.value = "";
-    setComments([...comments, newComment]);
+    setComments((comments) => addItem(comments, newComment));
   }
 
   const getOpenModalForm = useContext(KanbanFormContext);
@@ -110,7 +110,7 @@ export default function CardDetail(props: Props) {
           );
           if (updatedComment && updatedComment.id) {
             message.success("Update Succeed!");
-            setComments(replaceItem(comments, (c) => c.id, updatedComment));
+            setComments((comments) => replaceItem(comments, (c) => c.id, updatedComment));
           } else {
             message.error("Update Failed!");
           }
@@ -132,7 +132,7 @@ export default function CardDetail(props: Props) {
       );
       if (res.success) {
         message.success("Delete Succeed!");
-        setComments(comments.filter((c) => c.id !== comment.id));
+        setComments((comments) => comments.filter((c) => c.id !== comment.id));
       } else {
         message.error("Delete Failed!");
       }

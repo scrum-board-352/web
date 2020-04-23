@@ -1,4 +1,4 @@
-import useFormData from "hooks/useFormData";
+import useFormData, { Validators } from "hooks/useFormData";
 import React, { Fragment, useEffect } from "react";
 import { Button, Form, Modal, Spinner } from "react-bootstrap";
 
@@ -12,7 +12,9 @@ export interface Template<T extends object> {
   label: string;
   type: "text" | "number" | "textarea" | "select";
   options?: Array<Option>;
+  required?: boolean;
   defaultValue?: string;
+  validator?: (value: string) => boolean;
 }
 
 export type Props<T extends object> = {
@@ -41,15 +43,17 @@ function asType(type: Template<object>["type"]) {
   }
 }
 
-function generateOptions(options?: Array<Option>) {
+function generateOptions(required?: boolean, options?: Array<Option>) {
   if (!options) {
     return null;
   }
   return (
     <Fragment>
-      <option key="nonenone" value="">
-        None
-      </option>
+      {required ? null : (
+        <option key="nonenone" value="">
+          None
+        </option>
+      )}
       {options.map((o) => (
         <option key={o.value} value={o.value}>
           {o.label}
@@ -59,8 +63,35 @@ function generateOptions(options?: Array<Option>) {
   );
 }
 
+function getDefaultValues<T extends object>(templates: Array<Template<T>>) {
+  const values: Partial<T> = {};
+  for (const t of templates) {
+    if (Object.prototype.hasOwnProperty.call(t, "defaultValue")) {
+      Reflect.set(values, t.name, t.defaultValue);
+    }
+  }
+  return values;
+}
+
+function getValidators<T extends object>(templates: Array<Template<T>>) {
+  const validators = {} as Validators<T>;
+  for (const t of templates) {
+    if (typeof t.validator === "function") {
+      Reflect.set(validators, t.name, t.validator);
+    }
+  }
+  return validators;
+}
+
 export default function ModalForm<T extends object>(props: Props<T>) {
-  const [values, handleInputChange, clear] = useFormData<T>();
+  const {
+    data: values,
+    setRef: setFormElementRef,
+    handleInputChange,
+    clear,
+    isFieldValid,
+    validate,
+  } = useFormData<T>(getDefaultValues(props.templates), getValidators(props.templates));
 
   useEffect(() => {
     if (!props.show) {
@@ -70,18 +101,14 @@ export default function ModalForm<T extends object>(props: Props<T>) {
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    props.onSubmit(values);
+    if (validate()) {
+      props.onSubmit(values as T);
+    }
   }
 
   return (
     <Fragment>
-      <Modal
-        show={props.show}
-        onHide={() => {
-          props.onClose();
-          clear();
-        }}
-        centered>
+      <Modal show={props.show} onHide={props.onClose} onExited={clear} centered>
         <Modal.Header closeButton>
           <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>
@@ -91,13 +118,17 @@ export default function ModalForm<T extends object>(props: Props<T>) {
               <Form.Group key={String(t.name)}>
                 <Form.Label>{t.label}</Form.Label>
                 <Form.Control
-                  disabled={props.loading}
+                  ref={(elem) => setFormElementRef(elem as any)}
+                  disabled={
+                    props.loading || (t.type === "select" && Number(t.options?.length) === 0)
+                  }
+                  isInvalid={!isFieldValid(t.name)}
                   type={t.type}
                   name={t.name}
                   value={String(values[t.name] ?? t.defaultValue ?? "")}
                   onChange={handleInputChange}
                   as={asType(t.type)}>
-                  {t.type === "select" ? generateOptions(t.options) : null}
+                  {t.type === "select" ? generateOptions(t.required, t.options) : null}
                 </Form.Control>
               </Form.Group>
             ))}

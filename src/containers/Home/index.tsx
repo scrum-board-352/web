@@ -21,6 +21,7 @@ function Home() {
     teamName: string;
     value: number;
     description: string;
+    iteration: string;
   };
 
   const templates: Template<FormDataType>[] = [
@@ -33,11 +34,31 @@ function Home() {
       name: "value",
       label: "value",
       type: "number",
+      defaultValue: "2",
+      validator(value) {
+        return Number(value) > 5 ? false : true;
+      },
     },
     {
       name: "description",
       label: "Description",
       type: "textarea",
+    },
+    {
+      name: "iteration",
+      label: "Iteration",
+      type: "select",
+      required: true,
+      defaultValue: "1",
+      options: [
+        {
+          label: "1",
+          value: "1",
+        },
+      ],
+      validator(value) {
+        return value !== undefined;
+      },
     },
   ];
 

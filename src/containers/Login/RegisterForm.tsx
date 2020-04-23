@@ -16,7 +16,9 @@ export default function RegisterForm(props?: Props) {
   const [usernameInputOk, setUsernameInputOk] = useState(true);
   const [emailInputOk, setEmailInputOk] = useState(true);
   const [passwordInputOk, setPasswordInputOk] = useState(true);
-  const [registerForm, handleInputChange] = useFormData<UserModel.RegisterInfo>();
+  const { data: registerForm, setRef: setFormElementRef, handleInputChange } = useFormData<
+    UserModel.RegisterInfo
+  >();
 
   function checkRegisterFormData({ username, email, password }: UserModel.RegisterInfo): boolean {
     if (username && email && password) {
@@ -37,7 +39,7 @@ export default function RegisterForm(props?: Props) {
   async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!checkRegisterFormData(registerForm)) {
+    if (!checkRegisterFormData(registerForm as UserModel.RegisterInfo)) {
       return;
     }
 
@@ -64,6 +66,7 @@ export default function RegisterForm(props?: Props) {
           <Form.Label>Username</Form.Label>
           <Form.Control
             disabled={loading}
+            ref={(elem: any) => setFormElementRef(elem)}
             className={usernameInputOk ? "" : "is-invalid"}
             placeholder="Username"
             name="username"
@@ -80,6 +83,7 @@ export default function RegisterForm(props?: Props) {
           <Form.Label>Email</Form.Label>
           <Form.Control
             disabled={loading}
+            ref={(elem: any) => setFormElementRef(elem)}
             className={emailInputOk ? "" : "is-invalid"}
             type="email"
             placeholder="Email Address"

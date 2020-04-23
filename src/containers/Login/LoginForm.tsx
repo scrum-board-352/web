@@ -17,7 +17,9 @@ export default function LoginForm(props?: Props) {
   const [loading, loadingOps] = useLoading();
   const [usernameInputOk, setUsernameInputOk] = useState(true);
   const [passwordInputOk, setPasswordInputOk] = useState(true);
-  const [loginForm, handleInputChange] = useFormData<UserModel.LoginInfo>();
+  const { data: loginForm, setRef: setFormElementRef, handleInputChange } = useFormData<
+    UserModel.LoginInfo
+  >();
   const history = useHistory();
 
   function checkLoginFormData({ username, password }: UserModel.LoginInfo): boolean {
@@ -36,7 +38,7 @@ export default function LoginForm(props?: Props) {
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!checkLoginFormData(loginForm)) {
+    if (!checkLoginFormData(loginForm as UserModel.LoginInfo)) {
       return;
     }
 
@@ -67,6 +69,7 @@ export default function LoginForm(props?: Props) {
           <Form.Label>Username</Form.Label>
           <Form.Control
             disabled={loading}
+            ref={(elem: any) => setFormElementRef(elem)}
             placeholder="Username"
             name="username"
             className={usernameInputOk ? "" : "is-invalid"}
@@ -83,6 +86,7 @@ export default function LoginForm(props?: Props) {
           <Form.Label>Password</Form.Label>
           <Form.Control
             disabled={loading}
+            ref={(elem: any) => setFormElementRef(elem)}
             type="password"
             placeholder="Password"
             name="password"

@@ -77,7 +77,7 @@ async function updateCard(newCard: CardModel.UpdateInfo) {
   const updatedCard = await auth({ projectId }, updateCardApi, newCard);
   const oldCardIndex = cards.findIndex((c) => c.id === updatedCard.id);
   if (oldCardIndex >= 0) {
-    if (newCard.boardId !== boardId) {
+    if (newCard.boardId && newCard.boardId !== boardId) {
       // Moved card to different board, remove it from view.
       cards.splice(oldCardIndex, 1);
     } else {

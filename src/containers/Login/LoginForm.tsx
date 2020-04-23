@@ -17,7 +17,7 @@ export default function LoginForm(props?: Props) {
   const [loading, loadingOps] = useLoading();
   const [usernameInputOk, setUsernameInputOk] = useState(true);
   const [passwordInputOk, setPasswordInputOk] = useState(true);
-  const { data: loginForm, setRef: setFormElementRef, handleInputChange } = useFormData<
+  const { rawData: loginForm, setRef: setFormElementRef, handleInputChange } = useFormData<
     UserModel.LoginInfo
   >();
   const history = useHistory();

@@ -29,13 +29,21 @@ function Home() {
       name: "teamName",
       label: "Team name",
       type: "text",
+      filter(name: string) {
+        return "[" + name + "]";
+      },
     },
     {
       name: "value",
       label: "value",
       type: "number",
-      defaultValue: "2",
+      required: true,
+      min: 1,
+      max: 4,
       validator(value) {
+        if (!value) {
+          return false;
+        }
         return Number(value) > 5 ? false : true;
       },
     },

@@ -1,4 +1,4 @@
-import useFormData, { Validators } from "hooks/useFormData";
+import useFormData, { Filters, Validators } from "hooks/useFormData";
 import React, { Fragment, useEffect } from "react";
 import { Button, Form, Modal, Spinner } from "react-bootstrap";
 
@@ -11,10 +11,14 @@ export interface Template<T extends object> {
   name: keyof T;
   label: string;
   type: "text" | "number" | "textarea" | "select";
+  min?: number;
+  max?: number;
+  step?: number;
   options?: Array<Option>;
   required?: boolean;
-  defaultValue?: string;
-  validator?: (value: string) => boolean;
+  defaultValue?: string | number;
+  validator?: (value: string | number | undefined) => boolean;
+  filter?: ((value: string) => string) | ((value: number) => number);
 }
 
 export type Props<T extends object> = {
@@ -83,15 +87,29 @@ function getValidators<T extends object>(templates: Array<Template<T>>) {
   return validators;
 }
 
+function getFilters<T extends object>(templates: Array<Template<T>>) {
+  const filters = {} as Filters<T>;
+  for (const t of templates) {
+    if (typeof t.filter === "function") {
+      Reflect.set(filters, t.name, t.filter);
+    }
+  }
+  return filters;
+}
+
 export default function ModalForm<T extends object>(props: Props<T>) {
   const {
-    data: values,
+    rawData: rawValues,
     setRef: setFormElementRef,
     handleInputChange,
     clear,
     isFieldValid,
-    validate,
-  } = useFormData<T>(getDefaultValues(props.templates), getValidators(props.templates));
+    getData,
+  } = useFormData<T>(
+    getDefaultValues(props.templates),
+    getValidators(props.templates),
+    getFilters(props.templates)
+  );
 
   useEffect(() => {
     if (!props.show) {
@@ -101,7 +119,8 @@ export default function ModalForm<T extends object>(props: Props<T>) {
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (validate()) {
+    const values = getData();
+    if (values) {
       props.onSubmit(values as T);
     }
   }
@@ -122,10 +141,14 @@ export default function ModalForm<T extends object>(props: Props<T>) {
                   disabled={
                     props.loading || (t.type === "select" && Number(t.options?.length) === 0)
                   }
+                  required={t.required}
                   isInvalid={!isFieldValid(t.name)}
                   type={t.type}
                   name={t.name}
-                  value={String(values[t.name] ?? t.defaultValue ?? "")}
+                  value={String(rawValues[t.name] ?? t.defaultValue ?? "")}
+                  min={t.min ?? ""}
+                  max={t.max ?? ""}
+                  step={t.step ?? ""}
                   onChange={handleInputChange}
                   as={asType(t.type)}>
                   {t.type === "select" ? generateOptions(t.required, t.options) : null}

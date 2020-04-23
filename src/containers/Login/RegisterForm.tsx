@@ -16,7 +16,7 @@ export default function RegisterForm(props?: Props) {
   const [usernameInputOk, setUsernameInputOk] = useState(true);
   const [emailInputOk, setEmailInputOk] = useState(true);
   const [passwordInputOk, setPasswordInputOk] = useState(true);
-  const { data: registerForm, setRef: setFormElementRef, handleInputChange } = useFormData<
+  const { rawData: registerForm, setRef: setFormElementRef, handleInputChange } = useFormData<
     UserModel.RegisterInfo
   >();
 

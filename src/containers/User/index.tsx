@@ -70,11 +70,7 @@ export default function User() {
 
   async function handleInviteSubmit(values: InviteUserFormValues) {
     if (!values.teamId) {
-      message({
-        title: "Invalid Input!",
-        type: "error",
-        content: "You should select a team for user to join in!",
-      });
+      message.error("Invalid Input!", "You should select a team for user to join in!");
       setShowSelectTeamForm(false);
       return;
     }
@@ -89,17 +85,9 @@ export default function User() {
       }
     );
     if (res.success) {
-      message({
-        title: "Email Sent Succeed!",
-        type: "success",
-        content: res.message,
-      });
+      message.success("Email Sent Succeed!", res.message);
     } else {
-      message({
-        title: "Email Sent Failed!",
-        type: "error",
-        content: res.message,
-      });
+      message.error("Email Sent Failed!", res.message);
     }
     setShowSelectTeamForm(false);
   }
@@ -122,6 +110,7 @@ export default function User() {
         label: team.name,
         value: team.id,
       })),
+      required: true,
     },
   ];
 

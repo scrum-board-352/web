@@ -203,6 +203,7 @@ export default function Card(props: Props) {
       <div className={style.footer}>
         <Avatar size="1rem" name={props.card.processor || "None"} gap="0.5rem" />
         <Priority priority={props.card.priority} />
+        <span className={style.story_points}>{props.card.storyPoints}</span>
       </div>
     </div>
   );

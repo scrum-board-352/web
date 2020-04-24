@@ -62,5 +62,21 @@
 .footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+}
+
+.footer > *:nth-child(2) {
+  margin-left: auto;
+}
+
+.story_points {
+  margin-left: 0.5rem;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  background-color: #6e42c11a;
+  color: var(--indigo);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
 }

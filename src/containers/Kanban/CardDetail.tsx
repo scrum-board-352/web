@@ -211,7 +211,7 @@ export default function CardDetail(props: Props) {
               </div>
               <div className={style.info_field}>
                 <p>Processor</p>
-                <p>{props.card.processor ?? "None"}</p>
+                <p>{props.card.processor || "None"}</p>
               </div>
               <div className={style.info_field}>
                 <p>Founder</p>

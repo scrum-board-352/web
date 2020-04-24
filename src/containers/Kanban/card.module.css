@@ -74,9 +74,9 @@
   width: 16px;
   height: 16px;
   text-align: center;
-  background-color: #6e42c11a;
-  color: var(--indigo);
+  background-color: #6e42c111;
+  color: #b28feb;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 16px;
 }

@@ -1,5 +1,4 @@
 import auth from "api/base/auth";
-import { avatarUrl } from "api/base/url";
 import { updateUser, uploadAvatar } from "api/User";
 import LoadingButton from "components/LoadingButton";
 import { message } from "components/MessageBox";
@@ -12,7 +11,6 @@ import { Button, Modal } from "react-bootstrap";
 import { FiDownload, FiUpload } from "react-icons/fi";
 import { useStore } from "rlax";
 import avatar from "utils/avatar";
-import joinUrl from "utils/join-url";
 import style from "./avatar-editor.module.css";
 
 type Props = {
@@ -122,7 +120,7 @@ export default function AvatarEditor(props: Props) {
     if (!res.success) {
       return null;
     }
-    const url = joinUrl(avatarUrl, res.message);
+    const url = res.message;
     const updatedUser = await auth(null, updateUser, {
       username: currentUser.name,
       avatar: url,

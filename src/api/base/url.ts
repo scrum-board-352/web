@@ -1,10 +1,3 @@
-const _avatarUrl = process.env.REACT_APP_AVATAR_URL;
-if (!_avatarUrl) {
-  throw new Error("'REACT_APP_AVATAR_URL' not set!");
-}
-
-export const avatarUrl = _avatarUrl;
-
 const _restApiUrl = process.env.REACT_APP_REST_API_URL;
 if (!_restApiUrl) {
   throw new Error("'REACT_APP_REST_API_URL' not set!");

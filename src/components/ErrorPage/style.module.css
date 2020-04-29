@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,700");
+
+.container {
+  position: relative;
+  height: 100vh;
+}
+
+.container .notfound {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.notfound {
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.notfound .notfound_404 {
+  height: 190px;
+}
+
+.notfound .notfound_404 h1 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 146px;
+  font-weight: 700;
+  margin: 0px;
+  color: #232323;
+}
+
+.title_text {
+  position: relative;
+  z-index: -1;
+  display: inline-block;
+  min-width: 6rem;
+}
+
+.emoji {
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  background-image: url(./emoji.png);
+  background-size: cover;
+  transform: scale(1.4);
+}
+
+.notfound h2 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  color: #232323;
+}
+
+.notfound p {
+  font-family: "Montserrat", sans-serif;
+  color: #787878;
+  font-weight: 300;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.notfound button {
+  font-family: "Montserrat", sans-serif;
+  padding: 12px 30px;
+  font-weight: 700;
+  font-size: 1rem;
+  background-color: #f99827;
+  color: #fff;
+  border-radius: 40px;
+  text-decoration: none;
+  border: 0;
+  transition: 0.2s all;
+}
+
+.notfound button:hover {
+  opacity: 0.8;
+}
+
+@media only screen and (max-width: 767px) {
+  .notfound .notfound_404 {
+    height: 115px;
+  }
+  .notfound .notfound_404 h1 {
+    font-size: 86px;
+  }
+  .notfound .notfound_404 h1 > span {
+    width: 86px;
+    height: 86px;
+  }
+}

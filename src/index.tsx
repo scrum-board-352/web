@@ -1,3 +1,4 @@
+import ErrorPage from "components/ErrorPage";
 import MessageBox from "components/MessageBox";
 import Dashboard from "containers/Dashboard";
 import User from "containers/User";
@@ -8,7 +9,6 @@ import rlax from "rlax";
 import store from "store";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
-import NotFound from "./containers/NotFound";
 import "./style.css";
 
 rlax.initStore({
@@ -23,7 +23,15 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/404" exact component={NotFound} />
+          <Route path="/401" exact>
+            <ErrorPage type="401" />
+          </Route>
+          <Route path="/403" exact>
+            <ErrorPage type="403" />
+          </Route>
+          <Route path="/404" exact>
+            <ErrorPage type="404" />
+          </Route>
           <Route path="/login" exact component={Login} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/user/:username" exact component={User} />

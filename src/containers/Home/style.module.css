@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500");
+
+.landing {
+  height: 100vh;
+  background-image: url(./landing.svg);
+  background-repeat: no-repeat;
+  background-position: 60% 2rem;
+  background-size: contain;
+  display: flex;
+  flex-direction: column;
+}
+
+.landing > nav {
+  height: 5rem;
+}
+
+.logo {
+  display: inline-block;
+  height: 100%;
+  width: 10rem;
+  background-image: url(/img/logo.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 10rem;
+  margin-right: auto;
+}
+
+.nav_link {
+  color: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-left: 3rem;
+}
+
+.nav_link:last-child {
+  margin-right: 2rem;
+}
+
+.nav_link:hover {
+  color: rgb(238, 22, 150);
+}
+
+.content {
+  max-width: 45%;
+  padding-left: 0.4rem;
+  transform: translateY(-4rem);
+}
+
+.content > h1 {
+  font-family: "Quicksand", sans-serif;
+  font-size: 2.5rem;
+}
+
+.content > p {
+  font-family: "Montserrat", sans-serif;
+  color: #aaa;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.8;
+  margin-top: 1.5rem;
+}
+
+.content > button {
+  margin-top: 2rem;
+  border: 0;
+  border-radius: 50rem;
+  padding: 0.8rem 1.5rem;
+  box-shadow: 0 10px 30px rgba(238, 22, 152, 0.212);
+  background: linear-gradient(to right top, rgb(238, 22, 150), rgb(159, 20, 194));
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.content > button:hover {
+  opacity: 0.8;
+}

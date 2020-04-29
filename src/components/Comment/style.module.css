@@ -21,7 +21,7 @@
 
 .content_container {
   width: 100%;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
   white-space: pre-wrap;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .username {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
 }
 

@@ -1,8 +1,6 @@
 import auth from "api/base/auth";
 import { createComment, removeComment, selectCommentsByCardId, updateComment } from "api/Message";
-import Comment from "components/Comment";
 import Empty from "components/Empty";
-import Img from "components/Img";
 import Loading from "components/Loading";
 import { message } from "components/MessageBox";
 import { MenuItem } from "components/SettingButton";
@@ -10,16 +8,16 @@ import useLoading from "hooks/useLoading";
 import CardModel from "models/Card";
 import MessageModel from "models/Message";
 import UserModel from "models/User";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { Badge, Modal, Spinner } from "react-bootstrap";
-import { FiMessageSquare } from "react-icons/fi";
+import React, { useContext, useEffect, useState } from "react";
+import { Badge, Modal } from "react-bootstrap";
 import ScrollBox from "react-responsive-scrollbox";
 import { useStore } from "rlax";
 import { addItem, replaceItem } from "utils/array";
-import avatar from "utils/avatar";
 import className from "utils/class-name";
 import { dateDistance } from "utils/date";
 import style from "./card-detail.module.css";
+import Comment from "./Comment";
+import CommentInput from "./CommentInput";
 import KanbanFormContext from "./KanbanFormContext";
 import Priority from "./Priority";
 
@@ -51,18 +49,9 @@ export default function CardDetail(props: Props) {
     });
   }, [props.card.id, props.projectId]);
 
-  const commentInputRef = useRef<HTMLTextAreaElement>(null);
   const [createCommentLoading, createCommentLoadingOps] = useLoading();
 
-  async function handleCreateCommentClick() {
-    const commentInput = commentInputRef.current;
-    if (!commentInput) {
-      return;
-    }
-    const content = commentInput.value;
-    if (!content) {
-      return;
-    }
+  async function handleCreateComment(content: string) {
     const newComment = await createCommentLoadingOps(
       auth,
       { projectId: props.projectId },
@@ -73,7 +62,6 @@ export default function CardDetail(props: Props) {
         cardId: props.card.id,
       }
     );
-    commentInput.value = "";
     setComments((comments) => addItem(comments, newComment));
   }
 
@@ -177,22 +165,7 @@ export default function CardDetail(props: Props) {
             ) : (
               <Empty message="No Comment" size="10rem" />
             )}
-            <div className={style.comment_input}>
-              <Img className={style.comment_input_avatar} src={avatar(currentUser.avatar)} />
-              <textarea
-                className="noscrollbar"
-                ref={commentInputRef}
-                placeholder="Comment here..."
-                disabled={createCommentLoading}
-              />
-              <button onClick={handleCreateCommentClick} disabled={createCommentLoading}>
-                {createCommentLoading ? (
-                  <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
-                ) : (
-                  <FiMessageSquare />
-                )}
-              </button>
-            </div>
+            <CommentInput loading={createCommentLoading} onSubmit={handleCreateComment} />
           </div>
           <div className={style.card_info}>
             <p className={style.title}>Detail</p>

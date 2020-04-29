@@ -7,12 +7,27 @@ import { useStore } from "rlax";
 import avatar from "utils/avatar";
 import style from "./style.module.css";
 
-type Output = string;
+export type Output = {
+  content: string;
+  receivers: Array<string>;
+};
 
 type Props = {
   loading: boolean;
   onSubmit: (comment: Output) => void;
 };
+
+function startWithAt(s: string) {
+  return s.length > 0 && s[0] === "@";
+}
+
+function getAllReceivers(content: string): Array<string> {
+  return content
+    .split(" ")
+    .filter(startWithAt)
+    .map((s) => s.substring(1))
+    .filter(Boolean);
+}
 
 export default function CommentInput(props: Props) {
   const currentUser: UserModel.PrivateInfo = useStore("user");
@@ -27,7 +42,8 @@ export default function CommentInput(props: Props) {
     if (!content) {
       return;
     }
-    props.onSubmit(content);
+    const receivers = getAllReceivers(content);
+    props.onSubmit({ content, receivers });
     commentInput.value = "";
   }
 

@@ -17,7 +17,7 @@ import className from "utils/class-name";
 import { dateDistance } from "utils/date";
 import style from "./card-detail.module.css";
 import Comment from "./Comment";
-import CommentInput from "./CommentInput";
+import CommentInput, { Output } from "./CommentInput";
 import KanbanFormContext from "./KanbanFormContext";
 import Priority from "./Priority";
 
@@ -51,14 +51,15 @@ export default function CardDetail(props: Props) {
 
   const [createCommentLoading, createCommentLoadingOps] = useLoading();
 
-  async function handleCreateComment(content: string) {
+  async function handleCreateComment(output: Output) {
     const newComment = await createCommentLoadingOps(
       auth,
       { projectId: props.projectId },
       createComment,
       {
         announcer: currentUser.name,
-        description: content,
+        description: output.content,
+        receiver: output.receivers.join(","),
         cardId: props.card.id,
       }
     );

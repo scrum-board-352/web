@@ -72,10 +72,7 @@ export default function Messages() {
       return;
     }
     const projectId = comment.posInfo.projectId;
-    return await auth({ projectId }, updateComment, {
-      id,
-      read: true,
-    });
+    return await auth({ projectId, username: currentUser.name }, updateComment, { id, read: true });
   }
 
   const [markAsReadLoading, setMarkAsReadLoading] = useState(false);

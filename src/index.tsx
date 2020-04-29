@@ -4,9 +4,10 @@ import Dashboard from "containers/Dashboard";
 import User from "containers/User";
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Router, Switch } from "react-router-dom";
 import rlax from "rlax";
 import store from "store";
+import history from "utils/history";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
 import "./style.css";
@@ -20,7 +21,7 @@ function App() {
   return (
     <Fragment>
       <MessageBox />
-      <Router>
+      <Router history={history}>
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/401" exact>

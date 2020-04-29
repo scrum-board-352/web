@@ -1,3 +1,4 @@
+import history from "utils/history";
 import { PromiseType } from "utils/type";
 import { getApiMappingName } from "./api-name-mapping";
 import { post } from "./fetch";
@@ -40,8 +41,14 @@ export default async function auth<T extends ApiCallFunc>(
     functionName: getApiMappingName(apiCall),
   });
   if (!res.success) {
-    // window.location.replace("/login");
-    throw new Error(res.message);
+    if (res.message === "401") {
+      history.replace("/401");
+    } else if (res.message === "403") {
+      history.replace("/403");
+    } else {
+      throw new Error(res.message);
+    }
+    throw new Error("Auth failed!");
   }
   // set global uid.
   if (res.uid) {

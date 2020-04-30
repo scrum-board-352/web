@@ -32,7 +32,7 @@ export default function Dashboard() {
           <UserInfo user={user} />
         </Sidebar.Title>
         <IconContext.Provider value={{ size: "20px" }}>
-          <Sidebar.Items color="var(--dark)" activeColor="yellowgreen">
+          <Sidebar.Items color="var(--dark)" activeColor="var(--blue-green)">
             <Sidebar.Item onClick={() => history.push(joinUrl(url, Path.Projects))}>
               <AiOutlineProject />
               <span className="ml-3 dashboard_sidebar_item">Projects</span>

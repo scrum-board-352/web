@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap");
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.welcome > h1 {
+  font-family: "Quicksand", sans-serif;
+}
+
+.bg_start {
+  background: url(./start.svg) no-repeat center;
+  background-size: contain;
+  height: 45%;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.welcome > button {
+  margin-top: 2.5rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+}

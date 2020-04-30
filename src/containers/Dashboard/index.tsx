@@ -12,6 +12,7 @@ import { useStore } from "rlax";
 import joinUrl from "utils/join-url";
 import "./style.css";
 import UserInfo from "./UserInfo";
+import Welcome from "./Welcome";
 
 enum Path {
   Projects = "projects",
@@ -52,7 +53,7 @@ export default function Dashboard() {
       <main className="dashboard_content_container">
         <Switch>
           <Route exact path={path}>
-            <h1>Welcome!</h1>
+            <Welcome />
           </Route>
 
           <Route exact path={`${path}/${Path.Projects}`}>

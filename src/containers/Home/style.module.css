@@ -34,7 +34,7 @@
 }
 
 .nav_link:last-child {
-  margin-right: 2rem;
+  margin-right: 1rem;
 }
 
 .nav_link:hover {
@@ -43,7 +43,7 @@
 
 .content {
   max-width: 45%;
-  padding-left: 0.4rem;
+  padding-left: 0.45rem;
   transform: translateY(-4rem);
 }
 

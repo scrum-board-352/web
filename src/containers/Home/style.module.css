@@ -15,7 +15,7 @@
   top: -50rem;
   right: -50rem;
   border-radius: 50%;
-  background: linear-gradient(to right top, var(--yellow-green), var(--blue-green) 50%);
+  background: linear-gradient(to right top, var(--blue-green), var(--yellow-green) 50%);
   opacity: 0.8;
   width: 100rem;
   height: 100rem;
@@ -132,7 +132,7 @@
   border-radius: 50rem;
   padding: 0.8rem 1.5rem;
   box-shadow: 0 10px 30px rgba(119, 238, 22, 0.432);
-  background: linear-gradient(to right top, var(--yellow-green), var(--blue-green));
+  background: linear-gradient(to right top, var(--blue-green), var(--yellow-green));
   color: white;
   font-weight: 700;
   font-size: 1rem;

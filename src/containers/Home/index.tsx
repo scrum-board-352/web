@@ -6,6 +6,9 @@ import style from "./style.module.css";
 function Home() {
   return (
     <div className={style.landing}>
+      <div className={style.bg_circle}></div>
+      <div className={style.bg_illustration}></div>
+      <div className={style.bg_square}></div>
       <nav>
         <Container className="h-100 d-flex align-items-center">
           <Link to="/" className={style.logo}></Link>
@@ -18,11 +21,13 @@ function Home() {
         </Container>
       </nav>
       <Container className="h-100 d-flex align-items-center">
-        <p className={style.content}>
-          <h1>Manage Your Tasks.</h1>
-          <p>Use kanban to organize and prioritize your projects in an efficient way.</p>
-          <button>Get Started</button>
-        </p>
+        <div className={style.content}>
+          <h1 className="animated bounceInUp">Manage Your Tasks.</h1>
+          <p className="animated bounceInUp">
+            Use kanban to organize and prioritize your projects in an efficient way.
+          </p>
+          <button className="animated bounceInUp">Get Started</button>
+        </div>
       </Container>
     </div>
   );

@@ -3,12 +3,65 @@
 
 .landing {
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.bg_circle {
+  position: absolute;
+  z-index: -1;
+  top: -50rem;
+  right: -50rem;
+  border-radius: 50%;
+  background: linear-gradient(to right top, var(--yellow-green), var(--blue-green) 50%);
+  opacity: 0.8;
+  width: 100rem;
+  height: 100rem;
+  pointer-events: none;
+  box-shadow: inset 12px -10px 20px -10px rgba(0, 0, 0, 0.45);
+}
+
+.bg_illustration {
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
   background-image: url(./landing.svg);
   background-repeat: no-repeat;
   background-position: 60% 2rem;
   background-size: contain;
-  display: flex;
-  flex-direction: column;
+  pointer-events: none;
+  animation: slideInRight 1.2s ease-out;
+}
+
+.bg_square {
+  position: absolute;
+  z-index: -1;
+  bottom: -5rem;
+  left: -5rem;
+  height: 16rem;
+  width: 16rem;
+  border-radius: 2rem;
+  background-color: rgba(211, 237, 254, 0.61);
+  transform-origin: center center;
+  transform: rotate(20deg);
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(10rem);
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .landing > nav {
@@ -27,7 +80,7 @@
 }
 
 .nav_link {
-  color: inherit;
+  color: white;
   font-size: 1rem;
   font-weight: 700;
   margin-left: 3rem;
@@ -45,6 +98,18 @@
   max-width: 45%;
   padding-left: 0.45rem;
   transform: translateY(-4rem);
+}
+
+.content > *:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.content > *:nth-child(2) {
+  animation-delay: 100ms;
+}
+
+.content > *:nth-child(3) {
+  animation-delay: 200ms;
 }
 
 .content > h1 {
@@ -66,8 +131,8 @@
   border: 0;
   border-radius: 50rem;
   padding: 0.8rem 1.5rem;
-  box-shadow: 0 10px 30px rgba(238, 22, 152, 0.212);
-  background: linear-gradient(to right top, rgb(238, 22, 150), rgb(159, 20, 194));
+  box-shadow: 0 10px 30px rgba(119, 238, 22, 0.432);
+  background: linear-gradient(to right top, var(--yellow-green), var(--blue-green));
   color: white;
   font-weight: 700;
   font-size: 1rem;

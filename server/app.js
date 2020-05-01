@@ -1,5 +1,5 @@
 const Koa = require("koa");
-const static = require("koa-static");
+const static = require("koa-static-cache");
 const path = require("path");
 const fs = require("fs");
 
@@ -9,7 +9,14 @@ const STATIC = process.env.STATIC || "../build";
 const app = new Koa();
 
 const staticPath = path.resolve(STATIC);
-app.use(static(staticPath));
+app.use(
+  static({
+    dir: staticPath,
+    buffer: true,
+    gzip: true,
+    usePrecompiledGzip: true,
+  })
+);
 
 const indexHtml = fs.readFileSync(path.join(staticPath, "index.html"));
 app.use((ctx) => {

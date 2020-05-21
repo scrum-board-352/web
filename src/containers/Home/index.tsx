@@ -1,9 +1,15 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import style from "./style.module.css";
 
 function Home() {
+  const history = useHistory();
+
+  function gotoLogin() {
+    history.push("/login");
+  }
+
   return (
     <div className={style.landing}>
       <div className={style.bg_circle}></div>
@@ -26,7 +32,9 @@ function Home() {
           <p className="animated bounceInUp">
             Use kanban to organize and prioritize your projects in an efficient way.
           </p>
-          <button className="animated bounceInUp">Get Started</button>
+          <button onClick={gotoLogin} className="animated bounceInUp">
+            Get Started
+          </button>
         </div>
       </Container>
     </div>

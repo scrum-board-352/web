@@ -28,7 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && gzipper --verbose ./build",
-    "heroku-postbuild": "./scripts/build.sh",
+    "heroku-postbuild": "chmod +x ./scripts/build.sh && ./scripts/build.sh",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

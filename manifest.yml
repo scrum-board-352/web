@@ -1,9 +1,0 @@
----
-applications:
-  - name: scrumboard
-    memory: 512M
-    instances: 1
-    command: npm start
-    path: server
-    env:
-      STATIC: "./build"

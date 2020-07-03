@@ -2,9 +2,10 @@ const Koa = require("koa");
 const staticFiles = require("koa-static-cache");
 const path = require("path");
 const fs = require("fs");
+require("./init");
 
 const PORT = Number(process.env.PORT) || 3000;
-const STATIC_PATH = path.join(__dirname, "build");
+const STATIC_PATH = path.join(__dirname, "../build");
 
 const app = new Koa();
 

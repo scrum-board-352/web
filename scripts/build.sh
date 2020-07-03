@@ -1,8 +1,7 @@
 #!/usr/bin/env sh
 
-# build front-end bundle and move output files into server
+# build front-end bundle
 npm run build
-mv ./build ./server
 
 # install dependencies for server
 cd server

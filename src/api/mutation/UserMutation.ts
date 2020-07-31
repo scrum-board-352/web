@@ -14,7 +14,7 @@ mutation register($username: String!, $password: String!, $email: String!) {
 `;
 
 const updateMutation = `
-mutation updateUser($username: String!, $password: String, $power: String, $avatar: String, $uid: String) {
+mutation updateUser($username: String!, $password: String, $power: String, $avatar: String, $authCheckInput: AuthCheckInput) {
   updateUser(selectionInput: {
     userInput: {
       username: $username
@@ -22,7 +22,7 @@ mutation updateUser($username: String!, $password: String, $power: String, $avat
       power: $power
       icon: $avatar
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }){
       id
       name: username

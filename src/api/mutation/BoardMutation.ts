@@ -1,11 +1,11 @@
 const createBoard = `
-mutation createBoard($projectId: String, $uid: String) {
+mutation createBoard($projectId: String, $authCheckInput: AuthCheckInput) {
   createBoard(
     selectionInput: {
     boardInput: {
       projectId: $projectId
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }){
   	id
     createTime
@@ -14,12 +14,12 @@ mutation createBoard($projectId: String, $uid: String) {
 `;
 
 const removeBoard = `
-mutation removeBoard($boardId: String, $uid: String) {
+mutation removeBoard($boardId: String, $authCheckInput: AuthCheckInput) {
   removeBoard(selectionInput: {
     boardInput: {
       id: $boardId
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }) {
     success
     message

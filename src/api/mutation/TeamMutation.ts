@@ -1,12 +1,12 @@
 const createTeamMutation = `
-mutation createTeam($creator:String, $name:String, $description: String, $uid: String){
+mutation createTeam($creator:String, $name:String, $description: String, $authCheckInput: AuthCheckInput){
   createTeam(selectionInput: {
     teamInput: {
       creator: $creator
       teamname: $name
       description: $description
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }){
     id
     name: teamname
@@ -16,7 +16,7 @@ mutation createTeam($creator:String, $name:String, $description: String, $uid: S
 }
 `;
 const updateTeam = `
-mutation updateTeam($id:String, $creator:String, $name:String, $description:String, $uid: String){
+mutation updateTeam($id:String, $creator:String, $name:String, $description:String, $authCheckInput: AuthCheckInput){
     updateTeam(selectionInput: {
     teamInput: {
       id: $id
@@ -24,7 +24,7 @@ mutation updateTeam($id:String, $creator:String, $name:String, $description:Stri
       teamname: $name
       description: $description
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }){
     id
     name: teamname
@@ -35,12 +35,12 @@ mutation updateTeam($id:String, $creator:String, $name:String, $description:Stri
 `;
 
 const removeTeam = `
-mutation removeTeam($teamId: String, $uid: String){
+mutation removeTeam($teamId: String, $authCheckInput: AuthCheckInput){
   removeTeam(selectionInput: {
     teamInput: {
       id: $teamId
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }) {
     success
     message

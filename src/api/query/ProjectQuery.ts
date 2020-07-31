@@ -1,10 +1,10 @@
 const selectProjectByCreatorQuery = `
-  query selectProjectByCreator($creator: String!, $uid: String) {
+  query selectProjectByCreator($creator: String!, $authCheckInput: AuthCheckInput) {
     selectProjectByCreator(selectionInput: {
       projectInput: {
         creator: $creator
       }
-      uid: $uid
+      authCheckInput: $authCheckInput
     }) {
         id
         name: projectName
@@ -19,12 +19,12 @@ const selectProjectByCreatorQuery = `
 `;
 
 const selectProjectById = `
-  query selectProjectById($projectId: String!, $uid: String) {
+  query selectProjectById($projectId: String!, $authCheckInput: AuthCheckInput) {
     selectProjectById(selectionInput: {
       projectInput: {
         id: $projectId
       }
-      uid: $uid
+      authCheckInput: $authCheckInput
     }) {
         id
         name: projectName

@@ -1,5 +1,5 @@
 const createComment = `
-mutation createCommit($description: String, $announcer: String, $receiver: String, $cardId: String, $uid: String){
+mutation createCommit($description: String, $announcer: String, $receiver: String, $cardId: String, $authCheckInput: AuthCheckInput){
   createCommit(selectionInput: {
     commitInput: {
       description:$description
@@ -7,7 +7,7 @@ mutation createCommit($description: String, $announcer: String, $receiver: Strin
       receiver:$receiver
       cardId:$cardId
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }){
     id
     description
@@ -25,14 +25,14 @@ mutation createCommit($description: String, $announcer: String, $receiver: Strin
 `;
 
 const updateComment = `
-mutation updateCommit($description: String, $read: Boolean, $id: String, $uid: String){
+mutation updateCommit($description: String, $read: Boolean, $id: String, $authCheckInput: AuthCheckInput){
   updateCommit(selectionInput: {
     commitInput: {
       description: $description
       read: $read
       id: $id
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }){
     id
     description
@@ -50,12 +50,12 @@ mutation updateCommit($description: String, $read: Boolean, $id: String, $uid: S
 `;
 
 const removeComment = `
-mutation removeCommit($commitId: String, $uid: String){
+mutation removeCommit($commitId: String, $authCheckInput: AuthCheckInput){
   removeCommit(selectionInput: {
     commitInput: {
       id: $commitId
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }) {
     success
     message

@@ -7,7 +7,7 @@ mutation createCard($title: String,
   $founder: String, 
   $status: String, 
   $boardId: String,
-  $uid: String) {
+  $authCheckInput: AuthCheckInput) {
   createCard(selectionInput: {
     cardInput: {
       title: $title
@@ -19,7 +19,7 @@ mutation createCard($title: String,
       status: $status
       boardId: $boardId
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }){
     id
     createTime
@@ -44,7 +44,7 @@ mutation updateCard($id: String,
   $processor: String, 
   $status: String,
   $boardId: String,
-  $uid: String) {
+  $authCheckInput: AuthCheckInput) {
   updateCard(selectionInput: {
     cardInput: {
       id: $id
@@ -56,7 +56,7 @@ mutation updateCard($id: String,
       status: $status
       boardId: $boardId
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }){
     id
     createTime
@@ -73,12 +73,12 @@ mutation updateCard($id: String,
 `;
 
 const removeCard = `
-mutation removeCard($cardId: String, $uid: String){
+mutation removeCard($cardId: String, $authCheckInput: AuthCheckInput){
   removeCard(selectionInput: {
     cardInput: {
       id: $cardId
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }) {
     success
     message

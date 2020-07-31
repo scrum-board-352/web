@@ -1,10 +1,10 @@
 const selectCardsByBoardId = `
-query selectCardsByBoardId($boardId: String!, $uid: String){
+query selectCardsByBoardId($boardId: String!, $authCheckInput: AuthCheckInput){
   selectCardsByBoardId(selectionInput: {
     cardInput: {
       boardId: $boardId
     }
-    uid: $uid
+    authCheckInput: $authCheckInput
   }){
     id
     createTime

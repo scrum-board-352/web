@@ -1,12 +1,12 @@
-namespace BoardModel {
-  export interface CreateInfo {
-    projectId: string;
-  }
-
+namespace AuchCheck {
   export interface Info {
-    id: string;
-    createTime: string;
+    username?: string;
+    teamId?: string;
+    projectId?: string;
+    boardId?: string;
+    cardId?: string;
+    commentId?: string;
   }
 }
 
-export default BoardModel;
+export default AuchCheck;

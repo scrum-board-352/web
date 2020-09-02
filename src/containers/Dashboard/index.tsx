@@ -23,7 +23,7 @@ enum Path {
 export default function Dashboard() {
   const { path, url } = useRouteMatch();
   const history = useHistory();
-  const user: UserModel.PrivateInfo = useStore("user");
+  const { userOutput: user }: UserModel.LoginOutput = useStore("user");
 
   return (
     <div className="d-flex">

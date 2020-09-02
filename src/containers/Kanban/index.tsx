@@ -1,4 +1,3 @@
-import auth from "api/base/auth";
 import { createBoard, removeBoard, selectBoardsByProjectId } from "api/Board";
 import { selectCardsByBoardId } from "api/Card";
 import { selectProjectById } from "api/Project";
@@ -73,9 +72,9 @@ export default function Kanban() {
           throw ErrorType.NotFound;
         }
         const res: any = await Promise.all([
-          auth({ projectId }, selectProjectById, { projectId }),
-          auth({ projectId }, selectBoardsByProjectId, { projectId }),
-          boardId ? auth({ projectId }, selectCardsByBoardId, { boardId }) : Promise.resolve([]),
+          selectProjectById({ projectId }),
+          selectBoardsByProjectId({ projectId }),
+          boardId ? selectCardsByBoardId({ boardId }) : Promise.resolve([]),
         ]);
         project = res[0];
         if (!project.id) {
@@ -182,7 +181,7 @@ export default function Kanban() {
     });
     let newBoard: BoardModel.Info | null = null;
     try {
-      newBoard = await createBoardLoadingOps(auth, { projectId }, createBoard, {
+      newBoard = await createBoardLoadingOps(createBoard, {
         projectId: projectId as string,
       });
     } catch (err) {
@@ -215,7 +214,7 @@ export default function Kanban() {
       title: "Deleting...",
       type: "info",
     });
-    const res = await auth({ projectId }, removeBoard, { boardId });
+    const res = await removeBoard({ boardId });
     const messageOption: Message = {
       title: "",
       type: "error",

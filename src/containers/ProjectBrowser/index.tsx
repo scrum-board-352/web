@@ -1,4 +1,3 @@
-import auth from "api/base/auth";
 import { createProject, removeProject, selectProjectByCreator } from "api/Project";
 import { selectTeamByUsername } from "api/Team";
 import Empty from "components/Empty";
@@ -41,12 +40,12 @@ export default function ProjectBrowser() {
   const [projectData, setProjectData] = useState<ProjectModel.Info[]>([]);
   const [loading, loadingOps] = useLoading(true);
   const [noProject, setNoProject] = useState(false);
-  const currentUser: UserModel.PrivateInfo = useStore("user");
+  const { userOutput: currentUser }: UserModel.LoginOutput = useStore("user");
 
   useEffect(() => {
     // fetch project data.
     loadingOps(async () => {
-      const projectData = await auth(null, selectProjectByCreator, { creator: currentUser.name });
+      const projectData = await selectProjectByCreator({ creator: currentUser.name });
       if (projectData.length === 0) {
         setNoProject(true);
       } else if (projectData.length > 0) {
@@ -73,7 +72,7 @@ export default function ProjectBrowser() {
   useEffect(() => {
     // teams by user.
     (async () => {
-      const teams = await auth(null, selectTeamByUsername, { username: currentUser.name });
+      const teams = await selectTeamByUsername({ username: currentUser.name });
       setTeams(teams);
     })();
   }, []);
@@ -85,7 +84,7 @@ export default function ProjectBrowser() {
       ...values,
       creator: currentUser.name,
     };
-    const newProject = await createProjectLoadingOps(auth, null, createProject, project);
+    const newProject = await createProjectLoadingOps(createProject, project);
     if (newProject.id) {
       message.success("Create Project Succeed!");
       setProjectData([...projectData, newProject]);
@@ -130,13 +129,9 @@ export default function ProjectBrowser() {
 
   async function handleDeleteProject(project: ProjectModel.Info) {
     const projectId = project.id;
-    const res: ResultOutput = await deleteProjectLoadingOps(
-      project.id,
-      auth,
-      { projectId },
-      removeProject,
-      { projectId }
-    );
+    const res: ResultOutput = await deleteProjectLoadingOps(project.id, removeProject, {
+      projectId,
+    });
     if (res.success) {
       message.success("Delete Succeed!", res.message);
       setProjectData((projectData) => removeItem(projectData, project));

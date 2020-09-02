@@ -1,4 +1,3 @@
-import auth from "api/base/auth";
 import { selectTeamByUsername, sendEmailToInviteReceiverJoinTeam } from "api/Team";
 import { selectUserBySubstring } from "api/User";
 import Img from "components/Img";
@@ -40,7 +39,7 @@ export default function User() {
   const [projects, setProjects] = useState<ProjectModel.Info[]>([]);
   const [teams, setTeams] = useState<TeamModel.Info[]>([]);
   const [loading, loadingOps] = useLoading(true);
-  const currentUser: UserModel.PrivateInfo = useStore("user");
+  const { userOutput: currentUser }: UserModel.LoginOutput = useStore("user");
 
   function isSelf() {
     return userInfo.id === currentUser.id;
@@ -49,7 +48,7 @@ export default function User() {
   useEffect(() => {
     loadingOps(async () => {
       // TODO: fetch projects, teams info.
-      const users = await auth(null, selectUserBySubstring, {
+      const users = await selectUserBySubstring({
         usernameSubstring: username as string,
       });
       const user = users.find((u) => u.name === username);
@@ -74,16 +73,11 @@ export default function User() {
       setShowSelectTeamForm(false);
       return;
     }
-    const res = await inviteLoadingOps(
-      auth,
-      { teamId: values.teamId },
-      sendEmailToInviteReceiverJoinTeam,
-      {
-        receiver: userInfo.name,
-        receiverMail: userInfo.email,
-        teamId: values.teamId,
-      }
-    );
+    const res = await inviteLoadingOps(sendEmailToInviteReceiverJoinTeam, {
+      receiver: userInfo.name,
+      receiverMail: userInfo.email,
+      teamId: values.teamId,
+    });
     if (res.success) {
       message.success("Email Sent Succeed!", res.message);
     } else {
@@ -96,7 +90,7 @@ export default function User() {
 
   useEffect(() => {
     (async () => {
-      const myTeams = await auth(null, selectTeamByUsername, { username: currentUser.name });
+      const myTeams = await selectTeamByUsername({ username: currentUser.name });
       setMyTeams(myTeams);
     })();
   }, []);

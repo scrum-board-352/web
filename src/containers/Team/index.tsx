@@ -1,4 +1,3 @@
-import auth from "api/base/auth";
 import { createTeam, removeTeam, selectTeamByUsername } from "api/Team";
 import { selectPeopleByTeamId, selectUserBySubstring } from "api/User";
 import Empty from "components/Empty";
@@ -42,14 +41,14 @@ export default function Team() {
   const [noPeopleMatched, setNoPeopleMatched] = useState(false);
   const [noPeople, setNoPeople] = useState(false);
   const [noTeam, setNoTeam] = useState(false);
-  const currentUser: UserModel.PrivateInfo = useStore("user");
+  const { userOutput: currentUser }: UserModel.LoginOutput = useStore("user");
 
   const [teamsLoading, teamsLoadingOps] = useLoading();
 
   useEffect(() => {
     // fetch teams.
     teamsLoadingOps(async () => {
-      const teams = await auth(null, selectTeamByUsername, { username: currentUser.name });
+      const teams = await selectTeamByUsername({ username: currentUser.name });
       setTeams(teams);
     });
   }, []);
@@ -70,7 +69,7 @@ export default function Team() {
       const recentTeams = teams.length < 5 ? teams : teams.slice(0, 5);
       const recentTeamsId = recentTeams.map((team) => team.id);
       const recentPeople = await Promise.all(
-        recentTeamsId.map((teamId) => auth({ teamId }, selectPeopleByTeamId, { teamId }))
+        recentTeamsId.map((teamId) => selectPeopleByTeamId({ teamId }))
       );
       const people = deduplication(recentPeople.flat(), (user) => user.id);
       setPeople(people);
@@ -91,7 +90,7 @@ export default function Team() {
       return;
     }
     setSearchPeople(true);
-    const filteredPeople = await peopleLoadingOps(auth, null, selectUserBySubstring, {
+    const filteredPeople = await peopleLoadingOps(selectUserBySubstring, {
       usernameSubstring: name,
     });
     if (filteredPeople.length) {
@@ -104,11 +103,11 @@ export default function Team() {
 
   const [showCreateTeam, setShowCreateTeam] = useState(false);
   const [createTeamLoading, createTeamLoadingOps] = useLoading();
-  const user: UserModel.PrivateInfo = useStore("user");
+  const { userOutput: user }: UserModel.LoginOutput = useStore("user");
 
   async function handleCreateTeamSubmit(values: TeamFormValues) {
     const team: TeamModel.CreateInfo = { ...values, creator: user.name };
-    const newTeam = await createTeamLoadingOps(auth, null, createTeam, team);
+    const newTeam = await createTeamLoadingOps(createTeam, team);
     setShowCreateTeam(false);
     setTeams((teams) => addItem(teams, newTeam));
   }
@@ -124,7 +123,7 @@ export default function Team() {
   async function handleDeleteTeamClick(team: TeamModel.Info) {
     message.info("Deleting...");
     const teamId = team.id;
-    const res: ResultOutput = await auth({ teamId }, removeTeam, { teamId });
+    const res: ResultOutput = await removeTeam({ teamId });
     if (res.success) {
       message.success("Delete Team Succeed!");
       setTeams((teams) => teams.filter((t) => t.id !== team.id));

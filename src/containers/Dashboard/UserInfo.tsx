@@ -1,4 +1,3 @@
-import auth from "api/base/auth";
 import { logout } from "api/User";
 import Img from "components/Img";
 import { message } from "components/MessageBox";
@@ -27,7 +26,7 @@ export default function UserInfo(props: Props) {
       title: "Logging out...",
       type: "info",
     });
-    const res = await auth(null, logout, { username: props.user.name });
+    const res = await logout({ username: props.user.name });
     if (res.success) {
       message({
         title: "Logout Succeed!",

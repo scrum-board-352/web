@@ -1,18 +1,20 @@
 import { GraphQLClient } from "graphql-request";
 import { Variables } from "graphql-request/dist/src/types";
-import { getUid } from "./auth";
+import { getStore } from "rlax";
 import { graphqlUrl } from "./url";
 
 class Client extends GraphQLClient {
-  constructor(endpoint: string) {
-    super(endpoint);
-  }
+  request<T extends any>(query: string, variables?: Variables): Promise<T> {
+    const user = getStore("user");
 
-  async request(query: string, variables: Variables) {
-    const uid = getUid();
-    if (uid) {
-      variables["uid"] = uid;
+    if (user) {
+      const token = user.token;
+
+      if (token) {
+        this.setHeader("authorization", `Bearer ${token}`);
+      }
     }
+
     return super.request(query, variables);
   }
 }

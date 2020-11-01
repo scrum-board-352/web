@@ -1,4 +1,3 @@
-import auth from "api/base/auth";
 import {
   createCard as createCardApi,
   removeCard as deleteCardApi,
@@ -74,7 +73,7 @@ function getCurrentCardId() {
 }
 
 async function updateCard(newCard: CardModel.UpdateInfo) {
-  const updatedCard = await auth({ projectId }, updateCardApi, newCard);
+  const updatedCard = await updateCardApi(newCard);
   const oldCardIndex = cards.findIndex((c) => c.id === updatedCard.id);
   if (oldCardIndex >= 0) {
     if (newCard.boardId && newCard.boardId !== boardId) {
@@ -90,7 +89,7 @@ async function updateCard(newCard: CardModel.UpdateInfo) {
 }
 
 async function deleteCard(card: CardModel.Info) {
-  const res = await auth({ projectId }, deleteCardApi, { cardId: card.id });
+  const res = await deleteCardApi({ cardId: card.id });
   if (res.success) {
     const cardIndex = cards.findIndex((c) => c.id === card.id);
     if (cardIndex >= 0) {
@@ -118,7 +117,7 @@ function getBoardIds() {
 }
 
 async function createCard(card: CardModel.CreateInfo) {
-  const createdCard = await auth({ projectId }, createCardApi, card);
+  const createdCard = await createCardApi(card);
   cards.push(createdCard);
   updateView();
 }

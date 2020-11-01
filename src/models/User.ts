@@ -20,6 +20,11 @@ namespace UserModel {
     email: string;
   }
 
+  export interface LoginOutput {
+    userOutput: PrivateInfo;
+    token: string;
+  }
+
   export interface UpdateInfo {
     username: string;
     password?: string;

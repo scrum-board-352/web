@@ -1,11 +1,41 @@
 const loginQuery = `
-  query login($username: String!, $password: String!, $uid: String) {
+  query login($username: String!, $password: String!) {
     login(selectionInput: {
       userInput: {
         username: $username
         password: $password
       }
-      uid: $uid
+    }) {
+      userOutput {
+        id
+        name: username
+        email
+        avatar: icon
+      }
+      token
+    }
+  }
+`;
+
+const logoutQuery = `
+  query logout($username: String!) {
+  	logout(selectionInput: {
+      userInput: {
+        username: $username
+      }
+    }) {
+      success
+  	  message
+  	}
+  }
+`;
+
+const selectUser = `
+  query selectUserBySubstring($usernameSubstring: String!) {
+    selectUserBySubstring(selectionInput: {
+      userInput: {
+        username: $usernameSubstring
+      }
     }) {
       id
       name: username
@@ -15,49 +45,19 @@ const loginQuery = `
   }
 `;
 
-const logoutQuery = `
-  query logout($username: String!, $uid: String) {
-  	logout(selectionInput: {
-      userInput: {
-        username: $username
-      }
-      uid: $uid
-    }) {
-      success
-  	  message
-  	}
-  }
-`;
-
-const selectUser = `
-query selectUserBySubstring($usernameSubstring: String!, $uid: String){
-  selectUserBySubstring(selectionInput: {
-    userInput: {
-      username: $usernameSubstring
-    }
-    uid: $uid
-  }) {
-    id
-    name: username
-    email
-    avatar: icon
-  }
-}
-`;
-
 const selectPeopleByTeamId = `
-query selectPeopleByTeamId($teamId: String!, $uid: String){
-  selectPeopleByTeamId(selectionInput: {
-    teamInput: {
-      id: $teamId
+  query selectPeopleByTeamId($teamId: String!) {
+    selectPeopleByTeamId(selectionInput: {
+      teamInput: {
+        id: $teamId
+      }
+    }) {
+      id
+      name: username
+      email
+      avatar: icon
     }
-    uid: $uid
-  }) {
-    id
-    name: username
-    email
-    avatar: icon
   }
-}
 `;
+
 export default { loginQuery, logoutQuery, selectUser, selectPeopleByTeamId };

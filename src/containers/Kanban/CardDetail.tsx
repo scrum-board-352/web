@@ -1,4 +1,3 @@
-import auth from "api/base/auth";
 import { createComment, removeComment, selectCommentsByCardId, updateComment } from "api/Message";
 import Empty from "components/Empty";
 import Loading from "components/Loading";
@@ -33,7 +32,7 @@ type UpdateCommentFormValues = Pick<MessageModel.UpdateInfo, "description">;
 export default function CardDetail(props: Props) {
   const [comments, setComments] = useState<Array<MessageModel.Info>>([]);
   const [commentsLoading, commentsLoadingOps] = useLoading(true);
-  const currentUser: UserModel.PrivateInfo = useStore("user");
+  const { userOutput: currentUser }: UserModel.LoginOutput = useStore("user");
 
   useEffect(() => {
     const cardId = props.card.id;
@@ -42,27 +41,20 @@ export default function CardDetail(props: Props) {
     }
     commentsLoadingOps(async () => {
       // fetch card comments.
-      const comments = await auth({ projectId: props.projectId }, selectCommentsByCardId, {
-        cardId,
-      });
+      const comments = await selectCommentsByCardId({ cardId });
       setComments(comments);
     });
-  }, [props.card.id, props.projectId]);
+  }, [props.card.id]);
 
   const [createCommentLoading, createCommentLoadingOps] = useLoading();
 
   async function handleCreateComment(output: Output) {
-    const newComment = await createCommentLoadingOps(
-      auth,
-      { projectId: props.projectId },
-      createComment,
-      {
-        announcer: currentUser.name,
-        description: output.content,
-        receiver: output.receivers.join(","),
-        cardId: props.card.id,
-      }
-    );
+    const newComment = await createCommentLoadingOps(createComment, {
+      announcer: currentUser.name,
+      description: output.content,
+      receiver: output.receivers.join(","),
+      cardId: props.card.id,
+    });
     setComments((comments) => addItem(comments, newComment));
   }
 
@@ -86,17 +78,10 @@ export default function CardDetail(props: Props) {
           },
         ],
         async onSubmit(values) {
-          const updatedComment = await auth(
-            {
-              username: comment.announcer.name,
-              projectId: props.projectId,
-            },
-            updateComment,
-            {
-              id: comment.id,
-              ...values,
-            }
-          );
+          const updatedComment = await updateComment({
+            id: comment.id,
+            ...values,
+          });
           if (updatedComment && updatedComment.id) {
             message.success("Update Succeed!");
             setComments((comments) => replaceItem(comments, (c) => c.id, updatedComment));
@@ -109,16 +94,9 @@ export default function CardDetail(props: Props) {
 
     async function deleteThisComment() {
       message.info("Deleting...");
-      const res = await auth(
-        {
-          username: comment.announcer.name,
-          projectId: props.projectId,
-        },
-        removeComment,
-        {
-          commentId: comment.id,
-        }
-      );
+      const res = await removeComment({
+        commentId: comment.id,
+      });
       if (res.success) {
         message.success("Delete Succeed!");
         setComments((comments) => comments.filter((c) => c.id !== comment.id));

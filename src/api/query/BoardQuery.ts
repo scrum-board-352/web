@@ -1,15 +1,14 @@
 const selectBoardsByProjectIdQuery = `
-query selectBoardsByProjectId($projectId: String!, $uid: String){
-  selectBoardsByProjectId(selectionInput: {
-    boardInput: {
-      projectId: $projectId
+  query selectBoardsByProjectId($projectId: String!) {
+    selectBoardsByProjectId(selectionInput: {
+      boardInput: {
+        projectId: $projectId
+      }
+    }) {
+      id
+      createTime
     }
-    uid: $uid
-  }) {
-    id
-    createTime
   }
-}
 `;
 
 export default { selectBoardsByProjectIdQuery };

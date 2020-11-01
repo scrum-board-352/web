@@ -5,7 +5,7 @@ import User from "containers/User";
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
-import rlax from "rlax";
+import * as rlax from "rlax";
 import store from "store";
 import history from "utils/history";
 import Home from "./containers/Home";

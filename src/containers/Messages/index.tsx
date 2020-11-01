@@ -1,4 +1,3 @@
-import auth from "api/base/auth";
 import { getCommentByReceiver, updateComment } from "api/Message";
 import Checkbox from "components/Checkbox";
 import Empty from "components/Empty";
@@ -18,18 +17,15 @@ import "./style.css";
 export default function Messages() {
   const [comments, setComments] = useState<Array<MessageModel.InfoOutput>>([]);
   const [loading, loadingOps] = useLoading(true);
-  const currentUser: UserModel.PrivateInfo = useStore("user");
+  const { userOutput: currentUser }: UserModel.LoginOutput = useStore("user");
   const [noMessage, setNoMessage] = useState(false);
 
   useEffect(() => {
     // fetch messages.
     loadingOps(async () => {
-      const comments: Array<MessageModel.InfoOutput> = await loadingOps(
-        auth,
-        null,
-        getCommentByReceiver,
-        { receiver: currentUser.name }
-      );
+      const comments: Array<MessageModel.InfoOutput> = await loadingOps(getCommentByReceiver, {
+        receiver: currentUser.name,
+      });
       setComments(comments);
       if (comments.length) {
         setNoMessage(false);
@@ -72,7 +68,7 @@ export default function Messages() {
       return;
     }
     const projectId = comment.posInfo.projectId;
-    return await auth({ projectId, username: currentUser.name }, updateComment, { id, read: true });
+    return await updateComment({ id, read: true });
   }
 
   const [markAsReadLoading, setMarkAsReadLoading] = useState(false);

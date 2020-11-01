@@ -104,7 +104,7 @@ export default function CardCol(props: Props) {
 
   const dropClass = selected ? style.selected : droppable ? style.droppable : "";
 
-  const currentUser: UserModel.PrivateInfo = useStore("user");
+  const { userOutput: currentUser }: UserModel.LoginOutput = useStore("user");
   const boardId = cardsManager.getCurrentBoardId();
 
   async function handleSubmitCreateCard(values: CardModel.CreateInfo) {

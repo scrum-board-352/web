@@ -30,7 +30,7 @@ function getAllReceivers(content: string): Array<string> {
 }
 
 export default function CommentInput(props: Props) {
-  const currentUser: UserModel.PrivateInfo = useStore("user");
+  const { userOutput: currentUser }: UserModel.LoginOutput = useStore("user");
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
 
   function handleSubmit() {

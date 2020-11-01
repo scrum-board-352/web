@@ -1,5 +1,5 @@
+import { getStore } from "rlax";
 import joinUrl from "utils/join-url";
-import { getUid } from "./auth";
 import { restApiUrl } from "./url";
 
 function toUrlEncoded(data: object) {
@@ -16,9 +16,19 @@ function toMuiltipart(data: object) {
 
 type PostContentType = "urlencoded" | "multipart";
 
+function getToken(): string {
+  try {
+    const { token } = getStore("user");
+
+    return token;
+  } catch {
+    throw new Error("not logged in");
+  }
+}
+
 export async function post(url: string, data: object, type: PostContentType = "urlencoded") {
   const headers: RequestInit["headers"] = {
-    Authorization: "Bearer " + getUid(),
+    Authorization: "Bearer " + getToken(),
   };
   let body: string | FormData;
 

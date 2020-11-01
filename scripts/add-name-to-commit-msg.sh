@@ -1,8 +1,9 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 . "$(dirname $0)/utils.sh"
 
-file=$HUSKY_GIT_PARAMS
+params=(`echo "$HUSKY_GIT_PARAMS"`)
+file="${params[0]}"
 user=$(git config --local user.name)
 
 if [ -z "$user" ]; then
@@ -10,10 +11,10 @@ if [ -z "$user" ]; then
   exit 1
 fi
 
-message=$(cat $file)
+message=$(cat "$file")
 prefix="[$user]"
 
 start_with "$message" "$prefix"
 if [ $? -eq 0 ]; then
-  echo "$prefix $message" > $file
+  echo "$prefix $message" > "$file"
 fi

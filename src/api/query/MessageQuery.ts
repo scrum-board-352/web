@@ -1,15 +1,14 @@
 const getCommentByReceiverQuery = `
-  query getCommitByReceiver($receiver: String!, $uid: String){
+  query getCommitByReceiver($receiver: String!) {
     getCommitByReceiver(selectionInput: {
       commitInput: {
         receiver:$receiver
       }
-      uid: $uid
-    }){
-      info: commitType{
+    }) {
+      info: commitType {
         id
         description
-        announcer{
+        announcer {
           id
           name: username
           avatar: icon
@@ -18,7 +17,7 @@ const getCommentByReceiverQuery = `
         isRead: read
         cardId
       }
-      posInfo:commitPos{
+      posInfo: commitPos {
         cardId
         boardId
         projectId
@@ -28,16 +27,15 @@ const getCommentByReceiverQuery = `
 `;
 
 const getCommentByCardId = `
-  query selectCommentsByCardId($cardId: String!, $uid: String){
+  query selectCommentsByCardId($cardId: String!) {
     selectCommentsByCardId(selectionInput: {
       commitInput: {
-        cardId:$cardId
+        cardId: $cardId
       }
-      uid: $uid
-    }){
+    }) {
       id
       description
-      announcer{
+      announcer {
         id
     		name: username
     		avatar: icon

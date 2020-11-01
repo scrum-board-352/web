@@ -1,33 +1,31 @@
 const sendEmailQuery = `
-query sendEmailToInviteReceiverJoinTeam($receiverMail: String!, $receiver: String!, $teamId: String!, $uid: String) {
-  sendEmailToInviteReceiverJoinTeam(selectionInput: {
-    emailInput: {
-      receiverMail: $receiverMail
-      receiver: $receiver
-      teamId: $teamId
+  query sendEmailToInviteReceiverJoinTeam($receiverMail: String!, $receiver: String!, $teamId: String!) {
+    sendEmailToInviteReceiverJoinTeam(selectionInput: {
+      emailInput: {
+        receiverMail: $receiverMail
+        receiver: $receiver
+        teamId: $teamId
+      }
+    }) {
+      success
+      message
     }
-    uid: $uid
-}){
-    success
-    message
   }
-}
 `;
 
 const selectTeamByUser = `
-query selectTeamByUser($username: String!, $uid: String){
-  selectTeamByUsername(selectionInput: {
-    userInput: {
-      username: $username
+  query selectTeamByUser($username: String!) {
+    selectTeamByUsername(selectionInput: {
+      userInput: {
+        username: $username
+      }
+    }) {
+      id
+      name: teamname
+      creator
+      description
     }
-    uid: $uid
-  }) {
-    id
-    name: teamname
-    creator
-    description
   }
-}
 `;
 
 export default { sendEmailQuery, selectTeamByUser };

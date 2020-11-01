@@ -1,4 +1,3 @@
-import auth from "api/base/auth";
 import { updateUser, uploadAvatar } from "api/User";
 import LoadingButton from "components/LoadingButton";
 import { message } from "components/MessageBox";
@@ -113,7 +112,7 @@ export default function AvatarEditor(props: Props) {
     }
   }
 
-  const currentUser: UserModel.PrivateInfo = useStore("user");
+  const { userOutput: currentUser }: UserModel.LoginOutput = useStore("user");
 
   async function handleUploadAvatar(imageBlob: Blob) {
     const res = await uploadAvatar(imageBlob);
@@ -121,7 +120,7 @@ export default function AvatarEditor(props: Props) {
       return null;
     }
     const url = res.message;
-    const updatedUser = await auth(null, updateUser, {
+    const updatedUser = await updateUser({
       username: currentUser.name,
       avatar: url,
     });

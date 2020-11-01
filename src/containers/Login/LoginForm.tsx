@@ -1,4 +1,3 @@
-import auth from "api/base/auth";
 import { login } from "api/User";
 import { message } from "components/MessageBox";
 import useFormData from "hooks/useFormData";
@@ -42,8 +41,9 @@ export default function LoginForm(props?: Props) {
       return;
     }
 
-    const userInfo = await loadingOps(auth, null, login, loginForm);
-    if (null === userInfo.id) {
+    const loginOutput = await loadingOps(login, loginForm);
+
+    if (!loginOutput.token) {
       message({
         type: "error",
         title: "Login Failed!",
@@ -56,7 +56,7 @@ export default function LoginForm(props?: Props) {
         type: "success",
         title: "Login Succed!",
       });
-      setStore("user", userInfo);
+      setStore("user", loginOutput);
       history.push("/dashboard");
     }
   }

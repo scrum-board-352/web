@@ -1,4 +1,4 @@
-import rlax from "rlax";
+import * as rlax from "rlax";
 
 export function clearUserState() {
   rlax.clear();

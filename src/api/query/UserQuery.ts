@@ -1,16 +1,18 @@
 const loginQuery = `
-  query login($username: String!, $password: String!, $authCheckInput: AuthCheckInput) {
+  query login($username: String!, $password: String!) {
     login(selectionInput: {
       userInput: {
         username: $username
         password: $password
       }
-      authCheckInput: $authCheckInput
     }) {
-      id
-      name: username
-      email
-      avatar: icon
+      userOutput {
+        id
+        name: username
+        email
+        avatar: icon
+      }
+      token
     }
   }
 `;

@@ -18,12 +18,11 @@ const loginQuery = `
 `;
 
 const logoutQuery = `
-  query logout($username: String!, $authCheckInput: AuthCheckInput) {
+  query logout($username: String!) {
   	logout(selectionInput: {
       userInput: {
         username: $username
       }
-      authCheckInput: $authCheckInput
     }) {
       success
   	  message
@@ -32,34 +31,33 @@ const logoutQuery = `
 `;
 
 const selectUser = `
-query selectUserBySubstring($usernameSubstring: String!, $authCheckInput: AuthCheckInput){
-  selectUserBySubstring(selectionInput: {
-    userInput: {
-      username: $usernameSubstring
+  query selectUserBySubstring($usernameSubstring: String!) {
+    selectUserBySubstring(selectionInput: {
+      userInput: {
+        username: $usernameSubstring
+      }
+    }) {
+      id
+      name: username
+      email
+      avatar: icon
     }
-    authCheckInput: $authCheckInput
-  }) {
-    id
-    name: username
-    email
-    avatar: icon
   }
-}
 `;
 
 const selectPeopleByTeamId = `
-query selectPeopleByTeamId($teamId: String!, $authCheckInput: AuthCheckInput){
-  selectPeopleByTeamId(selectionInput: {
-    teamInput: {
-      id: $teamId
+  query selectPeopleByTeamId($teamId: String!) {
+    selectPeopleByTeamId(selectionInput: {
+      teamInput: {
+        id: $teamId
+      }
+    }) {
+      id
+      name: username
+      email
+      avatar: icon
     }
-    authCheckInput: $authCheckInput
-  }) {
-    id
-    name: username
-    email
-    avatar: icon
   }
-}
 `;
+
 export default { loginQuery, logoutQuery, selectUser, selectPeopleByTeamId };

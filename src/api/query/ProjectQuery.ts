@@ -1,40 +1,38 @@
 const selectProjectByCreatorQuery = `
-  query selectProjectByCreator($creator: String!, $authCheckInput: AuthCheckInput) {
+  query selectProjectByCreator($creator: String!) {
     selectProjectByCreator(selectionInput: {
       projectInput: {
         creator: $creator
       }
-      authCheckInput: $authCheckInput
     }) {
-        id
-        name: projectName
-        creator
-        teamId
-        createTime
-        col: colTitle
-        row: rowTitle
-        iteration
-      }
+      id
+      name: projectName
+      creator
+      teamId
+      createTime
+      col: colTitle
+      row: rowTitle
+      iteration
+    }
   }
 `;
 
 const selectProjectById = `
-  query selectProjectById($projectId: String!, $authCheckInput: AuthCheckInput) {
+  query selectProjectById($projectId: String!) {
     selectProjectById(selectionInput: {
       projectInput: {
         id: $projectId
       }
-      authCheckInput: $authCheckInput
     }) {
-        id
-        name: projectName
-        creator
-        teamId
-        createTime
-        col: colTitle
-        row: rowTitle
-        iteration
-      }
+      id
+      name: projectName
+      creator
+      teamId
+      createTime
+      col: colTitle
+      row: rowTitle
+      iteration
+    }
   }
 `;
 

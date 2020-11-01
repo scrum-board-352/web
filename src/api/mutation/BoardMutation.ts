@@ -1,29 +1,27 @@
 const createBoard = `
-mutation createBoard($projectId: String, $authCheckInput: AuthCheckInput) {
-  createBoard(
-    selectionInput: {
-    boardInput: {
-      projectId: $projectId
+  mutation createBoard($projectId: String!) {
+    createBoard(selectionInput: {
+      boardInput: {
+        projectId: $projectId
+      }
+    }) {
+      id
+      createTime
     }
-    authCheckInput: $authCheckInput
-  }){
-  	id
-    createTime
   }
-}
 `;
 
 const removeBoard = `
-mutation removeBoard($boardId: String, $authCheckInput: AuthCheckInput) {
-  removeBoard(selectionInput: {
-    boardInput: {
-      id: $boardId
+  mutation removeBoard($boardId: String!) {
+    removeBoard(selectionInput: {
+      boardInput: {
+        id: $boardId
+      }
+    }) {
+      success
+      message
     }
-    authCheckInput: $authCheckInput
-  }) {
-    success
-    message
   }
-}
 `;
+
 export default { createBoard, removeBoard };
